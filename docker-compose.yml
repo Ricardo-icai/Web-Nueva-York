@@ -1,0 +1,14 @@
+﻿services:
+  postgres:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_USER: nyc
+      POSTGRES_PASSWORD: nyc
+      POSTGRES_DB: nyc_family_planner
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
