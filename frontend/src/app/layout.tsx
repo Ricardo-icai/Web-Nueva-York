@@ -1,16 +1,19 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import Link from "next/link";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
+import BackButton from "@/components/navigation/BackButton";
+import MenuDropdown from "@/components/navigation/MenuDropdown";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
   subsets: ["latin"],
+  weight: ["600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -24,17 +27,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="es"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col bg-slate-950 text-slate-100">
-        <header className="border-b border-slate-800 bg-slate-950/90 backdrop-blur">
+    <html lang="es" className={`${inter.variable} ${playfair.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col bg-stone-50 text-slate-900">
+        <header className="sticky top-0 z-40 border-b border-stone-200/70 bg-white/80 backdrop-blur">
           <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
-            <Link href="/" className="text-sm font-bold tracking-wide text-sky-300">NYC FAMILY PLANNER</Link>
-            <div className="flex items-center gap-4 text-sm">
-              <Link href="/planner" className="hover:text-sky-300">Planes</Link>
-              <Link href="/onboarding" className="rounded-full bg-sky-400 px-4 py-2 font-semibold text-slate-900 hover:bg-sky-300">Crear viaje</Link>
+            <div className="flex items-center gap-3">
+              <BackButton />
+              <Link href="/" className="text-sm font-bold tracking-[0.16em] text-slate-900">
+                NYC FAMILY PLANNER
+              </Link>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <Link href="/onboarding" className="rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-stone-100">
+                Crear viaje
+              </Link>
+              <MenuDropdown />
             </div>
           </nav>
         </header>
