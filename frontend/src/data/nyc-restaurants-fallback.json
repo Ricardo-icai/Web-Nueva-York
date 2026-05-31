@@ -1,0 +1,54 @@
+[
+  {
+    "id": "katzs-delicatessen",
+    "name": "Katz's Delicatessen",
+    "cuisine": ["Deli", "Jewish"],
+    "category": ["iconic"],
+    "address": "205 E Houston St, New York, NY",
+    "lat": 40.7223,
+    "lng": -73.9874,
+    "officialWebsite": "https://katzsdelicatessen.com/",
+    "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Katz%27s%20Delicatessen%20205%20E%20Houston%20St%20New%20York",
+    "imageUrl": "",
+    "priceLevel": 2
+  },
+  {
+    "id": "gramercy-tavern",
+    "name": "Gramercy Tavern",
+    "cuisine": ["American"],
+    "category": ["iconic"],
+    "address": "42 E 20th St, New York, NY",
+    "lat": 40.7385,
+    "lng": -73.9881,
+    "officialWebsite": "https://www.gramercytavern.com/",
+    "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Gramercy%20Tavern%2042%20E%2020th%20St%20New%20York",
+    "imageUrl": "",
+    "priceLevel": 4
+  },
+  {
+    "id": "los-tacos-no1-chelsea",
+    "name": "Los Tacos No.1",
+    "cuisine": ["Mexican"],
+    "category": ["popular"],
+    "address": "75 9th Ave, New York, NY",
+    "lat": 40.7423,
+    "lng": -74.006,
+    "officialWebsite": "https://www.lostacos1.com/",
+    "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Los%20Tacos%20No.1%2075%209th%20Ave%20New%20York",
+    "imageUrl": "",
+    "priceLevel": 1
+  },
+  {
+    "id": "lilia-brooklyn",
+    "name": "Lilia",
+    "cuisine": ["Italian"],
+    "category": ["popular"],
+    "address": "567 Union Ave, Brooklyn, NY",
+    "lat": 40.7142,
+    "lng": -73.9501,
+    "officialWebsite": "https://www.lilianewyork.com/",
+    "googleMapsUrl": "https://www.google.com/maps/search/?api=1&query=Lilia%20567%20Union%20Ave%20Brooklyn%20NY",
+    "imageUrl": "",
+    "priceLevel": 3
+  }
+]
