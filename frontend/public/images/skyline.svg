@@ -1,0 +1,19 @@
+﻿<svg width="900" height="600" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="600" fill="url(#g)"/>
+  <rect y="420" width="900" height="180" fill="#0B1220"/>
+  <rect x="80" y="240" width="56" height="180" fill="#334155"/>
+  <rect x="152" y="180" width="70" height="240" fill="#475569"/>
+  <rect x="240" y="130" width="82" height="290" fill="#334155"/>
+  <rect x="340" y="210" width="62" height="210" fill="#475569"/>
+  <rect x="420" y="160" width="90" height="260" fill="#334155"/>
+  <rect x="530" y="200" width="65" height="220" fill="#475569"/>
+  <rect x="610" y="150" width="74" height="270" fill="#334155"/>
+  <rect x="702" y="230" width="54" height="190" fill="#475569"/>
+  <text x="48" y="82" fill="#BAE6FD" font-family="Arial" font-size="38" font-weight="700">Skyline NYC</text>
+</svg>

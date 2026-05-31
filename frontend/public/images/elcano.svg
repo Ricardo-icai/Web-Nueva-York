@@ -1,0 +1,8 @@
+﻿<svg width="900" height="600" viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg">
+  <rect width="900" height="600" fill="#0B1324"/>
+  <rect y="420" width="900" height="180" fill="#082F49"/>
+  <path d="M120 430L230 430L240 280L360 280L370 430L490 430L500 240L620 240L630 430L760 430" stroke="#CBD5E1" stroke-width="8" fill="none"/>
+  <path d="M250 280L295 200L340 280" fill="#E2E8F0"/>
+  <path d="M510 240L560 150L610 240" fill="#BAE6FD"/>
+  <text x="72" y="92" fill="#E0F2FE" font-family="Arial" font-size="40" font-weight="700">Sail4th y Elcano</text>
+</svg>
