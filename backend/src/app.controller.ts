@@ -1,10 +1,14 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import type { TripInput } from './app.service';
+import { RestaurantDiscoveryAgent } from './restaurant-discovery.agent';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(
+    private readonly appService: AppService,
+    private readonly restaurantDiscoveryAgent: RestaurantDiscoveryAgent,
+  ) {}
 
   @Get('health')
   getHealth() {
@@ -70,5 +74,10 @@ export class AppController {
   @Post('recommendations/day-plan')
   getDayPlan(@Body() body: { tripId: string; date: string }) {
     return this.appService.buildDayPlan(body.tripId, body.date);
+  }
+
+  @Get('agents/restaurants/discover')
+  discoverRestaurants() {
+    return this.restaurantDiscoveryAgent.discoverRestaurants();
   }
 }
