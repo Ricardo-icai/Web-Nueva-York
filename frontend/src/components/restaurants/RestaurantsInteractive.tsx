@@ -76,6 +76,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
       return [];
     }
   });
+  const [resolvedMapRestaurants, setResolvedMapRestaurants] = useState<Restaurant[]>([]);
 
   useEffect(() => {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
@@ -114,6 +115,10 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
     });
   }, [uniqueMapRestaurants]);
 
+  useEffect(() => {
+    setResolvedMapRestaurants(withLocation);
+  }, [withLocation]);
+
   const grouped = useMemo(() => {
     const map = new Map<string, Restaurant[]>();
     for (const r of uniqueRestaurants) {
@@ -141,7 +146,21 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
     return (
       <article key={cardKey ?? restaurant.id} className="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
         <div className="relative h-56 w-full">
-          <Image src={logoUrl ?? restaurant.imageUrl} alt={restaurant.name} fill className="object-contain bg-white p-4" sizes="(max-width: 768px) 100vw, 33vw" />
+          {/* Use plain img for external logos to avoid Next host allowlist issues */}
+          {logoUrl ? (
+            <img
+              src={logoUrl}
+              alt={restaurant.name}
+              className="h-full w-full object-contain bg-white p-4"
+              loading="lazy"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = restaurant.imageUrl;
+                (e.currentTarget as HTMLImageElement).className = "h-full w-full object-cover";
+              }}
+            />
+          ) : (
+            <Image src={restaurant.imageUrl} alt={restaurant.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
+          )}
         </div>
         <div className="space-y-2 p-5">
           <div className="flex items-center justify-between gap-3">
@@ -163,6 +182,75 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
       </article>
     );
   };
+
+  useEffect(() => {
+    let cancelled = false;
+    const CACHE_KEY = "nyc_restaurant_geo_cache_v1";
+
+    const runGeocoding = async () => {
+      const needs = withLocation.filter(
+        (r) =>
+          !Number.isFinite(r.location.lat) ||
+          !Number.isFinite(r.location.lng) ||
+          (r.location.lat === 40.758 && r.location.lng === -73.9855),
+      );
+      if (!needs.length) return;
+
+      let cache: Record<string, { lat: number; lng: number }> = {};
+      try {
+        cache = JSON.parse(localStorage.getItem(CACHE_KEY) ?? "{}") as Record<string, { lat: number; lng: number }>;
+      } catch {
+        cache = {};
+      }
+
+      const updated = [...withLocation];
+      for (const r of needs.slice(0, 120)) {
+        if (cancelled) break;
+        const key = `${r.name}|${r.neighborhood ?? ""}|${r.borough ?? ""}`;
+        const cached = cache[key];
+        if (cached) {
+          const idx = updated.findIndex((x) => x.id === r.id);
+          if (idx >= 0) updated[idx] = { ...updated[idx], location: cached };
+          continue;
+        }
+
+        const query = encodeURIComponent(
+          `${r.name} ${r.neighborhood ?? ""} ${r.borough ?? ""} New York`,
+        );
+        try {
+          const resp = await fetch(
+            `https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=us&q=${query}`,
+            { headers: { "Accept-Language": "en" } },
+          );
+          if (resp.ok) {
+            const rows = (await resp.json()) as Array<{ lat?: string; lon?: string }>;
+            const row = rows[0];
+            if (row?.lat && row?.lon) {
+              const point = { lat: Number(row.lat), lng: Number(row.lon) };
+              if (Number.isFinite(point.lat) && Number.isFinite(point.lng)) {
+                cache[key] = point;
+                const idx = updated.findIndex((x) => x.id === r.id);
+                if (idx >= 0) updated[idx] = { ...updated[idx], location: point };
+              }
+            }
+          }
+        } catch {
+          // ignore geocode errors
+        }
+        await new Promise((resolve) => setTimeout(resolve, 250));
+      }
+
+      if (!cancelled) {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
+        setResolvedMapRestaurants(updated);
+      }
+    };
+
+    runGeocoding();
+    return () => {
+      cancelled = true;
+    };
+  }, [withLocation]);
 
   useEffect(() => {
     let disposed = false;
@@ -217,7 +305,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
       markersLayerRef.current = layer;
 
       const bounds: [number, number][] = [];
-      for (const r of withLocation) {
+      for (const r of resolvedMapRestaurants) {
         const marker = L.circleMarker([r.location.lat, r.location.lng], {
           radius: 11,
           color: "#ffffff",
@@ -253,7 +341,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
     return () => {
       disposed = true;
     };
-  }, [withLocation, userLocation]);
+  }, [resolvedMapRestaurants, userLocation]);
 
   return (
     <>

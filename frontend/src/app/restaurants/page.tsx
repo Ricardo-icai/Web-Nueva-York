@@ -235,7 +235,20 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
                 return (
                 <article key={`hof-${r.id}-${idx}`} className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
                   <div className="relative h-44 w-full">
-                    <Image src={logoUrl ?? r.imageUrl} alt={r.name} fill className="object-contain bg-white p-4" sizes="(max-width: 768px) 100vw, 33vw" />
+                    {logoUrl ? (
+                      <img
+                        src={logoUrl}
+                        alt={r.name}
+                        className="h-full w-full object-contain bg-white p-4"
+                        loading="lazy"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).src = r.imageUrl;
+                          (e.currentTarget as HTMLImageElement).className = "h-full w-full object-cover";
+                        }}
+                      />
+                    ) : (
+                      <Image src={r.imageUrl} alt={r.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
+                    )}
                   </div>
                   <div className="space-y-2 p-4">
                     <p className="text-sm font-semibold text-slate-900">{r.name}</p>
@@ -303,13 +316,26 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
                       className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm"
                     >
                       <div className="relative h-44 w-full">
-                        <Image
-                          src={logoUrl ?? r.imageUrl}
-                          alt={r.name}
-                          fill
-                          className="object-contain bg-white p-4"
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                        />
+                        {logoUrl ? (
+                          <img
+                            src={logoUrl}
+                            alt={r.name}
+                            className="h-full w-full object-contain bg-white p-4"
+                            loading="lazy"
+                            onError={(e) => {
+                              (e.currentTarget as HTMLImageElement).src = r.imageUrl;
+                              (e.currentTarget as HTMLImageElement).className = "h-full w-full object-cover";
+                            }}
+                          />
+                        ) : (
+                          <Image
+                            src={r.imageUrl}
+                            alt={r.name}
+                            fill
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                          />
+                        )}
                       </div>
                       <div className="space-y-2 p-4">
                         <p className="text-sm font-semibold text-slate-900">{r.name}</p>
