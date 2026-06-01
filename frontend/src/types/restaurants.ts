@@ -1,5 +1,17 @@
-export type RestaurantSource = "overpass" | "google" | "local";
-export type RestaurantDataQuality = "basic" | "enriched" | "fallback";
+export type RestaurantSource = "google" | "overpass" | "curated";
+export type RestaurantDataQuality = "basic" | "enriched" | "curated";
+
+export interface Coordinates {
+  lat: number;
+  lng: number;
+}
+
+export interface RestaurantReview {
+  authorName?: string;
+  rating?: number;
+  text?: string;
+  relativeTimeDescription?: string;
+}
 
 export interface Restaurant {
   id: string;
@@ -7,42 +19,34 @@ export interface Restaurant {
   dataQuality: RestaurantDataQuality;
 
   name: string;
-  description?: string;
+  description?: string | null;
 
   cuisine: string[];
-  category: string[];
+  categories: string[];
 
-  address?: string;
-  neighborhood?: string;
-  borough?: string;
+  address?: string | null;
+  neighborhood?: string | null;
+  borough?: string | null;
 
-  location: {
-    lat: number;
-    lng: number;
-  };
+  location: Coordinates;
 
-  googlePlaceId?: string;
-  googleRating?: number;
-  googleReviewCount?: number;
-  googleReviews?: {
-    authorName?: string;
-    rating?: number;
-    text?: string;
-    relativeTimeDescription?: string;
-  }[];
+  googlePlaceId?: string | null;
+  googleRating?: number | null;
+  googleReviewCount?: number | null;
+  googleReviews?: RestaurantReview[];
 
-  priceLevel?: 1 | 2 | 3 | 4;
-  averagePricePerPersonUsd?: number;
+  priceLevel?: 1 | 2 | 3 | 4 | null;
+  averagePricePerPersonUsd?: number | null;
 
-  officialWebsite?: string;
+  officialWebsite?: string | null;
   googleMapsUrl: string;
-  directionsUrl?: string;
-  reservationUrl?: string;
+  directionsUrl?: string | null;
+  reservationUrl?: string | null;
 
   imageUrl: string;
-  imageSource?: "google" | "wikimedia" | "local" | "fallback";
+  imageSource: "google" | "wikimedia" | "curated" | "fallback";
 
-  phone?: string;
+  phone?: string | null;
   openingHours?: string[];
 
   familyFriendly?: boolean;
@@ -51,11 +55,12 @@ export interface Restaurant {
   halalOptions?: boolean;
   kosherOptions?: boolean;
 
-  distanceFromAccommodationKm?: number;
-  estimatedTransitMinutes?: number;
-  estimatedWalkingMinutes?: number;
+  distanceFromAccommodationKm?: number | null;
+  estimatedTransitMinutes?: number | null;
+  estimatedWalkingMinutes?: number | null;
 
   qualityScore?: number;
+  editorialTags?: string[];
 }
 
 export interface OverpassRestaurantRaw {
@@ -73,4 +78,3 @@ export interface OverpassRestaurantRaw {
   lng: number;
   source: "overpass";
 }
-

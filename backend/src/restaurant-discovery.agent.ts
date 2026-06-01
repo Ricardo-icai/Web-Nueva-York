@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 export type RestaurantLead = {
   id: string;
   name: string;
-  sourceType: 'directory' | 'news';
+  sourceType: 'directory' | 'news' | 'guide' | 'forum';
   sourceName: string;
   sourceUrl: string;
   rating?: number;
@@ -12,6 +12,7 @@ export type RestaurantLead = {
   lat?: number;
   lng?: number;
   imageUrl?: string;
+  imageSource?: string;
   cuisine?: string;
   sections?: string[];
   sectionReason?: string;
@@ -37,6 +38,20 @@ type NycOpenDataRow = {
 
 @Injectable()
 export class RestaurantDiscoveryAgent {
+  private cache:
+    | {
+        generatedAt: string;
+        payload: {
+          agent: string;
+          generatedAt: string;
+          total: number;
+          sources: { directories: string[]; mediaFeeds: string[]; guideFeeds: string[]; forumFeeds: string[] };
+          sections: SectionSummary[];
+          items: RestaurantLead[];
+        };
+      }
+    | null = null;
+  private readonly cacheTtlMs = 1000 * 60 * 30;
   private readonly sectionRules: Array<{
     key: string;
     label: string;
@@ -54,6 +69,17 @@ export class RestaurantDiscoveryAgent {
     { name: 'Eater NY', url: 'https://ny.eater.com/rss/index.xml' },
     { name: 'Time Out New York', url: 'https://www.timeout.com/newyork/rss' },
     { name: 'The Infatuation NYC', url: 'https://www.theinfatuation.com/new-york/feed' },
+  ];
+  private readonly guideFeeds = [
+    { name: 'Secret NYC', url: 'https://secretnyc.co/feed/' },
+    { name: 'Condé Nast Traveler', url: 'https://www.cntraveler.com/feed/rss' },
+    { name: 'Travel + Leisure', url: 'https://www.travelandleisure.com/rss' },
+    { name: 'NYC Tourism (nycgo)', url: 'https://www.nycgo.com/feed/' },
+  ];
+  private readonly forumFeeds = [
+    { name: 'Reddit AskNYC', url: 'https://www.reddit.com/r/AskNYC/.rss' },
+    { name: 'Reddit FoodNYC', url: 'https://www.reddit.com/r/FoodNYC/.rss' },
+    { name: 'Reddit nyc', url: 'https://www.reddit.com/r/nyc/.rss' },
   ];
 
   private async safeFetchText(url: string) {
@@ -74,6 +100,22 @@ export class RestaurantDiscoveryAgent {
     } catch {
       return null;
     }
+  }
+
+  private async findImageForRestaurant(name: string) {
+    const wikiApi =
+      `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*` +
+      `&prop=pageimages|info&inprop=url&pithumbsize=1200&generator=search&gsrnamespace=0` +
+      `&gsrlimit=1&gsrsearch=${encodeURIComponent(`${name} New York restaurant`)}`;
+    const wiki = await this.safeFetchJson<{
+      query?: { pages?: Record<string, { thumbnail?: { source?: string }; fullurl?: string }> };
+    }>(wikiApi);
+
+    const first = wiki?.query?.pages ? Object.values(wiki.query.pages)[0] : undefined;
+    if (first?.thumbnail?.source) {
+      return { imageUrl: first.thumbnail.source, imageSource: first.fullurl ?? 'wikipedia' };
+    }
+    return null;
   }
 
   private pickRestaurantsFromTitle(title: string) {
@@ -139,6 +181,50 @@ export class RestaurantDiscoveryAgent {
     return leads;
   }
 
+  private async discoverFromGenericFeeds(
+    feeds: Array<{ name: string; url: string }>,
+    sourceType: 'guide' | 'forum',
+  ): Promise<RestaurantLead[]> {
+    const leads: RestaurantLead[] = [];
+    for (const feed of feeds) {
+      const xml = await this.safeFetchText(feed.url);
+      if (!xml) continue;
+
+      const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+      const titleRegex = /<title><!\[CDATA\[(.*?)\]\]><\/title>|<title>(.*?)<\/title>/;
+      const linkRegex = /<link>(.*?)<\/link>/;
+
+      let match: RegExpExecArray | null = itemRegex.exec(xml);
+      let count = 0;
+      while (match && count < 40) {
+        const block = match[1];
+        const titleMatch = block.match(titleRegex);
+        const linkMatch = block.match(linkRegex);
+        const title = (titleMatch?.[1] ?? titleMatch?.[2] ?? '').trim();
+        const url = (linkMatch?.[1] ?? '').trim();
+        if (title && url) {
+          const sections = this.inferSectionsFromText(title);
+          const picks = this.pickRestaurantsFromTitle(title);
+          for (const pick of picks) {
+            leads.push({
+              id: `${sourceType}-${feed.name}-${pick}-${count}`.toLowerCase().replace(/[^a-z0-9-]/g, '-'),
+              name: pick,
+              sourceType,
+              sourceName: feed.name,
+              sourceUrl: url,
+              sections,
+              sectionReason: `Clasificado por titular en ${feed.name}`,
+              discoveredAt: new Date().toISOString(),
+            });
+          }
+        }
+        count += 1;
+        match = itemRegex.exec(xml);
+      }
+    }
+    return leads;
+  }
+
   private async discoverFromNycOpenData(): Promise<RestaurantLead[]> {
     const url =
       'https://data.cityofnewyork.us/resource/43nn-pn8j.json?$select=camis,dba,cuisine_description,building,street,boro,zipcode,latitude,longitude&$where=latitude%20IS%20NOT%20NULL%20AND%20longitude%20IS%20NOT%20NULL&$limit=2000';
@@ -170,8 +256,8 @@ export class RestaurantDiscoveryAgent {
         address: `${street}${street ? ', ' : ''}${city}${zip ? ` ${zip}` : ''}`,
         lat,
         lng,
-        imageUrl:
-          'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80',
+        imageUrl: undefined,
+        imageSource: undefined,
         discoveredAt: new Date().toISOString(),
       });
       if (out.length >= 1000) break;
@@ -203,22 +289,52 @@ export class RestaurantDiscoveryAgent {
   }
 
   async discoverRestaurants() {
-    const [directory, news] = await Promise.all([
+    if (this.cache) {
+      const age = Date.now() - new Date(this.cache.generatedAt).getTime();
+      if (age < this.cacheTtlMs) {
+        return this.cache.payload;
+      }
+    }
+
+    const [directory, news, guides, forums] = await Promise.all([
       this.discoverFromNycOpenData(),
       this.discoverFromRss(),
+      this.discoverFromGenericFeeds(this.guideFeeds, 'guide'),
+      this.discoverFromGenericFeeds(this.forumFeeds, 'forum'),
     ]);
 
-    const items = this.dedupe([...directory, ...news]);
-    return {
+    const merged = this.dedupe([...directory, ...news, ...guides, ...forums]);
+    const items: RestaurantLead[] = merged.map((lead) => ({ ...lead }));
+    const enrichLimit = Math.min(120, items.length);
+    for (let i = 0; i < enrichLimit; i += 12) {
+      const chunk = items.slice(i, i + 12);
+      const chunkImages = await Promise.all(chunk.map((lead) => this.findImageForRestaurant(lead.name)));
+      for (let j = 0; j < chunk.length; j += 1) {
+        const img = chunkImages[j];
+        if (img?.imageUrl) {
+          const idx = i + j;
+          items[idx] = {
+            ...items[idx],
+            imageUrl: img.imageUrl,
+            imageSource: img.imageSource,
+          };
+        }
+      }
+    }
+    const payload = {
       agent: 'restaurant-discovery',
       generatedAt: new Date().toISOString(),
       total: items.length,
       sources: {
         directories: ['NYC Open Data'],
         mediaFeeds: this.rssFeeds.map((s) => s.name),
+        guideFeeds: this.guideFeeds.map((s) => s.name),
+        forumFeeds: this.forumFeeds.map((s) => s.name),
       },
       sections: this.buildSectionSummary(items),
       items,
     };
+    this.cache = { generatedAt: payload.generatedAt, payload };
+    return payload;
   }
 }

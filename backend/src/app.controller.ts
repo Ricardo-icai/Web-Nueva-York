@@ -2,12 +2,18 @@ import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import type { TripInput } from './app.service';
 import { RestaurantDiscoveryAgent } from './restaurant-discovery.agent';
+import { RestaurantKnowledgeService } from './restaurant-knowledge.service';
+import { SpecializedFoodAgent } from './specialized-food.agent';
+import { RestaurantPhotoAgent } from './restaurant-photo.agent';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly appService: AppService,
     private readonly restaurantDiscoveryAgent: RestaurantDiscoveryAgent,
+    private readonly restaurantKnowledgeService: RestaurantKnowledgeService,
+    private readonly specializedFoodAgent: SpecializedFoodAgent,
+    private readonly restaurantPhotoAgent: RestaurantPhotoAgent,
   ) {}
 
   @Get('health')
@@ -79,5 +85,32 @@ export class AppController {
   @Get('agents/restaurants/discover')
   discoverRestaurants() {
     return this.restaurantDiscoveryAgent.discoverRestaurants();
+  }
+
+  @Post('agents/restaurants/sync')
+  syncRestaurantKnowledgeDb() {
+    return this.restaurantKnowledgeService.syncAll();
+  }
+
+  @Get('restaurants/db')
+  async getRestaurantKnowledgeDb() {
+    const db = await this.restaurantKnowledgeService.readDb();
+    if (db) return db;
+    return this.restaurantKnowledgeService.syncAll();
+  }
+
+  @Get('agents/restaurants/burgers')
+  getBurgerRestaurants() {
+    return this.specializedFoodAgent.discoverByFoodType('burgers');
+  }
+
+  @Get('agents/restaurants/pizzas')
+  getPizzaRestaurants() {
+    return this.specializedFoodAgent.discoverByFoodType('pizza');
+  }
+
+  @Get('agents/restaurants/photo')
+  getPhotoForRestaurant(@Query('name') name: string) {
+    return this.restaurantPhotoAgent.findPhotoForRestaurant(name ?? '');
   }
 }

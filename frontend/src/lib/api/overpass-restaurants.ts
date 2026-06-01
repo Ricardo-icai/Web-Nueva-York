@@ -35,6 +35,15 @@ export async function fetchOverpassRestaurants(): Promise<OverpassRestaurantRaw[
       node["amenity"="fast_food"](area.searchArea);
       way["amenity"="fast_food"](area.searchArea);
       relation["amenity"="fast_food"](area.searchArea);
+      node["amenity"="food_court"](area.searchArea);
+      way["amenity"="food_court"](area.searchArea);
+      relation["amenity"="food_court"](area.searchArea);
+      node["amenity"="bar"](area.searchArea);
+      way["amenity"="bar"](area.searchArea);
+      relation["amenity"="bar"](area.searchArea);
+      node["amenity"="pub"](area.searchArea);
+      way["amenity"="pub"](area.searchArea);
+      relation["amenity"="pub"](area.searchArea);
     );
     out center tags;
   `;
@@ -79,4 +88,3 @@ export async function fetchOverpassRestaurants(): Promise<OverpassRestaurantRaw[
     return [];
   }
 }
-

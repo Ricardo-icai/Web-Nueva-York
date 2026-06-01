@@ -1,41 +1,52 @@
 import type { Restaurant } from "@/types/restaurants";
 
-export function haversineKm(
-  lat1: number,
-  lng1: number,
-  lat2: number,
-  lng2: number,
-): number {
-  const toRad = (d: number) => (d * Math.PI) / 180;
-  const dLat = toRad(lat2 - lat1);
-  const dLng = toRad(lng2 - lng1);
-  const a =
-    Math.sin(dLat / 2) ** 2 +
-    Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
-  return 6371 * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+type RankingOptions = {
+  accommodation?: { lat: number; lng: number };
+};
+
+function distanceKm(a: { lat: number; lng: number }, b: { lat: number; lng: number }) {
+  const toRad = (deg: number) => (deg * Math.PI) / 180;
+  const dLat = toRad(b.lat - a.lat);
+  const dLng = toRad(b.lng - a.lng);
+  const v =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(a.lat)) * Math.cos(toRad(b.lat)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
+  return 6371 * (2 * Math.atan2(Math.sqrt(v), Math.sqrt(1 - v)));
 }
 
-export function rankRestaurants(
-  restaurants: Restaurant[],
-  origin?: { lat: number; lng: number },
-): Restaurant[] {
-  const scored = restaurants.map((r) => {
-    const distance = origin
-      ? haversineKm(origin.lat, origin.lng, r.location.lat, r.location.lng)
-      : undefined;
-    const ratingScore = r.googleRating ?? 0;
-    const reviewScore = Math.log10((r.googleReviewCount ?? 0) + 1);
-    const distancePenalty = distance ? Math.min(distance / 10, 3) : 0;
-    const qualityScore = ratingScore * 2 + reviewScore - distancePenalty;
-    return {
-      ...r,
-      distanceFromAccommodationKm: distance
-        ? Number(distance.toFixed(2))
-        : undefined,
-      qualityScore: Number(qualityScore.toFixed(2)),
-    };
+export function rankRestaurants(rows: Restaurant[], options: RankingOptions = {}) {
+  const ranked = rows.map((r) => {
+    const ratingScore = ((r.googleRating ?? 0) / 5) * 30;
+    const reviewScore = Math.min(15, Math.log10((r.googleReviewCount ?? 0) + 1) * 5);
+    const hasWebsiteScore = r.officialWebsite ? 5 : 0;
+    const imageScore = r.imageUrl ? 5 : 0;
+    const familyScore = r.familyFriendly ? 10 : 0;
+    const curatedScore = r.source === "curated" ? Math.min(15, (r.qualityScore ?? 0) * 0.15) : 0;
+
+    let distanceScore = 0;
+    let distanceFromAccommodationKm: number | null = null;
+    if (options.accommodation) {
+      const km = distanceKm(options.accommodation, r.location);
+      const norm = Math.max(0, 1 - Math.min(1, km / 20));
+      distanceScore = norm * 20;
+      distanceFromAccommodationKm = Number(km.toFixed(1));
+    }
+
+    const qualityScore = Number(
+      (
+        ratingScore +
+        reviewScore +
+        distanceScore +
+        curatedScore +
+        familyScore +
+        hasWebsiteScore +
+        imageScore
+      ).toFixed(2),
+    );
+
+    return { ...r, qualityScore, distanceFromAccommodationKm };
   });
 
-  return scored.sort((a, b) => (b.qualityScore ?? 0) - (a.qualityScore ?? 0));
+  return ranked.sort((a, b) => (b.qualityScore ?? 0) - (a.qualityScore ?? 0));
 }
 

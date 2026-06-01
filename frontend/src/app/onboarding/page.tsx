@@ -68,7 +68,6 @@ export default function OnboardingPage() {
   useEffect(() => {
     const query = accommodation.trim();
     if (query.length < 3) {
-      setSuggestions([]);
       return;
     }
 
@@ -183,6 +182,7 @@ export default function OnboardingPage() {
             onChange={(event) => {
               setAccommodation(event.target.value);
               setSelectedLocation(null);
+              setSuggestions([]);
             }}
             placeholder="Hotel, direccion o zona"
             className="rounded-xl border border-stone-300 bg-stone-50 px-4 py-3"

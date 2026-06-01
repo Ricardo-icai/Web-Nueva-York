@@ -501,21 +501,9 @@ export class AppService {
   }
 
   async getRestaurants(filters: RestaurantFilters = {}) {
-    const yelpItems = await this.getYelpRestaurants();
-    if (yelpItems.length) {
-      yelpItems.sort((a, b) => {
-        if (b.reviewCount !== a.reviewCount) return b.reviewCount - a.reviewCount;
-        return b.rating - a.rating;
-      });
-      return { source: 'yelp', items: this.applyRestaurantFilters(yelpItems, filters) };
-    }
-
     const key = process.env.GOOGLE_MAPS_API_KEY;
-    if (!key) {
-      return { source: 'fallback', items: [] };
-    }
-
-    try {
+    if (key) {
+      try {
       const queries = [
         'best restaurants in New York City',
         'viral restaurants in New York City',
@@ -640,9 +628,21 @@ export class AppService {
         source: 'google-places',
         items: filtered,
       };
-    } catch {
-      return { source: 'fallback', items: [] };
+      } catch {
+        // fallback to yelp/fallback below
+      }
     }
+
+    const yelpItems = await this.getYelpRestaurants();
+    if (yelpItems.length) {
+      yelpItems.sort((a, b) => {
+        if (b.reviewCount !== a.reviewCount) return b.reviewCount - a.reviewCount;
+        return b.rating - a.rating;
+      });
+      return { source: 'yelp', items: this.applyRestaurantFilters(yelpItems, filters) };
+    }
+
+    return { source: 'fallback', items: this.applyRestaurantFilters(this.fallbackRestaurants, filters) };
   }
 
   async searchLocation(query: string) {

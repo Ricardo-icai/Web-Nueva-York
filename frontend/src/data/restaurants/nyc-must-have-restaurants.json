@@ -1,0 +1,3946 @@
+[
+    {
+        "id":  "joes-pizza",
+        "name":  "Joe\u0027s Pizza",
+        "type":  "restaurant",
+        "categories":  [
+                           "pizza"
+                       ],
+        "cuisine":  [
+                        "Pizza"
+                    ],
+        "signatureDishes":  [
+                                "Cheese slice"
+                            ],
+        "whyItMatters":  "Classic NYC slice experience.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.joespizzanyc.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Joe\u0027s Pizza New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "prince-street-pizza",
+        "name":  "Prince Street Pizza",
+        "type":  "restaurant",
+        "categories":  [
+                           "pizza"
+                       ],
+        "cuisine":  [
+                        "Pizza"
+                    ],
+        "signatureDishes":  [
+                                "Spicy spring"
+                            ],
+        "whyItMatters":  "One of the most famous viral slices in NYC.",
+        "neighborhood":  "SoHo",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.princestreetpizza.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Prince Street Pizza New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "johns-of-bleecker",
+        "name":  "John\u0027s of Bleecker Street",
+        "type":  "restaurant",
+        "categories":  [
+                           "pizza"
+                       ],
+        "cuisine":  [
+                        "Pizza"
+                    ],
+        "signatureDishes":  [
+                                "Coal-oven pie"
+                            ],
+        "whyItMatters":  "Historic coal-oven pizzeria.",
+        "neighborhood":  "West Village",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.johnsofbleecker.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=John\u0027s of Bleecker Street New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "lombardis",
+        "name":  "Lombardi\u0027s",
+        "type":  "restaurant",
+        "categories":  [
+                           "pizza",
+                           "little_italy"
+                       ],
+        "cuisine":  [
+                        "Pizza"
+                    ],
+        "signatureDishes":  [
+                                "Margherita pie"
+                            ],
+        "whyItMatters":  "AmericaÃ¢â‚¬â„¢s first pizzeria legacy spot.",
+        "neighborhood":  "Nolita",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.firstpizza.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Lombardi\u0027s New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "di-fara-pizza",
+        "name":  "Di Fara Pizza",
+        "type":  "restaurant",
+        "categories":  [
+                           "pizza",
+                           "brooklyn"
+                       ],
+        "cuisine":  [
+                        "Pizza"
+                    ],
+        "signatureDishes":  [
+                                "Classic square slice"
+                            ],
+        "whyItMatters":  "Legendary Brooklyn pizza institution.",
+        "neighborhood":  "Midwood",
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  null,
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Di Fara Pizza New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "lindustrie-pizzeria",
+        "name":  "LÃ¢â‚¬â„¢Industrie Pizzeria",
+        "type":  "restaurant",
+        "categories":  [
+                           "pizza",
+                           "brooklyn"
+                       ],
+        "cuisine":  [
+                        "Pizza"
+                    ],
+        "signatureDishes":  [
+                                "Burrata slice"
+                            ],
+        "whyItMatters":  "Top-rated modern pizza destination.",
+        "neighborhood":  "Williamsburg",
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.lindustriebk.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=LÃ¢â‚¬â„¢Industrie Pizzeria New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "scarrs-pizza",
+        "name":  "ScarrÃ¢â‚¬â„¢s Pizza",
+        "type":  "restaurant",
+        "categories":  [
+                           "pizza"
+                       ],
+        "cuisine":  [
+                        "Pizza"
+                    ],
+        "signatureDishes":  [
+                                "Pepperoni slice"
+                            ],
+        "whyItMatters":  "Cult-favorite LES slice shop.",
+        "neighborhood":  "Lower East Side",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.scarrspizza.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=ScarrÃ¢â‚¬â„¢s Pizza New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "rubirosa",
+        "name":  "Rubirosa",
+        "type":  "restaurant",
+        "categories":  [
+                           "pizza",
+                           "italian"
+                       ],
+        "cuisine":  [
+                        "Italian",
+                        "Pizza"
+                    ],
+        "signatureDishes":  [
+                                "Tie-dye pizza"
+                            ],
+        "whyItMatters":  "Iconic Nolita pizza-pasta spot.",
+        "neighborhood":  "Nolita",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.rubirosanyc.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Rubirosa New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "lucali",
+        "name":  "Lucali",
+        "type":  "restaurant",
+        "categories":  [
+                           "pizza",
+                           "brooklyn"
+                       ],
+        "cuisine":  [
+                        "Pizza"
+                    ],
+        "signatureDishes":  [
+                                "Whole pie"
+                            ],
+        "whyItMatters":  "One of NYCÃ¢â‚¬â„¢s most famous reservation-heavy pizza spots.",
+        "neighborhood":  "Carroll Gardens",
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.lucali.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Lucali New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "artichoke-basilles",
+        "name":  "Artichoke BasilleÃ¢â‚¬â„¢s Pizza",
+        "type":  "restaurant",
+        "categories":  [
+                           "pizza"
+                       ],
+        "cuisine":  [
+                        "Pizza"
+                    ],
+        "signatureDishes":  [
+                                "Artichoke slice"
+                            ],
+        "whyItMatters":  "Famous late-night NYC slice.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.artichokepizza.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Artichoke BasilleÃ¢â‚¬â„¢s Pizza New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "ess-a-bagel",
+        "name":  "Ess-a-Bagel",
+        "type":  "bakery",
+        "categories":  [
+                           "bagels"
+                       ],
+        "cuisine":  [
+                        "Bagels"
+                    ],
+        "signatureDishes":  [
+                                "Classic bagel with schmear"
+                            ],
+        "whyItMatters":  "One of the most referenced bagel spots.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.ess-a-bagel.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Ess-a-Bagel New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "russ-and-daughters",
+        "name":  "Russ \u0026 Daughters",
+        "type":  "bakery",
+        "categories":  [
+                           "bagels",
+                           "deli"
+                       ],
+        "cuisine":  [
+                        "Jewish Deli"
+                    ],
+        "signatureDishes":  [
+                                "Lox and bagel"
+                            ],
+        "whyItMatters":  "Historic appetizing shop.",
+        "neighborhood":  "Lower East Side",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.russanddaughters.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Russ and Daughters New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "absolute-bagels",
+        "name":  "Absolute Bagels",
+        "type":  "bakery",
+        "categories":  [
+                           "bagels"
+                       ],
+        "cuisine":  [
+                        "Bagels"
+                    ],
+        "signatureDishes":  [
+                                "Everything bagel"
+                            ],
+        "whyItMatters":  "Upper West Side favorite.",
+        "neighborhood":  "Upper West Side",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  null,
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Absolute Bagels New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "tompkins-square-bagels",
+        "name":  "Tompkins Square Bagels",
+        "type":  "bakery",
+        "categories":  [
+                           "bagels"
+                       ],
+        "cuisine":  [
+                        "Bagels"
+                    ],
+        "signatureDishes":  [
+                                "Rainbow bagel"
+                            ],
+        "whyItMatters":  "Popular East Village bagels.",
+        "neighborhood":  "East Village",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.tompkinssquarebagels.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Tompkins Square Bagels New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "brooklyn-bagel-and-coffee",
+        "name":  "Brooklyn Bagel \u0026 Coffee Company",
+        "type":  "bakery",
+        "categories":  [
+                           "bagels"
+                       ],
+        "cuisine":  [
+                        "Bagels"
+                    ],
+        "signatureDishes":  [
+                                "Bagel sandwiches"
+                            ],
+        "whyItMatters":  "Reliable NYC bagel option with multiple locations.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.brooklynbagelandcoffeecompany.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Brooklyn Bagel and Coffee Company New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "zuckers-bagels",
+        "name":  "ZuckerÃ¢â‚¬â„¢s Bagels",
+        "type":  "bakery",
+        "categories":  [
+                           "bagels"
+                       ],
+        "cuisine":  [
+                        "Bagels"
+                    ],
+        "signatureDishes":  [
+                                "Smoked salmon bagel"
+                            ],
+        "whyItMatters":  "Strong local bagel chain downtown.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.zuckersbagels.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=ZuckerÃ¢â‚¬â„¢s Bagels New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "liberty-bagels",
+        "name":  "Liberty Bagels",
+        "type":  "bakery",
+        "categories":  [
+                           "bagels"
+                       ],
+        "cuisine":  [
+                        "Bagels"
+                    ],
+        "signatureDishes":  [
+                                "Bagel with cream cheese"
+                            ],
+        "whyItMatters":  "Popular Midtown bagel stop.",
+        "neighborhood":  "Midtown",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.libertybagels.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Liberty Bagels New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "katzs-delicatessen",
+        "name":  "KatzÃ¢â‚¬â„¢s Delicatessen",
+        "type":  "restaurant",
+        "categories":  [
+                           "deli"
+                       ],
+        "cuisine":  [
+                        "Deli",
+                        "Jewish"
+                    ],
+        "signatureDishes":  [
+                                "Pastrami sandwich"
+                            ],
+        "whyItMatters":  "One of NYCÃ¢â‚¬â„¢s most iconic delis.",
+        "neighborhood":  "Lower East Side",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://katzsdelicatessen.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=KatzÃ¢â‚¬â„¢s Delicatessen New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "2nd-ave-deli",
+        "name":  "2nd Ave Deli",
+        "type":  "restaurant",
+        "categories":  [
+                           "deli"
+                       ],
+        "cuisine":  [
+                        "Jewish Deli"
+                    ],
+        "signatureDishes":  [
+                                "Corned beef"
+                            ],
+        "whyItMatters":  "Classic old-school deli experience.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://2ndavedeli.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=2nd Ave Deli New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "sp-lunch",
+        "name":  "S\u0026P Lunch",
+        "type":  "restaurant",
+        "categories":  [
+                           "deli",
+                           "classic_nyc"
+                       ],
+        "cuisine":  [
+                        "American"
+                    ],
+        "signatureDishes":  [
+                                "Tuna melt"
+                            ],
+        "whyItMatters":  "Beloved old-school lunch counter.",
+        "neighborhood":  "Flatiron",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  null,
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=S\u0026P Lunch New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "juniors",
+        "name":  "JuniorÃ¢â‚¬â„¢s",
+        "type":  "restaurant",
+        "categories":  [
+                           "deli",
+                           "cheesecake"
+                       ],
+        "cuisine":  [
+                        "American"
+                    ],
+        "signatureDishes":  [
+                                "Cheesecake"
+                            ],
+        "whyItMatters":  "Classic NYC diner and cheesecake icon.",
+        "neighborhood":  null,
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.juniorscheesecake.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=JuniorÃ¢â‚¬â„¢s New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "grays-papaya",
+        "name":  "GrayÃ¢â‚¬â„¢s Papaya",
+        "type":  "street_food",
+        "categories":  [
+                           "classic_nyc",
+                           "street_food"
+                       ],
+        "cuisine":  [
+                        "Hot Dogs"
+                    ],
+        "signatureDishes":  [
+                                "Recession special"
+                            ],
+        "whyItMatters":  "Legendary fast NYC hot dog stop.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.grayspapaya.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=GrayÃ¢â‚¬â„¢s Papaya New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "nathans-famous",
+        "name":  "NathanÃ¢â‚¬â„¢s Famous",
+        "type":  "street_food",
+        "categories":  [
+                           "classic_nyc",
+                           "street_food"
+                       ],
+        "cuisine":  [
+                        "Hot Dogs"
+                    ],
+        "signatureDishes":  [
+                                "Coney Island hot dog"
+                            ],
+        "whyItMatters":  "Historic Coney Island institution.",
+        "neighborhood":  "Coney Island",
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.nathansfamous.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=NathanÃ¢â‚¬â„¢s Famous New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "the-halal-guys",
+        "name":  "The Halal Guys",
+        "type":  "street_food",
+        "categories":  [
+                           "classic_nyc",
+                           "street_food"
+                       ],
+        "cuisine":  [
+                        "Middle Eastern"
+                    ],
+        "signatureDishes":  [
+                                "Chicken and rice"
+                            ],
+        "whyItMatters":  "Iconic NYC cart-to-chain success story.",
+        "neighborhood":  "Midtown",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://thehalalguys.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=The Halal Guys New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "7th-street-burger",
+        "name":  "7th Street Burger",
+        "type":  "restaurant",
+        "categories":  [
+                           "burgers"
+                       ],
+        "cuisine":  [
+                        "Burgers"
+                    ],
+        "signatureDishes":  [
+                                "Double cheeseburger"
+                            ],
+        "whyItMatters":  "One of the most talked-about NYC burger spots.",
+        "neighborhood":  "East Village",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.7thstreetburger.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=7th Street Burger New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "shake-shack-madison-square-park",
+        "name":  "Shake Shack Madison Square Park",
+        "type":  "restaurant",
+        "categories":  [
+                           "burgers"
+                       ],
+        "cuisine":  [
+                        "Burgers"
+                    ],
+        "signatureDishes":  [
+                                "ShackBurger"
+                            ],
+        "whyItMatters":  "Original flagship of a global NYC brand.",
+        "neighborhood":  "Flatiron",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://shakeshack.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Shake Shack Madison Square Park New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "emily",
+        "name":  "Emily",
+        "type":  "restaurant",
+        "categories":  [
+                           "burgers",
+                           "pizza"
+                       ],
+        "cuisine":  [
+                        "American"
+                    ],
+        "signatureDishes":  [
+                                "Emmy Burger"
+                            ],
+        "whyItMatters":  "Frequently ranked among NYCÃ¢â‚¬â„¢s best burgers.",
+        "neighborhood":  "West Village",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.pizzalovesemily.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Emily New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "minetta-tavern",
+        "name":  "Minetta Tavern",
+        "type":  "restaurant",
+        "categories":  [
+                           "burgers",
+                           "steakhouse"
+                       ],
+        "cuisine":  [
+                        "French",
+                        "American"
+                    ],
+        "signatureDishes":  [
+                                "Black Label Burger"
+                            ],
+        "whyItMatters":  "Historic and famous upscale burger.",
+        "neighborhood":  "Greenwich Village",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.minettatavernny.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Minetta Tavern New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  false,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "jg-melon",
+        "name":  "J.G. Melon",
+        "type":  "restaurant",
+        "categories":  [
+                           "burgers"
+                       ],
+        "cuisine":  [
+                        "American"
+                    ],
+        "signatureDishes":  [
+                                "Cheeseburger"
+                            ],
+        "whyItMatters":  "Old-school Upper East Side burger icon.",
+        "neighborhood":  "Upper East Side",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  null,
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=J.G. Melon New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "peter-luger-burger",
+        "name":  "Peter Luger Burger",
+        "type":  "restaurant",
+        "categories":  [
+                           "burgers",
+                           "steakhouse"
+                       ],
+        "cuisine":  [
+                        "Steakhouse"
+                    ],
+        "signatureDishes":  [
+                                "Luger Burger"
+                            ],
+        "whyItMatters":  "Steakhouse burger legend.",
+        "neighborhood":  "Williamsburg",
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://peterluger.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Peter Luger Burger New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "corner-bistro",
+        "name":  "Corner Bistro",
+        "type":  "restaurant",
+        "categories":  [
+                           "burgers"
+                       ],
+        "cuisine":  [
+                        "American"
+                    ],
+        "signatureDishes":  [
+                                "Bistro Burger"
+                            ],
+        "whyItMatters":  "Classic no-frills burger institution.",
+        "neighborhood":  "West Village",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://cornerbistrony.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Corner Bistro New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "nom-wah-tea-parlor",
+        "name":  "Nom Wah Tea Parlor",
+        "type":  "restaurant",
+        "categories":  [
+                           "chinatown",
+                           "asian"
+                       ],
+        "cuisine":  [
+                        "Chinese"
+                    ],
+        "signatureDishes":  [
+                                "Dim sum"
+                            ],
+        "whyItMatters":  "Historic Chinatown dim sum classic.",
+        "neighborhood":  "Chinatown",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://nomwah.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Nom Wah Tea Parlor New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "joes-shanghai",
+        "name":  "JoeÃ¢â‚¬â„¢s Shanghai",
+        "type":  "restaurant",
+        "categories":  [
+                           "chinatown",
+                           "asian"
+                       ],
+        "cuisine":  [
+                        "Chinese"
+                    ],
+        "signatureDishes":  [
+                                "Soup dumplings"
+                            ],
+        "whyItMatters":  "Most famous soup dumpling spot for visitors.",
+        "neighborhood":  "Chinatown",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://joesshanghai.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=JoeÃ¢â‚¬â„¢s Shanghai New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "wo-hop",
+        "name":  "Wo Hop",
+        "type":  "restaurant",
+        "categories":  [
+                           "chinatown",
+                           "asian"
+                       ],
+        "cuisine":  [
+                        "Chinese"
+                    ],
+        "signatureDishes":  [
+                                "Late-night Cantonese"
+                            ],
+        "whyItMatters":  "Cult late-night Chinatown institution.",
+        "neighborhood":  "Chinatown",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  null,
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Wo Hop New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "xian-famous-foods",
+        "name":  "XiÃ¢â‚¬â„¢an Famous Foods",
+        "type":  "restaurant",
+        "categories":  [
+                           "asian",
+                           "street_food"
+                       ],
+        "cuisine":  [
+                        "Chinese"
+                    ],
+        "signatureDishes":  [
+                                "Spicy cumin lamb noodles"
+                            ],
+        "whyItMatters":  "NYC cult favorite for hand-pulled noodles.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.xianfoods.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=XiÃ¢â‚¬â„¢an Famous Foods New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "vanessas-dumpling-house",
+        "name":  "VanessaÃ¢â‚¬â„¢s Dumpling House",
+        "type":  "restaurant",
+        "categories":  [
+                           "chinatown",
+                           "budget_eats"
+                       ],
+        "cuisine":  [
+                        "Chinese"
+                    ],
+        "signatureDishes":  [
+                                "Fried dumplings"
+                            ],
+        "whyItMatters":  "Highly popular low-cost dumpling stop.",
+        "neighborhood":  "Chinatown",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.vanessas.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=VanessaÃ¢â‚¬â„¢s Dumpling House New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "wah-fung-fast-food",
+        "name":  "Wah Fung No.1 Fast Food",
+        "type":  "street_food",
+        "categories":  [
+                           "chinatown",
+                           "budget_eats"
+                       ],
+        "cuisine":  [
+                        "Chinese"
+                    ],
+        "signatureDishes":  [
+                                "Roast pork over rice"
+                            ],
+        "whyItMatters":  "One of ChinatownÃ¢â‚¬â„¢s most viral value spots.",
+        "neighborhood":  "Chinatown",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  null,
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Wah Fung No.1 Fast Food New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "jongro-bbq",
+        "name":  "Jongro BBQ",
+        "type":  "restaurant",
+        "categories":  [
+                           "korean",
+                           "asian"
+                       ],
+        "cuisine":  [
+                        "Korean"
+                    ],
+        "signatureDishes":  [
+                                "Korean BBQ"
+                            ],
+        "whyItMatters":  "Koreatown staple for travelers.",
+        "neighborhood":  "Koreatown",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.jongrobbqny.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Jongro BBQ New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "her-name-is-han",
+        "name":  "Her Name is Han",
+        "type":  "restaurant",
+        "categories":  [
+                           "korean",
+                           "asian"
+                       ],
+        "cuisine":  [
+                        "Korean"
+                    ],
+        "signatureDishes":  [
+                                "Bibimbap"
+                            ],
+        "whyItMatters":  "Popular modern Korean destination.",
+        "neighborhood":  "Koreatown",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.hernameishan.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Her Name is Han New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "atomix",
+        "name":  "Atomix",
+        "type":  "restaurant",
+        "categories":  [
+                           "korean",
+                           "fine_dining"
+                       ],
+        "cuisine":  [
+                        "Korean"
+                    ],
+        "signatureDishes":  [
+                                "Tasting menu"
+                            ],
+        "whyItMatters":  "Globally recognized high-end NYC Korean restaurant.",
+        "neighborhood":  "NoMad",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.atomixnyc.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Atomix New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  false,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "atoboy",
+        "name":  "Atoboy",
+        "type":  "restaurant",
+        "categories":  [
+                           "korean"
+                       ],
+        "cuisine":  [
+                        "Korean"
+                    ],
+        "signatureDishes":  [
+                                "Banchan-style tasting"
+                            ],
+        "whyItMatters":  "Influential modern Korean in Manhattan.",
+        "neighborhood":  "NoMad",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.atoboynyc.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Atoboy New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  false,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "carbone",
+        "name":  "Carbone",
+        "type":  "restaurant",
+        "categories":  [
+                           "italian",
+                           "fine_dining"
+                       ],
+        "cuisine":  [
+                        "Italian"
+                    ],
+        "signatureDishes":  [
+                                "Spicy rigatoni vodka"
+                            ],
+        "whyItMatters":  "One of the most famous Manhattan Italian restaurants.",
+        "neighborhood":  "Greenwich Village",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.carbonenewyork.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Carbone New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  false,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "emilios-ballato",
+        "name":  "EmilioÃ¢â‚¬â„¢s Ballato",
+        "type":  "restaurant",
+        "categories":  [
+                           "italian"
+                       ],
+        "cuisine":  [
+                        "Italian"
+                    ],
+        "signatureDishes":  [
+                                "Pasta"
+                            ],
+        "whyItMatters":  "Iconic celebrity-loved Italian classic.",
+        "neighborhood":  "SoHo",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  null,
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=EmilioÃ¢â‚¬â„¢s Ballato New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "lartusi",
+        "name":  "LÃ¢â‚¬â„¢Artusi",
+        "type":  "restaurant",
+        "categories":  [
+                           "italian"
+                       ],
+        "cuisine":  [
+                        "Italian"
+                    ],
+        "signatureDishes":  [
+                                "Pasta tasting"
+                            ],
+        "whyItMatters":  "Highly rated West Village Italian spot.",
+        "neighborhood":  "West Village",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.lartusi.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=LÃ¢â‚¬â„¢Artusi New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  false,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "don-angie",
+        "name":  "Don Angie",
+        "type":  "restaurant",
+        "categories":  [
+                           "italian",
+                           "fine_dining"
+                       ],
+        "cuisine":  [
+                        "Italian"
+                    ],
+        "signatureDishes":  [
+                                "Stuffed garlic flatbread"
+                            ],
+        "whyItMatters":  "Reservation-heavy modern Italian.",
+        "neighborhood":  "West Village",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.donangie.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Don Angie New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  false,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "via-carota",
+        "name":  "Via Carota",
+        "type":  "restaurant",
+        "categories":  [
+                           "italian"
+                       ],
+        "cuisine":  [
+                        "Italian"
+                    ],
+        "signatureDishes":  [
+                                "Cacio e pepe"
+                            ],
+        "whyItMatters":  "One of NYCÃ¢â‚¬â„¢s most famous trattorias.",
+        "neighborhood":  "West Village",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.viacarota.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Via Carota New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "misi",
+        "name":  "Misi",
+        "type":  "restaurant",
+        "categories":  [
+                           "italian",
+                           "brooklyn"
+                       ],
+        "cuisine":  [
+                        "Italian"
+                    ],
+        "signatureDishes":  [
+                                "Handmade pasta"
+                            ],
+        "whyItMatters":  "Top-rated Brooklyn Italian destination.",
+        "neighborhood":  "Williamsburg",
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.misinewyork.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Misi New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "rezdora",
+        "name":  "RezdÃƒÂ´ra",
+        "type":  "restaurant",
+        "categories":  [
+                           "italian",
+                           "fine_dining"
+                       ],
+        "cuisine":  [
+                        "Italian"
+                    ],
+        "signatureDishes":  [
+                                "Regional pasta"
+                            ],
+        "whyItMatters":  "Awarded and globally recognized NYC Italian.",
+        "neighborhood":  "Flatiron",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.rezdora.nyc/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=RezdÃƒÂ´ra New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  false,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "parm",
+        "name":  "Parm",
+        "type":  "restaurant",
+        "categories":  [
+                           "italian"
+                       ],
+        "cuisine":  [
+                        "Italian-American"
+                    ],
+        "signatureDishes":  [
+                                "Chicken parm hero"
+                            ],
+        "whyItMatters":  "Classic red-sauce comfort for visitors.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.parmitalian.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Parm New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "peter-luger",
+        "name":  "Peter Luger",
+        "type":  "restaurant",
+        "categories":  [
+                           "steakhouse",
+                           "brooklyn"
+                       ],
+        "cuisine":  [
+                        "Steakhouse"
+                    ],
+        "signatureDishes":  [
+                                "Dry-aged porterhouse"
+                            ],
+        "whyItMatters":  "NYC steakhouse icon.",
+        "neighborhood":  "Williamsburg",
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://peterluger.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Peter Luger New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "keens-steakhouse",
+        "name":  "Keens Steakhouse",
+        "type":  "restaurant",
+        "categories":  [
+                           "steakhouse"
+                       ],
+        "cuisine":  [
+                        "Steakhouse"
+                    ],
+        "signatureDishes":  [
+                                "Mutton chop"
+                            ],
+        "whyItMatters":  "Historic Manhattan steakhouse must-visit.",
+        "neighborhood":  "Midtown",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.keens.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Keens Steakhouse New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "gallaghers-steakhouse",
+        "name":  "Gallaghers Steakhouse",
+        "type":  "restaurant",
+        "categories":  [
+                           "steakhouse"
+                       ],
+        "cuisine":  [
+                        "Steakhouse"
+                    ],
+        "signatureDishes":  [
+                                "Dry-aged steak"
+                            ],
+        "whyItMatters":  "Broadway-adjacent old NYC steakhouse.",
+        "neighborhood":  "Theater District",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.gallaghersnysteakhouse.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Gallaghers Steakhouse New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "smith-and-wollensky",
+        "name":  "Smith \u0026 Wollensky",
+        "type":  "restaurant",
+        "categories":  [
+                           "steakhouse"
+                       ],
+        "cuisine":  [
+                        "Steakhouse"
+                    ],
+        "signatureDishes":  [
+                                "Prime rib"
+                            ],
+        "whyItMatters":  "Landmark American steakhouse brand.",
+        "neighborhood":  "Midtown East",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.smithandwollensky.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Smith and Wollensky New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "benjamin-steakhouse",
+        "name":  "Benjamin Steakhouse",
+        "type":  "restaurant",
+        "categories":  [
+                           "steakhouse"
+                       ],
+        "cuisine":  [
+                        "Steakhouse"
+                    ],
+        "signatureDishes":  [
+                                "Porterhouse"
+                            ],
+        "whyItMatters":  "Well-known Midtown steakhouse for visitors and business trips.",
+        "neighborhood":  "Midtown East",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.benjaminsteakhouse.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Benjamin Steakhouse New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "wolfgangs-steakhouse",
+        "name":  "WolfgangÃ¢â‚¬â„¢s Steakhouse",
+        "type":  "restaurant",
+        "categories":  [
+                           "steakhouse"
+                       ],
+        "cuisine":  [
+                        "Steakhouse"
+                    ],
+        "signatureDishes":  [
+                                "Porterhouse"
+                            ],
+        "whyItMatters":  "Classic NYC steakhouse circuit favorite.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://wolfgangssteakhouse.net/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=WolfgangÃ¢â‚¬â„¢s Steakhouse New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "chelsea-market",
+        "name":  "Chelsea Market",
+        "type":  "market",
+        "categories":  [
+                           "food_markets"
+                       ],
+        "cuisine":  [
+                        "Market"
+                    ],
+        "signatureDishes":  [
+                                "Multi-vendor"
+                            ],
+        "whyItMatters":  "Must-visit food market for first-time visitors.",
+        "neighborhood":  "Chelsea",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.chelseamarket.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Chelsea Market New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "timeout-market-ny",
+        "name":  "Time Out Market New York",
+        "type":  "market",
+        "categories":  [
+                           "food_markets",
+                           "brooklyn"
+                       ],
+        "cuisine":  [
+                        "Market"
+                    ],
+        "signatureDishes":  [
+                                "Multi-vendor"
+                            ],
+        "whyItMatters":  "Top chef vendors with skyline views.",
+        "neighborhood":  "DUMBO",
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.timeoutmarket.com/newyork/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Time Out Market New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "essex-market",
+        "name":  "Essex Market",
+        "type":  "market",
+        "categories":  [
+                           "food_markets"
+                       ],
+        "cuisine":  [
+                        "Market"
+                    ],
+        "signatureDishes":  [
+                                "Multiple vendors"
+                            ],
+        "whyItMatters":  "Historic LES market with modern food hall.",
+        "neighborhood":  "Lower East Side",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.essexmarket.nyc/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Essex Market New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "eataly-flatiron",
+        "name":  "Eataly NYC Flatiron",
+        "type":  "market",
+        "categories":  [
+                           "food_markets",
+                           "italian"
+                       ],
+        "cuisine":  [
+                        "Italian Market"
+                    ],
+        "signatureDishes":  [
+                                "Pasta and gelato"
+                            ],
+        "whyItMatters":  "Large Italian market and dining destination.",
+        "neighborhood":  "Flatiron",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.eataly.com/us_en/stores/nyc-flatiron",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Eataly NYC Flatiron New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "urbanspace-vanderbilt",
+        "name":  "Urbanspace Vanderbilt",
+        "type":  "market",
+        "categories":  [
+                           "food_markets"
+                       ],
+        "cuisine":  [
+                        "Market"
+                    ],
+        "signatureDishes":  [
+                                "Multiple vendors"
+                            ],
+        "whyItMatters":  "Convenient Midtown food hall near Grand Central.",
+        "neighborhood":  "Midtown",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.urbanspacenyc.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Urbanspace Vanderbilt New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "mercado-little-spain",
+        "name":  "Mercado Little Spain",
+        "type":  "market",
+        "categories":  [
+                           "food_markets"
+                       ],
+        "cuisine":  [
+                        "Spanish"
+                    ],
+        "signatureDishes":  [
+                                "Tapas"
+                            ],
+        "whyItMatters":  "Large Spanish market concept by major chefs.",
+        "neighborhood":  "Hudson Yards",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.mercadolittlespain.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Mercado Little Spain New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "smorgasburg",
+        "name":  "Smorgasburg",
+        "type":  "market",
+        "categories":  [
+                           "food_markets",
+                           "street_food",
+                           "brooklyn"
+                       ],
+        "cuisine":  [
+                        "Market"
+                    ],
+        "signatureDishes":  [
+                                "Seasonal vendors"
+                            ],
+        "whyItMatters":  "Most famous seasonal outdoor food market in NYC.",
+        "neighborhood":  "Williamsburg",
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.smorgasburg.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Smorgasburg New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "230-fifth-rooftop",
+        "name":  "230 Fifth Rooftop",
+        "type":  "rooftop",
+        "categories":  [
+                           "rooftop"
+                       ],
+        "cuisine":  [
+                        "American"
+                    ],
+        "signatureDishes":  [
+                                "Cocktails with skyline views"
+                            ],
+        "whyItMatters":  "One of NYCÃ¢â‚¬â„¢s best-known rooftop experiences.",
+        "neighborhood":  "Flatiron",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://230-fifth.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=230 Fifth Rooftop New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  false,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "the-fulton",
+        "name":  "The Fulton",
+        "type":  "rooftop",
+        "categories":  [
+                           "rooftop"
+                       ],
+        "cuisine":  [
+                        "Seafood"
+                    ],
+        "signatureDishes":  [
+                                "Seafood menu"
+                            ],
+        "whyItMatters":  "Waterfront fine dining by Pier 17.",
+        "neighborhood":  "Seaport",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.thefulton.nyc/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=The Fulton New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "manhatta",
+        "name":  "Manhatta",
+        "type":  "rooftop",
+        "categories":  [
+                           "rooftop",
+                           "fine_dining"
+                       ],
+        "cuisine":  [
+                        "New American"
+                    ],
+        "signatureDishes":  [
+                                "Prix-fixe"
+                            ],
+        "whyItMatters":  "Sky-high dining with premium skyline views.",
+        "neighborhood":  "Financial District",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.manhattarestaurant.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Manhatta New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  false,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "rh-rooftop-restaurant",
+        "name":  "RH Rooftop Restaurant",
+        "type":  "rooftop",
+        "categories":  [
+                           "rooftop"
+                       ],
+        "cuisine":  [
+                        "American"
+                    ],
+        "signatureDishes":  [
+                                "Brunch and classics"
+                            ],
+        "whyItMatters":  "Stylish rooftop dining in Meatpacking district.",
+        "neighborhood":  "Meatpacking District",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://rh.com/us/en/newyork/restaurant",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=RH Rooftop Restaurant New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "electric-lemon",
+        "name":  "Electric Lemon",
+        "type":  "rooftop",
+        "categories":  [
+                           "rooftop"
+                       ],
+        "cuisine":  [
+                        "New American"
+                    ],
+        "signatureDishes":  [
+                                "Seasonal plates"
+                            ],
+        "whyItMatters":  "Known for premium views in Equinox Hotel.",
+        "neighborhood":  "Hudson Yards",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.electriclemon.nyc/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Electric Lemon New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  false,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "westlight",
+        "name":  "Westlight",
+        "type":  "rooftop",
+        "categories":  [
+                           "rooftop",
+                           "brooklyn"
+                       ],
+        "cuisine":  [
+                        "Bar Food"
+                    ],
+        "signatureDishes":  [
+                                "Cocktails"
+                            ],
+        "whyItMatters":  "One of BrooklynÃ¢â‚¬â„¢s most famous skyline rooftops.",
+        "neighborhood":  "Williamsburg",
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.westlightnyc.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Westlight New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  false,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "peak-nyc",
+        "name":  "Peak NYC",
+        "type":  "rooftop",
+        "categories":  [
+                           "rooftop",
+                           "fine_dining"
+                       ],
+        "cuisine":  [
+                        "New American"
+                    ],
+        "signatureDishes":  [
+                                "Tasting menu"
+                            ],
+        "whyItMatters":  "High-floor Hudson Yards dining experience.",
+        "neighborhood":  "Hudson Yards",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.peaknyc.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Peak NYC New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  false,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "levain-bakery",
+        "name":  "Levain Bakery",
+        "type":  "bakery",
+        "categories":  [
+                           "dessert",
+                           "cookies"
+                       ],
+        "cuisine":  [
+                        "Bakery"
+                    ],
+        "signatureDishes":  [
+                                "Chocolate chip walnut cookie"
+                            ],
+        "whyItMatters":  "Most iconic NYC cookie for travelers.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://levainbakery.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Levain Bakery New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "culture-espresso",
+        "name":  "Culture Espresso",
+        "type":  "bakery",
+        "categories":  [
+                           "dessert",
+                           "cookies"
+                       ],
+        "cuisine":  [
+                        "Coffee",
+                        "Dessert"
+                    ],
+        "signatureDishes":  [
+                                "Chocolate chip cookie"
+                            ],
+        "whyItMatters":  "Widely loved cookie + coffee combo.",
+        "neighborhood":  "Midtown",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.cultureespresso.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Culture Espresso New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "funny-face-bakery",
+        "name":  "Funny Face Bakery",
+        "type":  "bakery",
+        "categories":  [
+                           "dessert",
+                           "cookies"
+                       ],
+        "cuisine":  [
+                        "Bakery"
+                    ],
+        "signatureDishes":  [
+                                "Custom cookies"
+                            ],
+        "whyItMatters":  "Popular social-media bakery spot.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.funnyfacebakery.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Funny Face Bakery New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "chip-city-cookies",
+        "name":  "Chip City Cookies",
+        "type":  "bakery",
+        "categories":  [
+                           "dessert",
+                           "cookies"
+                       ],
+        "cuisine":  [
+                        "Bakery"
+                    ],
+        "signatureDishes":  [
+                                "Rotating cookies"
+                            ],
+        "whyItMatters":  "Rapidly famous NYC cookie chain.",
+        "neighborhood":  null,
+        "borough":  "Queens",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://chipcitycookies.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Chip City Cookies New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "schmackarys",
+        "name":  "SchmackaryÃ¢â‚¬â„¢s",
+        "type":  "bakery",
+        "categories":  [
+                           "dessert",
+                           "cookies"
+                       ],
+        "cuisine":  [
+                        "Bakery"
+                    ],
+        "signatureDishes":  [
+                                "Cookies"
+                            ],
+        "whyItMatters":  "Theater District cookie staple.",
+        "neighborhood":  "Theater District",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://schmackarys.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=SchmackaryÃ¢â‚¬â„¢s New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "eileens-special-cheesecake",
+        "name":  "EileenÃ¢â‚¬â„¢s Special Cheesecake",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "cheesecake"
+                       ],
+        "cuisine":  [
+                        "Dessert"
+                    ],
+        "signatureDishes":  [
+                                "Mini cheesecake"
+                            ],
+        "whyItMatters":  "NYC cheesecake institution.",
+        "neighborhood":  "Nolita",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.eileenscheesecake.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=EileenÃ¢â‚¬â„¢s Special Cheesecake New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "venieros",
+        "name":  "VenieroÃ¢â‚¬â„¢s",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "cheesecake",
+                           "bakery"
+                       ],
+        "cuisine":  [
+                        "Italian Pastry"
+                    ],
+        "signatureDishes":  [
+                                "Cheesecake"
+                            ],
+        "whyItMatters":  "Historic East Village pastry shop.",
+        "neighborhood":  "East Village",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://venierospastry.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=VenieroÃ¢â‚¬â„¢s New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "little-cupcake-bakeshop",
+        "name":  "Little Cupcake Bakeshop",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "cheesecake"
+                       ],
+        "cuisine":  [
+                        "Bakery"
+                    ],
+        "signatureDishes":  [
+                                "Brooklyn blackout cake"
+                            ],
+        "whyItMatters":  "Beloved neighborhood dessert spot.",
+        "neighborhood":  null,
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.littlecupcakebakeshop.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Little Cupcake Bakeshop New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "magnolia-bakery",
+        "name":  "Magnolia Bakery",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "banana_pudding",
+                           "cupcakes"
+                       ],
+        "cuisine":  [
+                        "Bakery"
+                    ],
+        "signatureDishes":  [
+                                "Banana pudding"
+                            ],
+        "whyItMatters":  "One of NYCÃ¢â‚¬â„¢s most famous dessert brands.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.magnoliabakery.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Magnolia Bakery New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "dominique-ansel-bakery",
+        "name":  "Dominique Ansel Bakery",
+        "type":  "bakery",
+        "categories":  [
+                           "dessert",
+                           "pastry"
+                       ],
+        "cuisine":  [
+                        "French Pastry"
+                    ],
+        "signatureDishes":  [
+                                "Cronut"
+                            ],
+        "whyItMatters":  "Home of the cronut and pastry icon.",
+        "neighborhood":  "SoHo",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.dominiqueanselny.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Dominique Ansel Bakery New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "doughnut-plant",
+        "name":  "Doughnut Plant",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "donuts"
+                       ],
+        "cuisine":  [
+                        "Donuts"
+                    ],
+        "signatureDishes":  [
+                                "CrÃƒÂ¨me brÃƒÂ»lÃƒÂ©e doughnut"
+                            ],
+        "whyItMatters":  "Pioneer artisan doughnut shop in NYC.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.doughnutplant.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Doughnut Plant New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "peter-pan-donut",
+        "name":  "Peter Pan Donut \u0026 Pastry Shop",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "donuts",
+                           "brooklyn"
+                       ],
+        "cuisine":  [
+                        "Donuts"
+                    ],
+        "signatureDishes":  [
+                                "Old-fashioned doughnuts"
+                            ],
+        "whyItMatters":  "Classic Greenpoint donut institution.",
+        "neighborhood":  "Greenpoint",
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.peterpandonut.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Peter Pan Donut and Pastry Shop New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "dough",
+        "name":  "Dough",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "donuts"
+                       ],
+        "cuisine":  [
+                        "Donuts"
+                    ],
+        "signatureDishes":  [
+                                "Hibiscus doughnut"
+                            ],
+        "whyItMatters":  "Famous oversized artisan donuts.",
+        "neighborhood":  null,
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.doughdoughnuts.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Dough New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "morgensterns-finest-ice-cream",
+        "name":  "MorgensternÃ¢â‚¬â„¢s Finest Ice Cream",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "ice_cream"
+                       ],
+        "cuisine":  [
+                        "Ice Cream"
+                    ],
+        "signatureDishes":  [
+                                "Creative scoops"
+                            ],
+        "whyItMatters":  "One of NYCÃ¢â‚¬â„¢s best-known modern ice cream shops.",
+        "neighborhood":  "Lower East Side",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://morgensternsnyc.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=MorgensternÃ¢â‚¬â„¢s Finest Ice Cream New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "van-leeuwen-ice-cream",
+        "name":  "Van Leeuwen Ice Cream",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "ice_cream"
+                       ],
+        "cuisine":  [
+                        "Ice Cream"
+                    ],
+        "signatureDishes":  [
+                                "Honeycomb"
+                            ],
+        "whyItMatters":  "NYC-born ice cream brand with many locations.",
+        "neighborhood":  null,
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://vanleeuwenicecream.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Van Leeuwen Ice Cream New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "big-gay-ice-cream",
+        "name":  "Big Gay Ice Cream",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "ice_cream"
+                       ],
+        "cuisine":  [
+                        "Ice Cream"
+                    ],
+        "signatureDishes":  [
+                                "Soft-serve cones"
+                            ],
+        "whyItMatters":  "Playful iconic NYC dessert brand.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.biggayicecream.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Big Gay Ice Cream New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "taiyaki-nyc",
+        "name":  "Taiyaki NYC",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "ice_cream"
+                       ],
+        "cuisine":  [
+                        "Japanese Dessert"
+                    ],
+        "signatureDishes":  [
+                                "Taiyaki cone"
+                            ],
+        "whyItMatters":  "Highly instagrammable NYC sweet stop.",
+        "neighborhood":  "Chinatown",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://taiyakinyc.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Taiyaki NYC New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "milk-bar",
+        "name":  "Milk Bar",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "bakery"
+                       ],
+        "cuisine":  [
+                        "Dessert"
+                    ],
+        "signatureDishes":  [
+                                "Cereal milk soft serve"
+                            ],
+        "whyItMatters":  "Modern NYC dessert icon.",
+        "neighborhood":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://milkbarstore.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Milk Bar New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "serendipity-3",
+        "name":  "Serendipity 3",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert"
+                       ],
+        "cuisine":  [
+                        "American Dessert"
+                    ],
+        "signatureDishes":  [
+                                "Frozen hot chocolate"
+                            ],
+        "whyItMatters":  "Classic NYC dessert destination.",
+        "neighborhood":  "Upper East Side",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://serendipity3.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Serendipity 3 New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "breads-bakery",
+        "name":  "Breads Bakery",
+        "type":  "bakery",
+        "categories":  [
+                           "dessert",
+                           "chocolate_babka",
+                           "bakery"
+                       ],
+        "cuisine":  [
+                        "Bakery"
+                    ],
+        "signatureDishes":  [
+                                "Chocolate babka"
+                            ],
+        "whyItMatters":  "Most famous babka in NYC for many travelers.",
+        "neighborhood":  "Union Square",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.breadsbakery.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Breads Bakery New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "jacques-torres-chocolate",
+        "name":  "Jacques Torres Chocolate",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "chocolate_babka"
+                       ],
+        "cuisine":  [
+                        "Chocolate"
+                    ],
+        "signatureDishes":  [
+                                "Hot chocolate"
+                            ],
+        "whyItMatters":  "Iconic NYC chocolatier.",
+        "neighborhood":  "DUMBO",
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://mrchocolate.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Jacques Torres Chocolate New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "li-lac-chocolates",
+        "name":  "Li-Lac Chocolates",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "chocolate_babka"
+                       ],
+        "cuisine":  [
+                        "Chocolate"
+                    ],
+        "signatureDishes":  [
+                                "Assorted truffles"
+                            ],
+        "whyItMatters":  "Historic Manhattan chocolate house.",
+        "neighborhood":  "Greenwich Village",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.li-lacchocolates.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Li-Lac Chocolates New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "lng":  null,
+        "googlePlaceId":  null,
+        "googleReviewCount":  null,
+        "kosherOptions":  null,
+        "cuisine":  [
+                        "American"
+                    ],
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "imageUrl":  "",
+        "familyFriendly":  true,
+        "lat":  null,
+        "veganOptions":  null,
+        "borough":  "Brooklyn",
+        "address":  null,
+        "reservationUrl":  null,
+        "whyItMatters":  "Frequently cited among the best burgers in NYC.",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Red Hook Tavern New York",
+        "categories":  [
+                           "burgers",
+                           "classic_nyc"
+                       ],
+        "dataQuality":  "curated_pending_google_enrichment",
+        "signatureDishes":  [
+                                "Dry-aged burger"
+                            ],
+        "googleRating":  null,
+        "id":  "red-hook-tavern",
+        "halalOptions":  null,
+        "type":  "restaurant",
+        "name":  "Red Hook Tavern",
+        "officialWebsite":  "https://www.redhooktavern.com/",
+        "neighborhood":  "Red Hook",
+        "vegetarianOptions":  null
+    },
+    {
+        "lng":  null,
+        "googlePlaceId":  null,
+        "googleReviewCount":  null,
+        "kosherOptions":  null,
+        "cuisine":  [
+                        "American"
+                    ],
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "imageUrl":  "",
+        "familyFriendly":  true,
+        "lat":  null,
+        "veganOptions":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "reservationUrl":  null,
+        "whyItMatters":  "Famous burger destination with national reputation.",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Au Cheval New York",
+        "categories":  [
+                           "burgers"
+                       ],
+        "dataQuality":  "curated_pending_google_enrichment",
+        "signatureDishes":  [
+                                "Single cheeseburger"
+                            ],
+        "googleRating":  null,
+        "id":  "au-cheval-nyc",
+        "halalOptions":  null,
+        "type":  "restaurant",
+        "name":  "Au Cheval NYC",
+        "officialWebsite":  "https://auchevalnewyork.com/",
+        "neighborhood":  "Tribeca",
+        "vegetarianOptions":  null
+    },
+    {
+        "lng":  null,
+        "googlePlaceId":  null,
+        "googleReviewCount":  null,
+        "kosherOptions":  null,
+        "cuisine":  [
+                        "Burgers"
+                    ],
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "imageUrl":  "",
+        "familyFriendly":  true,
+        "lat":  null,
+        "veganOptions":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "reservationUrl":  null,
+        "whyItMatters":  "Popular burger chain known by travelers.",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Black Tap SoHo New York",
+        "categories":  [
+                           "burgers",
+                           "fast_food_american"
+                       ],
+        "dataQuality":  "curated_pending_google_enrichment",
+        "signatureDishes":  [
+                                "All-American Burger"
+                            ],
+        "googleRating":  null,
+        "id":  "black-tap-soho",
+        "halalOptions":  null,
+        "type":  "restaurant",
+        "name":  "Black Tap SoHo",
+        "officialWebsite":  "https://blacktap.com/",
+        "neighborhood":  "SoHo",
+        "vegetarianOptions":  null
+    },
+    {
+        "lng":  null,
+        "googlePlaceId":  null,
+        "googleReviewCount":  null,
+        "kosherOptions":  null,
+        "cuisine":  [
+                        "Burgers"
+                    ],
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "imageUrl":  "",
+        "familyFriendly":  true,
+        "lat":  null,
+        "veganOptions":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "reservationUrl":  null,
+        "whyItMatters":  "Hidden-door burger spot that became a NYC classic.",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Burger Joint NYC",
+        "categories":  [
+                           "burgers",
+                           "classic_nyc"
+                       ],
+        "dataQuality":  "curated_pending_google_enrichment",
+        "signatureDishes":  [
+                                "Cheeseburger"
+                            ],
+        "googleRating":  null,
+        "id":  "burger-joint-le-park-meridien",
+        "halalOptions":  null,
+        "type":  "restaurant",
+        "name":  "Burger Joint (Le Parker Meridien)",
+        "officialWebsite":  "https://www.burgerjointny.com/",
+        "neighborhood":  "Midtown",
+        "vegetarianOptions":  null
+    },
+    {
+        "lng":  null,
+        "googlePlaceId":  null,
+        "googleReviewCount":  null,
+        "kosherOptions":  null,
+        "cuisine":  [
+                        "Burgers",
+                        "Fast Food"
+                    ],
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "imageUrl":  "",
+        "familyFriendly":  true,
+        "lat":  null,
+        "veganOptions":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "reservationUrl":  null,
+        "whyItMatters":  "Classic American fast-food burger brand.",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Five Guys Times Square New York",
+        "categories":  [
+                           "burgers",
+                           "fast_food_american"
+                       ],
+        "dataQuality":  "curated_pending_google_enrichment",
+        "signatureDishes":  [
+                                "Bacon cheeseburger"
+                            ],
+        "googleRating":  null,
+        "id":  "five-guys-times-square",
+        "halalOptions":  null,
+        "type":  "restaurant",
+        "name":  "Five Guys Times Square",
+        "officialWebsite":  "https://www.fiveguys.com/",
+        "neighborhood":  "Times Square",
+        "vegetarianOptions":  null
+    },
+    {
+        "lng":  null,
+        "googlePlaceId":  null,
+        "googleReviewCount":  null,
+        "kosherOptions":  null,
+        "cuisine":  [
+                        "Fast Food"
+                    ],
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "imageUrl":  "",
+        "familyFriendly":  true,
+        "lat":  null,
+        "veganOptions":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "reservationUrl":  null,
+        "whyItMatters":  "Most iconic global fast-food reference for US visitors.",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=McDonalds Times Square New York",
+        "categories":  [
+                           "fast_food_american"
+                       ],
+        "dataQuality":  "curated_pending_google_enrichment",
+        "signatureDishes":  [
+                                "Big Mac"
+                            ],
+        "googleRating":  null,
+        "id":  "mcdonalds-times-square",
+        "halalOptions":  null,
+        "type":  "restaurant",
+        "name":  "McDonald\u0027s Times Square",
+        "officialWebsite":  "https://www.mcdonalds.com/us/en-us.html",
+        "neighborhood":  "Times Square",
+        "vegetarianOptions":  null
+    },
+    {
+        "lng":  null,
+        "googlePlaceId":  null,
+        "googleReviewCount":  null,
+        "kosherOptions":  null,
+        "cuisine":  [
+                        "Fast Food"
+                    ],
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "imageUrl":  "",
+        "familyFriendly":  true,
+        "lat":  null,
+        "veganOptions":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "reservationUrl":  null,
+        "whyItMatters":  "Typical American fast-food burger stop in Manhattan.",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Wendys Herald Square New York",
+        "categories":  [
+                           "fast_food_american"
+                       ],
+        "dataQuality":  "curated_pending_google_enrichment",
+        "signatureDishes":  [
+                                "Dave\u0027s Single"
+                            ],
+        "googleRating":  null,
+        "id":  "wendys-herald-square",
+        "halalOptions":  null,
+        "type":  "restaurant",
+        "name":  "Wendy\u0027s Herald Square",
+        "officialWebsite":  "https://www.wendys.com/",
+        "neighborhood":  "Herald Square",
+        "vegetarianOptions":  null
+    },
+    {
+        "lng":  null,
+        "googlePlaceId":  null,
+        "googleReviewCount":  null,
+        "kosherOptions":  null,
+        "cuisine":  [
+                        "Fast Food",
+                        "Chicken"
+                    ],
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "imageUrl":  "",
+        "familyFriendly":  true,
+        "lat":  null,
+        "veganOptions":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "reservationUrl":  null,
+        "whyItMatters":  "One of the most recognizable US quick-service chains.",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Chick-fil-A 6th Ave New York",
+        "categories":  [
+                           "fast_food_american"
+                       ],
+        "dataQuality":  "curated_pending_google_enrichment",
+        "signatureDishes":  [
+                                "Chicken Sandwich"
+                            ],
+        "googleRating":  null,
+        "id":  "chick-fil-a-6th-ave",
+        "halalOptions":  null,
+        "type":  "restaurant",
+        "name":  "Chick-fil-A 6th Ave",
+        "officialWebsite":  "https://www.chick-fil-a.com/",
+        "neighborhood":  "Midtown",
+        "vegetarianOptions":  null
+    },
+    {
+        "lng":  null,
+        "googlePlaceId":  null,
+        "googleReviewCount":  null,
+        "kosherOptions":  null,
+        "cuisine":  [
+                        "Fast Food",
+                        "Fried Chicken"
+                    ],
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "imageUrl":  "",
+        "familyFriendly":  true,
+        "lat":  null,
+        "veganOptions":  null,
+        "borough":  "Manhattan",
+        "address":  null,
+        "reservationUrl":  null,
+        "whyItMatters":  "Very popular American quick-service fried chicken chain.",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Popeyes Times Square New York",
+        "categories":  [
+                           "fast_food_american"
+                       ],
+        "dataQuality":  "curated_pending_google_enrichment",
+        "signatureDishes":  [
+                                "Chicken Sandwich"
+                            ],
+        "googleRating":  null,
+        "id":  "popeyes-times-square",
+        "halalOptions":  null,
+        "type":  "restaurant",
+        "name":  "Popeyes Times Square",
+        "officialWebsite":  "https://www.popeyes.com/",
+        "neighborhood":  "Times Square",
+        "vegetarianOptions":  null
+    },
+    {
+        "lng":  null,
+        "googlePlaceId":  null,
+        "googleReviewCount":  null,
+        "kosherOptions":  null,
+        "cuisine":  [
+                        "Fast Food",
+                        "Burgers"
+                    ],
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "imageUrl":  "",
+        "familyFriendly":  true,
+        "lat":  null,
+        "veganOptions":  null,
+        "borough":  "Queens",
+        "address":  null,
+        "reservationUrl":  null,
+        "whyItMatters":  "Historic American slider brand and fast-food icon.",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=White Castle Queens Blvd New York",
+        "categories":  [
+                           "fast_food_american",
+                           "burgers"
+                       ],
+        "dataQuality":  "curated_pending_google_enrichment",
+        "signatureDishes":  [
+                                "Sliders"
+                            ],
+        "googleRating":  null,
+        "id":  "white-castle-queens",
+        "halalOptions":  null,
+        "type":  "restaurant",
+        "name":  "White Castle Queens Blvd",
+        "officialWebsite":  "https://www.whitecastle.com/",
+        "neighborhood":  "Queens",
+        "vegetarianOptions":  null
+    },
+    {
+        "id":  "venchi-union-square",
+        "name":  "Venchi Union Square",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "ice_cream",
+                           "chocolate"
+                       ],
+        "cuisine":  [
+                        "Gelato",
+                        "Dessert"
+                    ],
+        "signatureDishes":  [
+                                "Gelato",
+                                "Gianduia"
+                            ],
+        "whyItMatters":  "Frequently recommended in NYC dessert roundups and travel guides.",
+        "neighborhood":  "Union Square",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://us.venchi.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Venchi Union Square New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "van-leeuwen-ice-cream-soho",
+        "name":  "Van Leeuwen Ice Cream SoHo",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "ice_cream"
+                       ],
+        "cuisine":  [
+                        "Ice Cream"
+                    ],
+        "signatureDishes":  [
+                                "Honeycomb"
+                            ],
+        "whyItMatters":  "One of NYC\u0027s most famous modern ice cream brands.",
+        "neighborhood":  "SoHo",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://vanleeuwenicecream.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Van Leeuwen Ice Cream SoHo New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "caffe-panna",
+        "name":  "Caffe Panna",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "ice_cream"
+                       ],
+        "cuisine":  [
+                        "Ice Cream"
+                    ],
+        "signatureDishes":  [
+                                "Sundaes"
+                            ],
+        "whyItMatters":  "Highly ranked in NYC dessert and ice cream recommendations.",
+        "neighborhood":  "Gramercy",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.caffepanna.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Caffe Panna New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "chinatown-ice-cream-factory",
+        "name":  "Chinatown Ice Cream Factory",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "ice_cream",
+                           "chinatown"
+                       ],
+        "cuisine":  [
+                        "Ice Cream"
+                    ],
+        "signatureDishes":  [
+                                "Black sesame"
+                            ],
+        "whyItMatters":  "Long-running NYC favorite often listed among essential ice cream spots.",
+        "neighborhood":  "Chinatown",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.chinatownicecreamfactory.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Chinatown Ice Cream Factory New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "lafayette-grand-cafe-bakery",
+        "name":  "Lafayette Grand Cafe and Bakery",
+        "type":  "bakery",
+        "categories":  [
+                           "dessert",
+                           "pastry",
+                           "bakery"
+                       ],
+        "cuisine":  [
+                        "Bakery",
+                        "French"
+                    ],
+        "signatureDishes":  [
+                                "Supreme croissant"
+                            ],
+        "whyItMatters":  "A current must-visit pastry stop in many NYC trend lists.",
+        "neighborhood":  "NoHo",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.lafayetteny.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Lafayette Bakery New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "breads-bakery-union-square",
+        "name":  "Breads Bakery Union Square",
+        "type":  "bakery",
+        "categories":  [
+                           "dessert",
+                           "pastry",
+                           "bakery",
+                           "chocolate_babka"
+                       ],
+        "cuisine":  [
+                        "Bakery"
+                    ],
+        "signatureDishes":  [
+                                "Chocolate babka"
+                            ],
+        "whyItMatters":  "Widely considered one of the top babka/pastry destinations in NYC.",
+        "neighborhood":  "Union Square",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.breadsbakery.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Breads Bakery Union Square New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "supermoon-bakehouse",
+        "name":  "Supermoon Bakehouse",
+        "type":  "bakery",
+        "categories":  [
+                           "dessert",
+                           "pastry",
+                           "bakery"
+                       ],
+        "cuisine":  [
+                        "Bakery"
+                    ],
+        "signatureDishes":  [
+                                "Creative laminated pastries"
+                            ],
+        "whyItMatters":  "Frequently highlighted in top pastry guides for NYC.",
+        "neighborhood":  "Lower East Side",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.supermoonbakehouse.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Supermoon Bakehouse New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "doughnut-plant-lower-east-side",
+        "name":  "Doughnut Plant Lower East Side",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "donuts",
+                           "bakery"
+                       ],
+        "cuisine":  [
+                        "Dessert"
+                    ],
+        "signatureDishes":  [
+                                "Creme brulee doughnut"
+                            ],
+        "whyItMatters":  "One of the classic names in NYC donut guides.",
+        "neighborhood":  "Lower East Side",
+        "borough":  "Manhattan",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.doughnutplant.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Doughnut Plant Lower East Side New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    },
+    {
+        "id":  "peter-pan-donut-brooklyn",
+        "name":  "Peter Pan Donut and Pastry Shop",
+        "type":  "dessert",
+        "categories":  [
+                           "dessert",
+                           "donuts",
+                           "bakery",
+                           "brooklyn"
+                       ],
+        "cuisine":  [
+                        "Dessert"
+                    ],
+        "signatureDishes":  [
+                                "Old-fashioned doughnuts"
+                            ],
+        "whyItMatters":  "Brooklyn donut institution consistently listed among must-try sweets.",
+        "neighborhood":  "Greenpoint",
+        "borough":  "Brooklyn",
+        "address":  null,
+        "lat":  null,
+        "lng":  null,
+        "officialWebsite":  "https://www.peterpandonut.com/",
+        "googleMapsUrl":  "https://www.google.com/maps/search/?api=1\u0026query=Peter Pan Donut Brooklyn New York",
+        "reservationUrl":  null,
+        "imageUrl":  "",
+        "priceLevel":  null,
+        "averagePricePerPersonUsd":  null,
+        "familyFriendly":  true,
+        "vegetarianOptions":  null,
+        "veganOptions":  null,
+        "halalOptions":  null,
+        "kosherOptions":  null,
+        "googlePlaceId":  null,
+        "googleRating":  null,
+        "googleReviewCount":  null,
+        "dataQuality":  "curated_pending_google_enrichment"
+    }
+]

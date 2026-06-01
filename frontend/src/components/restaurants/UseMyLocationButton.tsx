@@ -10,8 +10,8 @@ export default function UseMyLocationButton() {
 
   function updateWithLocation(lat: number, lng: number) {
     const next = new URLSearchParams(searchParams.toString());
-    next.set("hotelLat", String(lat));
-    next.set("hotelLng", String(lng));
+    next.set("userLat", String(lat));
+    next.set("userLng", String(lng));
     router.push(`/restaurants?${next.toString()}`);
   }
 
@@ -35,7 +35,7 @@ export default function UseMyLocationButton() {
       disabled={loading}
       className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-100 disabled:opacity-60"
     >
-      {loading ? "Buscando ubicacion..." : "Usar mi ubicacion exacta"}
+      {loading ? "Buscando ubicacion..." : "Usar mi ubicacion"}
     </button>
   );
 }
