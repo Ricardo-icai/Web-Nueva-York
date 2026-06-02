@@ -15,7 +15,7 @@ export default function RestaurantCard({ restaurant }: { restaurant: Restaurant 
         <p className="text-sm text-slate-700">{restaurant.cuisine.join(", ")}</p>
         <p className="text-sm text-slate-700">{restaurant.neighborhood ?? restaurant.address ?? "Address unavailable"}</p>
         <p className="text-sm text-slate-900">
-          {hasRating ? `⭐ ${restaurant.googleRating?.toFixed(1)} · ${restaurant.googleReviewCount ?? 0} reseñas` : "Google rating unavailable"}
+          {hasRating ? `Rating ${restaurant.googleRating?.toFixed(1)} - ${restaurant.googleReviewCount ?? 0} resenas` : "Google rating unavailable"}
         </p>
         <p className="text-sm text-slate-900">
           {hasPrice ? `Estimated from $${restaurant.averagePricePerPersonUsd}/person` : "Price estimate unavailable"}
@@ -36,4 +36,3 @@ export default function RestaurantCard({ restaurant }: { restaurant: Restaurant 
     </article>
   );
 }
-

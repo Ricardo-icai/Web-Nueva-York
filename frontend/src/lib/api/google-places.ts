@@ -29,6 +29,7 @@ type GoogleTextSearchResult = {
 
 type GoogleDetailsResult = {
   place_id?: string;
+  formatted_address?: string;
   rating?: number;
   user_ratings_total?: number;
   website?: string;
@@ -80,6 +81,7 @@ export async function getGooglePlaceDetails(placeId: string) {
     })) ?? [];
   return {
     googlePlaceId: result.place_id ?? null,
+    address: result.formatted_address ?? null,
     googleRating: result.rating ?? null,
     googleReviewCount: result.user_ratings_total ?? null,
     googleReviews: reviews,
@@ -100,4 +102,3 @@ export async function getGooglePlaceDetails(placeId: string) {
     },
   };
 }
-

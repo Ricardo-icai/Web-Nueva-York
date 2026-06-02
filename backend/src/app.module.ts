@@ -6,6 +6,7 @@ import { RestaurantKnowledgeService } from './restaurant-knowledge.service';
 import { RestaurantWebEnrichmentAgent } from './restaurant-web-enrichment.agent';
 import { SpecializedFoodAgent } from './specialized-food.agent';
 import { RestaurantPhotoAgent } from './restaurant-photo.agent';
+import { RestaurantDesignSupervisorAgent } from './restaurant-design-supervisor.agent';
 
 @Module({
   imports: [],
@@ -17,6 +18,7 @@ import { RestaurantPhotoAgent } from './restaurant-photo.agent';
     RestaurantWebEnrichmentAgent,
     SpecializedFoodAgent,
     RestaurantPhotoAgent,
+    RestaurantDesignSupervisorAgent,
   ],
 })
 export class AppModule {}

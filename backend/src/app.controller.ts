@@ -5,6 +5,7 @@ import { RestaurantDiscoveryAgent } from './restaurant-discovery.agent';
 import { RestaurantKnowledgeService } from './restaurant-knowledge.service';
 import { SpecializedFoodAgent } from './specialized-food.agent';
 import { RestaurantPhotoAgent } from './restaurant-photo.agent';
+import { RestaurantDesignSupervisorAgent } from './restaurant-design-supervisor.agent';
 
 @Controller()
 export class AppController {
@@ -14,6 +15,7 @@ export class AppController {
     private readonly restaurantKnowledgeService: RestaurantKnowledgeService,
     private readonly specializedFoodAgent: SpecializedFoodAgent,
     private readonly restaurantPhotoAgent: RestaurantPhotoAgent,
+    private readonly restaurantDesignSupervisorAgent: RestaurantDesignSupervisorAgent,
   ) {}
 
   @Get('health')
@@ -112,5 +114,10 @@ export class AppController {
   @Get('agents/restaurants/photo')
   getPhotoForRestaurant(@Query('name') name: string) {
     return this.restaurantPhotoAgent.findPhotoForRestaurant(name ?? '');
+  }
+
+  @Get('agents/restaurants/design-audit')
+  auditRestaurantDesign() {
+    return this.restaurantDesignSupervisorAgent.auditRestaurantVisuals();
   }
 }

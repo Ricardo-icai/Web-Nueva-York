@@ -1,14 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import RestaurantLogoImage from "@/components/restaurants/RestaurantLogoImage";
 import type { Restaurant } from "@/types/restaurants";
 
 type Props = {
   restaurants: Restaurant[];
   mapRestaurants?: Restaurant[];
   userLocation?: { lat: number; lng: number };
+  afterMapSlot?: ReactNode;
 };
 
 type MarkerLike = {
@@ -40,12 +41,16 @@ type LeafletLike = {
 
 const FAVORITES_KEY = "nyc_restaurant_favorites_v1";
 
-function estimateAvg(priceLevel?: 1 | 2 | 3 | 4 | null) {
-  if (priceLevel === 1) return 15;
-  if (priceLevel === 2) return 30;
-  if (priceLevel === 3) return 60;
-  if (priceLevel === 4) return 100;
-  return null;
+function canonicalName(name: string) {
+  return name
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\b(nyc|new york|restaurant|pizzeria|pizza)\b/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function groupKey(r: Restaurant) {
@@ -54,17 +59,7 @@ function groupKey(r: Restaurant) {
   return "Other";
 }
 
-function getLogoFromWebsite(website?: string | null) {
-  if (!website) return null;
-  try {
-    const parsed = new URL(website);
-    return `${parsed.protocol}//${parsed.hostname}/favicon.ico`;
-  } catch {
-    return null;
-  }
-}
-
-export default function RestaurantsInteractive({ restaurants, mapRestaurants, userLocation }: Props) {
+export default function RestaurantsInteractive({ restaurants, mapRestaurants, userLocation, afterMapSlot }: Props) {
   const [favorites, setFavorites] = useState<string[]>(() => {
     if (typeof window === "undefined") return [];
     try {
@@ -86,7 +81,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
     const seen = new Set<string>();
     const out: Restaurant[] = [];
     for (const r of restaurants) {
-      const key = `${r.id}|${r.name}|${r.location.lat}|${r.location.lng}`;
+      const key = canonicalName(r.name);
       if (seen.has(key)) continue;
       seen.add(key);
       out.push(r);
@@ -99,7 +94,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
     const seen = new Set<string>();
     const out: Restaurant[] = [];
     for (const r of source) {
-      const key = `${r.id}|${r.name}|${r.location.lat}|${r.location.lng}`;
+      const key = canonicalName(r.name);
       if (seen.has(key)) continue;
       seen.add(key);
       out.push(r);
@@ -144,38 +139,26 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
 
   const renderCard = (restaurant: Restaurant, cardKey?: string) => {
     const favorite = favorites.includes(restaurant.id);
-    const estimated = estimateAvg(restaurant.priceLevel ?? null);
-    const logoUrl = getLogoFromWebsite(restaurant.officialWebsite);
+    const estimated = restaurant.averagePricePerPersonUsd ?? null;
     return (
       <article key={cardKey ?? restaurant.id} className="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
         <div className="relative h-56 w-full">
-          {/* Use plain img for external logos to avoid Next host allowlist issues */}
-          {logoUrl ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={logoUrl}
-              alt={restaurant.name}
-              className="h-full w-full object-contain bg-white p-4"
-              loading="lazy"
-              onError={(e) => {
-                (e.currentTarget as HTMLImageElement).src = restaurant.imageUrl;
-                (e.currentTarget as HTMLImageElement).className = "h-full w-full object-cover";
-              }}
-            />
-          ) : (
-            <Image src={restaurant.imageUrl} alt={restaurant.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-          )}
+          <RestaurantLogoImage
+            name={restaurant.name}
+            officialWebsite={restaurant.officialWebsite}
+            fallbackImageUrl={restaurant.imageUrl}
+          />
         </div>
         <div className="space-y-2 p-5">
           <div className="flex items-center justify-between gap-3">
             <h3 className="text-lg font-semibold text-slate-900">{restaurant.name}</h3>
             <button type="button" onClick={() => toggleFavorite(restaurant.id)} className="rounded-full border border-amber-400 px-3 py-1 text-xs font-semibold text-amber-700">
-              {favorite ? "★ Favorito" : "☆ Favorito"}
+              {favorite ? "Favorito guardado" : "Favorito"}
             </button>
           </div>
           <p className="text-sm text-slate-700">{restaurant.cuisine.join(", ")}</p>
           <p className="text-sm text-slate-700">{restaurant.neighborhood ?? restaurant.address ?? "Address unavailable"}</p>
-          <p className="text-sm text-slate-900">{typeof restaurant.googleRating === "number" ? `⭐ ${restaurant.googleRating.toFixed(1)} · ${restaurant.googleReviewCount ?? 0} reviews` : "Rating unavailable"}</p>
+          <p className="text-sm text-slate-900">{typeof restaurant.googleRating === "number" ? `Rating ${restaurant.googleRating.toFixed(1)} - ${restaurant.googleReviewCount ?? 0} reviews` : "Rating unavailable"}</p>
           <p className="text-sm text-slate-900">{typeof estimated === "number" ? `Estimated from $${estimated}/person` : "Price estimate unavailable"}</p>
           <div className="flex flex-wrap gap-2">
             <Link href={restaurant.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-3 py-1 text-sm">Google Maps</Link>
@@ -323,7 +306,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
         marker.bindTooltip(r.name, { direction: "top", offset: [0, -12], opacity: 0.95 });
         marker.on("mouseover", () => marker.openTooltip());
         marker.on("mouseout", () => marker.closeTooltip());
-        marker.bindPopup(`<div style="min-width:190px"><strong>${r.name}</strong><br/>${typeof r.googleRating === "number" ? `⭐ ${r.googleRating.toFixed(1)} · ${r.googleReviewCount ?? 0} reviews` : "No rating"}<br/>${r.cuisine[0] ?? "Restaurant"}<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a href="${websiteUrl}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">Web</a><a href="${directionsUrl}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">Como llegar</a></div></div>`);
+        marker.bindPopup(`<div style="min-width:190px"><strong>${r.name}</strong><br/>${typeof r.googleRating === "number" ? `Rating ${r.googleRating.toFixed(1)} - ${r.googleReviewCount ?? 0} reviews` : "No rating"}<br/>${r.cuisine[0] ?? "Restaurant"}<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a href="${websiteUrl}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">Web</a><a href="${directionsUrl}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">Como llegar</a></div></div>`);
         marker.addTo(layer);
         bounds.push([r.location.lat, r.location.lng]);
       }
@@ -357,6 +340,8 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
         <div ref={mapHostRef} className="h-96 w-full" />
       </section>
 
+      {afterMapSlot}
+
       <section className="mx-auto mt-8 max-w-6xl">
         <h2 className="text-2xl font-bold text-slate-900">Favoritos</h2>
         {favoriteRestaurants.length === 0 ? <p className="mt-2 text-sm text-slate-600">Aun no has marcado favoritos.</p> : <div className="mt-4 grid gap-6 md:grid-cols-2 xl:grid-cols-3">{favoriteRestaurants.map((r, idx) => renderCard(r, `fav-${r.id}-${idx}`))}</div>}
@@ -374,3 +359,4 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
     </>
   );
 }
+

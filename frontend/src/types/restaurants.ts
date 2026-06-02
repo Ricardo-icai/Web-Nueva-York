@@ -63,6 +63,49 @@ export interface Restaurant {
   editorialTags?: string[];
 }
 
+export type PizzaBorough = "Manhattan" | "Brooklyn" | "Queens" | "Bronx" | "Staten Island";
+export type PizzaStyle =
+  | "NY slice"
+  | "Coal oven"
+  | "Neapolitan"
+  | "Sicilian"
+  | "Square slice"
+  | "Brooklyn classic"
+  | "Artisan"
+  | "Other";
+
+export interface NycPizzaHallOfFamePlace {
+  id: string;
+  name: string;
+  type: "pizzeria";
+  borough: PizzaBorough;
+  neighborhood: string;
+  pizzaStyle: PizzaStyle;
+  categories: string[];
+  signaturePizzas: string[];
+  whyItMatters: string;
+  bestFor: string[];
+  address: string | null;
+  lat: number | null;
+  lng: number | null;
+  officialWebsite: string | null;
+  googleMapsUrl: string;
+  reservationUrl: string | null;
+  imageUrl: string;
+  priceLevel: 1 | 2 | 3 | 4 | null;
+  averagePricePerPersonUsd: number | null;
+  googlePlaceId: string | null;
+  googleRating: number | null;
+  googleReviewCount: number | null;
+  dataQuality: "curated_pending_google_enrichment" | "enriched";
+  badges: string[];
+  nycReputationScore: number;
+  distanceFromAccommodationKm?: number | null;
+  directionsUrl?: string | null;
+  openingHours?: string[];
+  phone?: string | null;
+}
+
 export interface OverpassRestaurantRaw {
   osmId: string;
   name: string;

@@ -12,7 +12,10 @@ import {
 } from "@/lib/api/google-places";
 import { fetchOverpassRestaurants } from "@/lib/api/overpass-restaurants";
 import { resolveOfficialWebsite } from "@/lib/restaurants/build-restaurant-links";
-import { estimatePricePerPersonFromLevel } from "@/lib/restaurants/estimate-price";
+import {
+  estimatePricePerPersonFromLevel,
+  estimatePricePerPersonFromSignals,
+} from "@/lib/restaurants/estimate-price";
 import { normalizeOverpassRestaurant } from "@/lib/restaurants/normalize-restaurant";
 import { rankRestaurants } from "@/lib/restaurants/rank-restaurants";
 import type { Coordinates, Restaurant } from "@/types/restaurants";
@@ -34,6 +37,7 @@ type CuratedRow = {
   reservationUrl?: string | null;
   imageUrl?: string;
   priceLevel?: 1 | 2 | 3 | 4 | null;
+  averagePricePerPersonUsd?: number | null;
   familyFriendly?: boolean | null;
   vegetarianOptions?: boolean | null;
   veganOptions?: boolean | null;
@@ -60,6 +64,65 @@ type NycOpenDataRow = {
   longitude?: string;
 };
 
+function fixText(value?: string | null) {
+  if (!value) return value ?? null;
+  return value
+    .replaceAll("Ã¢â‚¬â„¢", "'")
+    .replaceAll("Ã¢â‚¬Å“", '"')
+    .replaceAll("Ã¢â‚¬Â", '"')
+    .replaceAll("Ã¢â‚¬â€œ", "-")
+    .replaceAll("Ã¢â‚¬â€", "-")
+    .replaceAll("ÃƒÂ´", "o")
+    .replaceAll("ÃƒÂ¨", "e")
+    .replaceAll("ÃƒÂ©", "e")
+    .replaceAll("ÃƒÂ¡", "a")
+    .replaceAll("ÃƒÂ­", "i")
+    .replaceAll("ÃƒÂ³", "o")
+    .replaceAll("ÃƒÂº", "u")
+    .replaceAll("Ã¢â‚¬Â¢", "-")
+    .replaceAll("Â·", "-")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function fixTextArray(values?: string[]) {
+  return (values ?? []).map((value) => fixText(value) ?? value);
+}
+
+function canonicalRestaurantName(name: string) {
+  return (fixText(name) ?? name)
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/&/g, " and ")
+    .replace(/no\.?\s*1/g, "no 1")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\b(nyc|new york|restaurant|pizzeria|pizza)\b/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function fallbackLocationFor(row: CuratedRow) {
+  if (typeof row.lat === "number" && typeof row.lng === "number") {
+    return { lat: row.lat, lng: row.lng };
+  }
+
+  const boroughCenters: Record<string, { lat: number; lng: number }> = {
+    manhattan: { lat: 40.758, lng: -73.9855 },
+    brooklyn: { lat: 40.6782, lng: -73.9442 },
+    queens: { lat: 40.7282, lng: -73.7949 },
+    bronx: { lat: 40.8448, lng: -73.8648 },
+    "staten island": { lat: 40.5795, lng: -74.1502 },
+  };
+  const base = boroughCenters[(row.borough ?? "").toLowerCase()] ?? boroughCenters.manhattan;
+  const seed = canonicalRestaurantName(`${row.name} ${row.neighborhood ?? ""}`);
+  const hash = Array.from(seed).reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return {
+    lat: Number((base.lat + ((hash % 17) - 8) * 0.003).toFixed(6)),
+    lng: Number((base.lng + ((Math.floor(hash / 17) % 17) - 8) * 0.003).toFixed(6)),
+  };
+}
+
 function pickCategoryImage(categories: string[], cuisine: string[]) {
   const merged = [...categories, ...cuisine].join(" ").toLowerCase();
   if (merged.includes("pizza")) return RESTAURANT_CATEGORY_IMAGES.pizza;
@@ -76,29 +139,49 @@ function pickCategoryImage(categories: string[], cuisine: string[]) {
 }
 
 function curatedToRestaurant(row: CuratedRow): Restaurant {
+  const location = fallbackLocationFor(row);
+  const name = fixText(row.name) ?? row.name;
+  const address = fixText(row.address ?? null);
+  const cuisine = fixTextArray(row.cuisine);
+  const categories = fixTextArray(row.categories);
+  const editorialTags = fixTextArray(row.editorialTags);
+  const signatureDishes = fixTextArray(row.signatureDishes);
+  const mapsUrl =
+    row.googleMapsUrl && !/[ÃÂâ]/.test(row.googleMapsUrl)
+      ? row.googleMapsUrl
+      : buildGoogleMapsSearchUrl(name, address ?? undefined);
+
   return {
     id: row.id,
     source: "curated",
     dataQuality: "curated",
-    name: row.name,
-    description: row.description ?? row.whyItMatters ?? null,
-    cuisine: row.cuisine,
-    categories: row.categories,
-    address: row.address ?? null,
-    neighborhood: row.neighborhood ?? null,
-    borough: row.borough ?? null,
-    location: { lat: row.lat ?? 40.758, lng: row.lng ?? -73.9855 },
+    name,
+    description: fixText(row.description ?? row.whyItMatters ?? null),
+    cuisine,
+    categories,
+    address,
+    neighborhood: fixText(row.neighborhood ?? null),
+    borough: fixText(row.borough ?? null),
+    location,
     googlePlaceId: null,
     googleRating: null,
     googleReviewCount: null,
     googleReviews: [],
     priceLevel: row.priceLevel ?? null,
-    averagePricePerPersonUsd: estimatePricePerPersonFromLevel(row.priceLevel ?? null),
-    officialWebsite: row.officialWebsite ?? null,
-    googleMapsUrl: row.googleMapsUrl || buildGoogleMapsSearchUrl(row.name, row.address ?? undefined),
+    averagePricePerPersonUsd:
+      row.averagePricePerPersonUsd ??
+      estimatePricePerPersonFromSignals({
+        priceLevel: row.priceLevel ?? null,
+        cuisine,
+        categories,
+        editorialTags,
+        name,
+      }),
+    officialWebsite: fixText(row.officialWebsite ?? null),
+    googleMapsUrl: mapsUrl,
     directionsUrl: null,
     reservationUrl: row.reservationUrl ?? null,
-    imageUrl: row.imageUrl && row.imageUrl.length > 0 ? row.imageUrl : pickCategoryImage(row.categories, row.cuisine),
+    imageUrl: row.imageUrl && row.imageUrl.length > 0 ? row.imageUrl : pickCategoryImage(categories, cuisine),
     imageSource: row.imageUrl && row.imageUrl.length > 0 ? "curated" : "fallback",
     phone: null,
     openingHours: [],
@@ -108,14 +191,14 @@ function curatedToRestaurant(row: CuratedRow): Restaurant {
     halalOptions: row.halalOptions ?? undefined,
     kosherOptions: row.kosherOptions ?? undefined,
     qualityScore: row.qualityScore ?? 70,
-    editorialTags: [...(row.editorialTags ?? []), ...(row.signatureDishes ?? []), ...(row.type ? [row.type] : [])],
+    editorialTags: [...editorialTags, ...signatureDishes, ...(row.type ? [fixText(row.type) ?? row.type] : [])],
   };
 }
 
 function mergeByName(base: Restaurant[], extra: Restaurant[]) {
   const out = new Map<string, Restaurant>();
   for (const r of [...base, ...extra]) {
-    const k = r.name.toLowerCase().trim();
+    const k = canonicalRestaurantName(r.name);
     const existing = out.get(k);
     if (!existing) {
       out.set(k, r);
@@ -131,6 +214,18 @@ function mergeByName(base: Restaurant[], extra: Restaurant[]) {
       borough: existing.borough ?? r.borough,
       officialWebsite: resolveOfficialWebsite(existing.officialWebsite, r.officialWebsite, null),
       imageUrl: existing.imageUrl || r.imageUrl,
+      googleMapsUrl: existing.googleMapsUrl || r.googleMapsUrl,
+      directionsUrl: existing.directionsUrl ?? r.directionsUrl,
+      reservationUrl: existing.reservationUrl ?? r.reservationUrl,
+      priceLevel: existing.priceLevel ?? r.priceLevel,
+      averagePricePerPersonUsd: existing.averagePricePerPersonUsd ?? r.averagePricePerPersonUsd,
+      googlePlaceId: existing.googlePlaceId ?? r.googlePlaceId,
+      googleRating: existing.googleRating ?? r.googleRating,
+      googleReviewCount: existing.googleReviewCount ?? r.googleReviewCount,
+      distanceFromAccommodationKm: existing.distanceFromAccommodationKm ?? r.distanceFromAccommodationKm,
+      estimatedTransitMinutes: existing.estimatedTransitMinutes ?? r.estimatedTransitMinutes,
+      estimatedWalkingMinutes: existing.estimatedWalkingMinutes ?? r.estimatedWalkingMinutes,
+      editorialTags: Array.from(new Set([...(existing.editorialTags ?? []), ...(r.editorialTags ?? [])])),
       qualityScore: Math.max(existing.qualityScore ?? 0, r.qualityScore ?? 0),
       source: existing.source === "curated" ? "curated" : r.source,
       dataQuality: existing.dataQuality === "curated" ? "curated" : r.dataQuality,
@@ -261,7 +356,14 @@ export async function getRestaurantsIntelligence(
     ...r,
     directionsUrl: accommodation ? buildGoogleDirectionsUrl(accommodation, r.location) : null,
     averagePricePerPersonUsd:
-      r.averagePricePerPersonUsd ?? estimatePricePerPersonFromLevel(r.priceLevel ?? null),
+      r.averagePricePerPersonUsd ??
+      estimatePricePerPersonFromSignals({
+        priceLevel: r.priceLevel ?? null,
+        cuisine: r.cuisine,
+        categories: r.categories,
+        editorialTags: r.editorialTags,
+        name: r.name,
+      }),
   }));
 
   return rankRestaurants(withDirections, { accommodation });
