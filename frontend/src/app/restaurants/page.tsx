@@ -35,39 +35,6 @@ function getLogoFromWebsite(website?: string | null) {
   }
 }
 
-const MUST_TRY_MAP_KEYS = [
-  "pizza",
-  "bagels",
-  "deli",
-  "burgers",
-  "chinatown",
-  "dessert",
-  "cookies",
-  "bakery",
-  "chocolate",
-  "food_markets",
-  "rooftop",
-  "steakhouse",
-  "italian",
-  "korean",
-  "donuts",
-  "ice_cream",
-  "pastry",
-  "cheesecake",
-  "banana_pudding",
-  "cupcakes",
-  "chocolate_babka",
-  "viral",
-  "worth_the_hype",
-  "tiktok",
-  "instagram",
-];
-
-function isMustTryForMap(categories: string[]) {
-  const hay = categories.join(" ").toLowerCase();
-  return MUST_TRY_MAP_KEYS.some((k) => hay.includes(k));
-}
-
 export default async function RestaurantsPage({ searchParams }: RestaurantsPageProps) {
   const params = await searchParams;
   const cuisine = one(params.cuisine).toLowerCase();
@@ -108,26 +75,6 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
     r.categories.join(" ").toLowerCase().includes("burgers"),
   );
 
-  const mapRestaurants = restaurants.filter(
-    (r, idx, arr) =>
-      arr.findIndex(
-        (x) =>
-          x.id === r.id &&
-          x.name === r.name &&
-          x.location.lat === r.location.lat &&
-          x.location.lng === r.location.lng,
-      ) === idx,
-  );
-  const mapWithHallOfFame = [...mapRestaurants, ...burgerHallOfFame].filter(
-    (r, idx, arr) =>
-      arr.findIndex(
-        (x) =>
-          x.id === r.id &&
-          x.name === r.name &&
-          x.location.lat === r.location.lat &&
-          x.location.lng === r.location.lng,
-      ) === idx,
-  );
   const mapAllLocales = allWithOfficialWebsite.filter(
     (r, idx, arr) =>
       arr.findIndex(
@@ -236,15 +183,12 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
                 <article key={`hof-${r.id}-${idx}`} className="overflow-hidden rounded-2xl border border-stone-200 bg-white shadow-sm">
                   <div className="relative h-44 w-full">
                     {logoUrl ? (
-                      <img
+                      <Image
                         src={logoUrl}
                         alt={r.name}
-                        className="h-full w-full object-contain bg-white p-4"
-                        loading="lazy"
-                        onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).src = r.imageUrl;
-                          (e.currentTarget as HTMLImageElement).className = "h-full w-full object-cover";
-                        }}
+                        fill
+                        className="bg-white object-contain p-4"
+                        sizes="(max-width: 768px) 100vw, 33vw"
                       />
                     ) : (
                       <Image src={r.imageUrl} alt={r.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
@@ -317,15 +261,12 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
                     >
                       <div className="relative h-44 w-full">
                         {logoUrl ? (
-                          <img
+                          <Image
                             src={logoUrl}
                             alt={r.name}
-                            className="h-full w-full object-contain bg-white p-4"
-                            loading="lazy"
-                            onError={(e) => {
-                              (e.currentTarget as HTMLImageElement).src = r.imageUrl;
-                              (e.currentTarget as HTMLImageElement).className = "h-full w-full object-cover";
-                            }}
+                            fill
+                            className="bg-white object-contain p-4"
+                            sizes="(max-width: 768px) 100vw, 33vw"
                           />
                         ) : (
                           <Image

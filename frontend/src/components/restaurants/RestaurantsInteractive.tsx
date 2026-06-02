@@ -76,7 +76,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
       return [];
     }
   });
-  const [resolvedMapRestaurants, setResolvedMapRestaurants] = useState<Restaurant[]>([]);
+  const [geocodedMapRestaurants, setGeocodedMapRestaurants] = useState<{ key: string; items: Restaurant[] } | null>(null);
 
   useEffect(() => {
     localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
@@ -115,9 +115,12 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
     });
   }, [uniqueMapRestaurants]);
 
-  useEffect(() => {
-    setResolvedMapRestaurants(withLocation);
-  }, [withLocation]);
+  const mapLocationKey = useMemo(
+    () => withLocation.map((r) => `${r.id}:${r.location.lat}:${r.location.lng}`).join("|"),
+    [withLocation],
+  );
+
+  const resolvedMapRestaurants = geocodedMapRestaurants?.key === mapLocationKey ? geocodedMapRestaurants.items : withLocation;
 
   const grouped = useMemo(() => {
     const map = new Map<string, Restaurant[]>();
@@ -148,6 +151,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
         <div className="relative h-56 w-full">
           {/* Use plain img for external logos to avoid Next host allowlist issues */}
           {logoUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               src={logoUrl}
               alt={restaurant.name}
@@ -242,7 +246,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
 
       if (!cancelled) {
         localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
-        setResolvedMapRestaurants(updated);
+        setGeocodedMapRestaurants({ key: mapLocationKey, items: updated });
       }
     };
 
@@ -250,7 +254,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
     return () => {
       cancelled = true;
     };
-  }, [withLocation]);
+  }, [mapLocationKey, withLocation]);
 
   useEffect(() => {
     let disposed = false;
