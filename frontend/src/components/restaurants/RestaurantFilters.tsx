@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import UseMyLocationButton from "@/components/restaurants/UseMyLocationButton";
+import { readSession, userScopedStorageKey } from "@/lib/auth";
 
 type Props = {
   cuisine: string;
@@ -14,21 +16,68 @@ type Props = {
   hotelLng: string;
 };
 
+type SavedTravelProfile = {
+  accommodation?: {
+    address?: string;
+    lat?: number;
+    lng?: number;
+  };
+};
+
+const TRAVEL_PROFILE_KEY = "nyc_travel_profile_v1";
+
 export default function RestaurantFilters(props: Props) {
+  const [savedHotel, setSavedHotel] = useState<{ address: string; lat: string; lng: string } | null>(null);
   const selectClass =
     "h-11 w-full rounded-md border-2 border-slate-950 bg-[#fffdf4] px-3 text-sm font-black uppercase tracking-wide text-slate-950 shadow-[3px_3px_0_#111827] outline-none transition focus:bg-white focus:ring-2 focus:ring-red-600";
   const labelClass = "text-[11px] font-black uppercase tracking-[0.18em] text-red-700";
+  const hotelLat = props.hotelLat || savedHotel?.lat || "";
+  const hotelLng = props.hotelLng || savedHotel?.lng || "";
+
+  useEffect(() => {
+    try {
+      const key = userScopedStorageKey(TRAVEL_PROFILE_KEY, readSession()?.email);
+      const raw = localStorage.getItem(key);
+      if (!raw) return;
+      const profile = JSON.parse(raw) as SavedTravelProfile;
+      const accommodation = profile.accommodation;
+      if (
+        accommodation?.address &&
+        typeof accommodation.lat === "number" &&
+        Number.isFinite(accommodation.lat) &&
+        typeof accommodation.lng === "number" &&
+        Number.isFinite(accommodation.lng)
+      ) {
+        setSavedHotel({
+          address: accommodation.address,
+          lat: String(accommodation.lat),
+          lng: String(accommodation.lng),
+        });
+      }
+    } catch {
+      setSavedHotel(null);
+    }
+  }, []);
 
   return (
     <form className="rounded-lg border-2 border-slate-950 bg-[#fff3d1] p-4 shadow-[6px_6px_0_#111827]">
       <input type="hidden" name="userLat" value={props.userLat} />
       <input type="hidden" name="userLng" value={props.userLng} />
-      <input type="hidden" name="hotelLat" value={props.hotelLat} />
-      <input type="hidden" name="hotelLng" value={props.hotelLng} />
+      <input type="hidden" name="hotelLat" value={hotelLat} />
+      <input type="hidden" name="hotelLng" value={hotelLng} />
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3 border-b-2 border-dashed border-slate-950 pb-3">
         <div>
           <p className="font-american-diner text-3xl text-slate-950">Menu de Filtros</p>
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-700">Elige comida, precio y distancia</p>
+          {savedHotel ? (
+            <p className="mt-2 text-xs font-black uppercase tracking-wide text-emerald-800">
+              Donde duermo: {savedHotel.address}
+            </p>
+          ) : (
+            <p className="mt-2 text-xs font-black uppercase tracking-wide text-red-700">
+              Guarda tu alojamiento en Editar perfil para filtrar por donde duermes.
+            </p>
+          )}
         </div>
         <span className="rounded-full border-2 border-slate-950 bg-red-700 px-3 py-1 text-xs font-black uppercase tracking-wide text-white">
           NYC Specials

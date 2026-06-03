@@ -10,6 +10,7 @@ import { RestaurantDesignSupervisorAgent } from './restaurant-design-supervisor.
 import { PatriotEventsAgent } from './patriot-events.agent';
 import { NycTransitAgent } from './nyc-transit.agent';
 import { HomeVisualCuratorAgent } from './home-visual-curator.agent';
+import { CultureCuratorAgent } from './culture-curator.agent';
 
 @Module({
   imports: [],
@@ -25,6 +26,7 @@ import { HomeVisualCuratorAgent } from './home-visual-curator.agent';
     PatriotEventsAgent,
     NycTransitAgent,
     HomeVisualCuratorAgent,
+    CultureCuratorAgent,
   ],
 })
 export class AppModule {}

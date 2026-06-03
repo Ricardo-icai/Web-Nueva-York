@@ -224,7 +224,7 @@ export default function OnboardingPage() {
           ...payload,
         }),
       );
-      router.push(`/dashboard/${trip.id}`);
+      router.push("/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error inesperado");
     } finally {

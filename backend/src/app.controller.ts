@@ -9,6 +9,7 @@ import { RestaurantDesignSupervisorAgent } from './restaurant-design-supervisor.
 import { PatriotEventsAgent } from './patriot-events.agent';
 import { NycTransitAgent } from './nyc-transit.agent';
 import { HomeVisualCuratorAgent } from './home-visual-curator.agent';
+import { CultureCuratorAgent } from './culture-curator.agent';
 
 @Controller()
 export class AppController {
@@ -22,6 +23,7 @@ export class AppController {
     private readonly patriotEventsAgent: PatriotEventsAgent,
     private readonly nycTransitAgent: NycTransitAgent,
     private readonly homeVisualCuratorAgent: HomeVisualCuratorAgent,
+    private readonly cultureCuratorAgent: CultureCuratorAgent,
   ) {}
 
   @Get('health')
@@ -164,5 +166,15 @@ export class AppController {
   @Get('agents/home-visual-curator/audit')
   auditHomeVisuals() {
     return this.homeVisualCuratorAgent.getHomeVisualAudit();
+  }
+
+  @Get('agents/culture-curator/briefing')
+  getCultureCuratorBriefing() {
+    return this.cultureCuratorAgent.getBriefing();
+  }
+
+  @Post('agents/culture-curator/recommend')
+  recommendCulture(@Body() body: { ageGroup?: string; weather?: string; preference?: string }) {
+    return this.cultureCuratorAgent.recommend(body);
   }
 }
