@@ -1,6 +1,7 @@
 "use client";
 
 import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   AUTH_UPDATED_EVENT,
   getCurrentAuthUser,
@@ -27,6 +28,7 @@ function createConfirmationCode() {
 }
 
 export default function AuthGate({ children }: Props) {
+  const router = useRouter();
   const [ready, setReady] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const [startedPlanning, setStartedPlanning] = useState(false);
@@ -67,6 +69,7 @@ export default function AuthGate({ children }: Props) {
         if (session?.user?.email) {
           saveSession(session.user.email);
           setAuthenticated(true);
+          router.replace("/");
         } else {
           setAuthenticated(false);
         }
@@ -95,6 +98,7 @@ export default function AuthGate({ children }: Props) {
           return;
         }
         setAuthenticated(true);
+        router.replace("/");
         return;
       }
 
@@ -119,6 +123,7 @@ export default function AuthGate({ children }: Props) {
       saveUsers(users);
       saveSession(cleanEmail);
       setAuthenticated(true);
+      router.replace("/");
     } finally {
       setBusy(false);
     }
@@ -151,6 +156,7 @@ export default function AuthGate({ children }: Props) {
           return;
         }
         setAuthenticated(true);
+        router.replace("/");
         return;
       }
 
@@ -197,6 +203,7 @@ export default function AuthGate({ children }: Props) {
     saveUsers(users);
     saveSession(cleanEmail);
     setAuthenticated(true);
+    router.replace("/");
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {

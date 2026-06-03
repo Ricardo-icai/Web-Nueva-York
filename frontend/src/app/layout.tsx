@@ -5,6 +5,7 @@ import AuthGate from "@/components/auth/AuthGate";
 import AuthStatus from "@/components/auth/AuthStatus";
 import BackButton from "@/components/navigation/BackButton";
 import MenuDropdown from "@/components/navigation/MenuDropdown";
+import ProfileCompletionBanner from "@/components/profile/ProfileCompletionBanner";
 import "./globals.css";
 
 const inter = Inter({
@@ -47,6 +48,7 @@ export default function RootLayout({
               </div>
             </nav>
           </header>
+          <ProfileCompletionBanner />
           <main className="flex-1">{children}</main>
         </AuthGate>
       </body>

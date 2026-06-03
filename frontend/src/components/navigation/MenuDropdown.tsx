@@ -5,13 +5,13 @@ import { useState } from "react";
 
 const menuLinks = [
   { href: "/", label: "Home" },
+  { href: "/route-planner", label: "Organizame la ruta" },
   { href: "/onboarding", label: "Editar perfil" },
   { href: "/map", label: "Mapa" },
   { href: "/restaurants", label: "Tengo Hambre" },
   { href: "/culture", label: "Cultura" },
   { href: "/viewpoints", label: "Roof Tops" },
   { href: "/fourth-of-july", label: "4 de Julio" },
-  { href: "/world-cup-2026", label: "Mundial 2026" },
 ];
 
 export default function MenuDropdown() {

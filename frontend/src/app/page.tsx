@@ -18,6 +18,13 @@ const mainCards: HomeCard[] = [
     label: "Primero",
   },
   {
+    title: "Organizame la ruta",
+    subtitle: "Planning automatico por dias, personas, ritmo y alojamiento.",
+    href: "/route-planner",
+    image: "https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1600&q=84",
+    label: "Ruta",
+  },
+  {
     title: "Tengo Hambre",
     subtitle: "Restaurantes, pizza, hamburguesas, favoritos y mapa de locales.",
     href: "/restaurants",
@@ -44,13 +51,6 @@ const mainCards: HomeCard[] = [
     href: "/fourth-of-july",
     image: "https://commons.wikimedia.org/wiki/Special:FilePath/Fireworks_around_the_Freedom_Tower_%2848201561146%29.jpg",
     label: "Eventos",
-  },
-  {
-    title: "Mundial 2026",
-    subtitle: "Todo lo importante para vivir el Mundial cerca de Nueva York.",
-    href: "/world-cup-2026",
-    image: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1600&q=82",
-    label: "Sports",
   },
   {
     title: "Editar perfil",
