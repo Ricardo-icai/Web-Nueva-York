@@ -3,13 +3,18 @@
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import {
   AUTH_UPDATED_EVENT,
+  getCurrentAuthUser,
   hashPassword,
+  isSupabaseConfigured,
   normalizeEmail,
   readSession,
   readUsers,
   saveSession,
   saveUsers,
+  signInWithEmailPassword,
+  signUpWithEmailPassword,
 } from "@/lib/auth";
+import { getSupabaseBrowserClient } from "@/lib/supabase";
 
 type Props = {
   children: ReactNode;
@@ -24,6 +29,7 @@ function createConfirmationCode() {
 export default function AuthGate({ children }: Props) {
   const [ready, setReady] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
+  const [startedPlanning, setStartedPlanning] = useState(false);
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -35,17 +41,44 @@ export default function AuthGate({ children }: Props) {
   const cleanEmail = useMemo(() => normalizeEmail(email), [email]);
 
   useEffect(() => {
-    const refresh = () => {
+    let active = true;
+    const refresh = async () => {
+      if (isSupabaseConfigured()) {
+        const user = await getCurrentAuthUser();
+        if (active) {
+          setAuthenticated(Boolean(user?.email));
+          setReady(true);
+        }
+        return;
+      }
+
       const session = readSession();
       const users = readUsers();
-      setAuthenticated(Boolean(session?.email && users[session.email]?.confirmed));
-      setReady(true);
+      if (active) {
+        setAuthenticated(Boolean(session?.email && users[session.email]?.confirmed));
+        setReady(true);
+      }
     };
 
-    refresh();
+    void refresh();
+    let subscription: { unsubscribe: () => void } | undefined;
+    void getSupabaseBrowserClient().then((supabase) => {
+      subscription = supabase?.auth.onAuthStateChange((_event, session) => {
+        if (session?.user?.email) {
+          saveSession(session.user.email);
+          setAuthenticated(true);
+        } else {
+          setAuthenticated(false);
+        }
+        setReady(true);
+      }).data.subscription;
+    });
+
     window.addEventListener(AUTH_UPDATED_EVENT, refresh);
     window.addEventListener("storage", refresh);
     return () => {
+      active = false;
+      subscription?.unsubscribe();
       window.removeEventListener(AUTH_UPDATED_EVENT, refresh);
       window.removeEventListener("storage", refresh);
     };
@@ -55,6 +88,16 @@ export default function AuthGate({ children }: Props) {
     setBusy(true);
     setMessage("");
     try {
+      const supabaseLogin = await signInWithEmailPassword(cleanEmail, password);
+      if (supabaseLogin.handledBySupabase) {
+        if (supabaseLogin.error) {
+          setMessage("Correo, contrasena o confirmacion incorrectos.");
+          return;
+        }
+        setAuthenticated(true);
+        return;
+      }
+
       const users = readUsers();
       const user = users[cleanEmail];
       const passwordHash = await hashPassword(cleanEmail, password);
@@ -92,6 +135,22 @@ export default function AuthGate({ children }: Props) {
 
       if (password.length < 6) {
         setMessage("La contrasena debe tener al menos 6 caracteres.");
+        return;
+      }
+
+      const supabaseSignup = await signUpWithEmailPassword(cleanEmail, password);
+      if (supabaseSignup.handledBySupabase) {
+        if (supabaseSignup.error) {
+          setMessage(supabaseSignup.error);
+          return;
+        }
+        if (supabaseSignup.needsEmailConfirmation) {
+          setMode("login");
+          setPassword("");
+          setMessage("Te he enviado un correo de confirmacion. Confirma el email y despues entra con tu contrasena.");
+          return;
+        }
+        setAuthenticated(true);
         return;
       }
 
@@ -157,6 +216,41 @@ export default function AuthGate({ children }: Props) {
 
   if (authenticated) return <>{children}</>;
 
+  if (!startedPlanning) {
+    return (
+      <main className="relative min-h-screen overflow-hidden bg-[#0A2342] px-4 py-8 text-white sm:px-6">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{
+            backgroundImage:
+              "linear-gradient(120deg, rgba(10,35,66,0.94), rgba(193,18,31,0.28)), url('https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=2200&q=82')",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A2342] via-[#0A2342]/40 to-transparent" />
+        <section className="relative z-10 mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl items-end">
+          <div className="max-w-4xl pb-8">
+            <p className="w-fit rounded-full border border-[#D4AF37]/60 bg-[#D4AF37]/12 px-3 py-2 text-xs font-black uppercase tracking-[0.22em] text-[#D4AF37]">
+              NYC Family Planner
+            </p>
+            <h1 className="mt-5 font-display text-5xl font-bold leading-[0.95] sm:text-7xl">
+              Planifica Nueva York con tu cuenta.
+            </h1>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-white/82 sm:text-xl">
+              Para usar la web tienes que registrarte o iniciar sesion. Asi guardamos tu perfil, tu viaje y tus favoritos.
+            </p>
+            <button
+              type="button"
+              onClick={() => setStartedPlanning(true)}
+              className="mt-8 rounded-sm bg-[#C1121F] px-6 py-4 text-sm font-black uppercase tracking-[0.16em] text-white shadow-[0_18px_45px_rgba(193,18,31,0.35)]"
+            >
+              Start Planning
+            </button>
+          </div>
+        </section>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-[#fff3d1] px-4 py-8 text-slate-950 sm:px-6">
       <section className="mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-6xl items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
@@ -170,6 +264,11 @@ export default function AuthGate({ children }: Props) {
             </h1>
             <p className="max-w-xl text-base font-semibold text-slate-700 sm:text-lg">
               Guarda tu sesion, tus preferencias y tus favoritos por usuario antes de entrar en la web.
+            </p>
+            <p className="max-w-xl text-sm font-bold text-red-700">
+              {isSupabaseConfigured()
+                ? "Conectado a Supabase Auth: cada usuario queda registrado con su propia cuenta."
+                : "Modo local hasta que anadas las claves de Supabase en .env.local."}
             </p>
           </div>
         </div>

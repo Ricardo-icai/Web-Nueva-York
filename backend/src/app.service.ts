@@ -805,6 +805,20 @@ export class AppService {
     return trip;
   }
 
+  updateTrip(id: string, input: TripInput) {
+    const existing = this.trips.get(id);
+    if (!existing) {
+      throw new NotFoundException(`Trip ${id} not found`);
+    }
+    const trip: Trip = {
+      ...existing,
+      ...input,
+      id,
+    };
+    this.trips.set(id, trip);
+    return trip;
+  }
+
   getTripById(id: string) {
     const trip = this.trips.get(id);
     if (!trip) {

@@ -1,5 +1,9 @@
-import PlaceholderPage from "@/components/common/PlaceholderPage";
+import PublicTransitPlanner from "@/components/transport/PublicTransitPlanner";
 
 export default function MapPage() {
-  return <PlaceholderPage title="Mapa de Nueva York" description="Visualiza zonas, rutas y puntos de interes del viaje." />;
+  return (
+    <main className="mx-auto max-w-7xl px-5 py-8 sm:px-8">
+      <PublicTransitPlanner />
+    </main>
+  );
 }

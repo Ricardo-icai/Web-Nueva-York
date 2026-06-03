@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { buildOfficialWebsiteSearchUrl } from "@/lib/restaurants/build-restaurant-links";
+import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 import type { Coordinates, NycRooftopHallOfFamePlace } from "@/types/restaurants";
 
 type Props = {
@@ -176,13 +177,18 @@ export default function RooftopsMap({ places, accommodation, selectedId, onSelec
           weight: 3,
         });
         const websiteUrl = place.officialWebsite ?? buildOfficialWebsiteSearchUrl(place.name, place.address);
-        const directionsUrl = place.directionsUrl ?? place.googleMapsUrl;
+        const directionsUrl = buildTransitPlannerUrl({
+          name: place.name,
+          address: place.address,
+          lat: location.lat,
+          lng: location.lng,
+        });
         marker.bindTooltip(place.name, { direction: "top", offset: [0, -12], opacity: 0.95 });
         marker.on("mouseover", () => marker.openTooltip());
         marker.on("mouseout", () => marker.closeTooltip());
         marker.on("click", () => onSelect?.(place.id));
         marker.bindPopup(
-          `<div style="min-width:220px"><img src="${escapeHtml(place.imageUrl)}" alt="" style="width:100%;height:92px;object-fit:cover;border-radius:10px;margin-bottom:8px"/><strong>${escapeHtml(place.name)}</strong><br/>${escapeHtml(place.neighborhood)}<br/>${typeof place.googleRating === "number" ? `Rating ${place.googleRating.toFixed(1)} - ${place.googleReviewCount ?? 0} reviews` : "Rating unavailable"}<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a href="${escapeHtml(place.googleMapsUrl)}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">Google Maps</a><a href="${escapeHtml(directionsUrl)}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">Como llegar</a><a href="${escapeHtml(websiteUrl)}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">${place.officialWebsite ? "Web oficial" : "Buscar web oficial"}</a></div></div>`,
+          `<div style="min-width:220px"><img src="${escapeHtml(place.imageUrl)}" alt="" style="width:100%;height:92px;object-fit:cover;border-radius:10px;margin-bottom:8px"/><strong>${escapeHtml(place.name)}</strong><br/>${escapeHtml(place.neighborhood)}<br/>${typeof place.googleRating === "number" ? `Rating ${place.googleRating.toFixed(1)} - ${place.googleReviewCount ?? 0} reviews` : "Rating unavailable"}<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a href="${escapeHtml(place.googleMapsUrl)}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">Google Maps</a><a href="${escapeHtml(directionsUrl)}" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">Como llegar</a><a href="${escapeHtml(websiteUrl)}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">${place.officialWebsite ? "Web oficial" : "Buscar web oficial"}</a></div></div>`,
         );
         marker.addTo(layer);
         bounds.push([location.lat, location.lng]);

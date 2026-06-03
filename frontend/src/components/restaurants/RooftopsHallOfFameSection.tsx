@@ -6,6 +6,7 @@ import RooftopCocktailLoader from "@/components/restaurants/RooftopCocktailLoade
 import RooftopsMap from "@/components/restaurants/RooftopsMap";
 import { readSession, userScopedStorageKey } from "@/lib/auth";
 import { buildOfficialWebsiteSearchUrl } from "@/lib/restaurants/build-restaurant-links";
+import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 import type { Coordinates, NycRooftopHallOfFamePlace } from "@/types/restaurants";
 
 type Props = {
@@ -280,7 +281,7 @@ export default function RooftopsHallOfFameSection({ places, accommodation }: Pro
                     <p className="text-xs font-bold uppercase tracking-wide text-slate-600">{place.neighborhood}</p>
                     <div className="flex flex-wrap gap-2 text-xs">
                       <a href={place.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">Maps</a>
-                      <a href={place.directionsUrl ?? place.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">Como llegar</a>
+                      <a href={buildTransitPlannerUrl({ name: place.name, address: place.address, lat: place.lat, lng: place.lng })} className="rounded-full border border-slate-300 px-2 py-1">Como llegar</a>
                       <a href={websiteHref} target="_blank" className="rounded-full border border-red-700 bg-red-700 px-2 py-1 font-bold text-white">Entradas / Web</a>
                     </div>
                   </div>
@@ -353,7 +354,7 @@ export default function RooftopsHallOfFameSection({ places, accommodation }: Pro
                   <a href={place.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">
                     Google Maps
                   </a>
-                  <a href={place.directionsUrl ?? place.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">
+                  <a href={buildTransitPlannerUrl({ name: place.name, address: place.address, lat: place.lat, lng: place.lng })} className="rounded-full border border-slate-300 px-2 py-1">
                     Como llegar
                   </a>
                   <a href={websiteHref} target="_blank" className="rounded-full border border-red-700 bg-red-700 px-2 py-1 font-bold text-white">

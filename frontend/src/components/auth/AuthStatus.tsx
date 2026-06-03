@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { AUTH_UPDATED_EVENT, clearSession, readSession } from "@/lib/auth";
+import { AUTH_UPDATED_EVENT, readSession, signOutCurrentUser } from "@/lib/auth";
 
 export default function AuthStatus() {
   const [email, setEmail] = useState<string | null>(null);
@@ -31,7 +31,7 @@ export default function AuthStatus() {
       </Link>
       <button
         type="button"
-        onClick={clearSession}
+        onClick={() => void signOutCurrentUser()}
         className="rounded-full border border-red-200 bg-red-50 px-3 py-2 text-xs font-black uppercase tracking-wide text-red-700 hover:bg-red-100"
       >
         Salir

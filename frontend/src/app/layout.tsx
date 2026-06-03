@@ -42,9 +42,6 @@ export default function RootLayout({
               </div>
 
               <div className="flex items-center gap-3">
-                <Link href="/onboarding" className="rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-stone-100">
-                  Crear viaje
-                </Link>
                 <AuthStatus />
                 <MenuDropdown />
               </div>

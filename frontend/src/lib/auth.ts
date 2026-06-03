@@ -1,3 +1,5 @@
+import { getSupabaseBrowserClient, isSupabaseConfigured } from "@/lib/supabase";
+
 export type StoredUser = {
   email: string;
   passwordHash: string;
@@ -14,6 +16,8 @@ export type StoredSession = {
 export const AUTH_USERS_KEY = "nyc_auth_users_v1";
 export const AUTH_SESSION_KEY = "nyc_auth_session_v1";
 export const AUTH_UPDATED_EVENT = "nyc-auth-updated";
+
+export { isSupabaseConfigured };
 
 export function normalizeEmail(email: string) {
   return email.trim().toLowerCase();
@@ -57,6 +61,53 @@ export function saveSession(email: string) {
 export function clearSession() {
   window.localStorage.removeItem(AUTH_SESSION_KEY);
   window.dispatchEvent(new Event(AUTH_UPDATED_EVENT));
+}
+
+export async function signOutCurrentUser() {
+  if (isSupabaseConfigured()) {
+    await (await getSupabaseBrowserClient())?.auth.signOut();
+  }
+  clearSession();
+}
+
+export async function getCurrentAuthUser() {
+  if (!isSupabaseConfigured()) return null;
+  const supabase = await getSupabaseBrowserClient();
+  const { data, error } = (await supabase?.auth.getUser()) ?? { data: null, error: null };
+  if (error || !data?.user?.email) return null;
+  saveSession(data.user.email);
+  return data.user;
+}
+
+export async function signInWithEmailPassword(email: string, password: string) {
+  if (!isSupabaseConfigured()) return { handledBySupabase: false as const };
+  const supabase = await getSupabaseBrowserClient();
+  const { data, error } = await supabase!.auth.signInWithPassword({
+    email: normalizeEmail(email),
+    password,
+  });
+  if (error) return { handledBySupabase: true as const, error: error.message };
+  if (data.user?.email) saveSession(data.user.email);
+  return { handledBySupabase: true as const, user: data.user };
+}
+
+export async function signUpWithEmailPassword(email: string, password: string) {
+  if (!isSupabaseConfigured()) return { handledBySupabase: false as const };
+  const supabase = await getSupabaseBrowserClient();
+  const { data, error } = await supabase!.auth.signUp({
+    email: normalizeEmail(email),
+    password,
+    options: {
+      emailRedirectTo: typeof window === "undefined" ? undefined : `${window.location.origin}/profile`,
+    },
+  });
+  if (error) return { handledBySupabase: true as const, error: error.message };
+  if (data.session && data.user?.email) saveSession(data.user.email);
+  return {
+    handledBySupabase: true as const,
+    user: data.user,
+    needsEmailConfirmation: !data.session,
+  };
 }
 
 export function userScopedStorageKey(baseKey: string, email?: string | null) {

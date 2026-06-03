@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { buildOfficialWebsiteSearchUrl } from "@/lib/restaurants/build-restaurant-links";
+import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 import type { Restaurant } from "@/types/restaurants";
 
 export default function RestaurantCard({ restaurant }: { restaurant: Restaurant }) {
@@ -8,6 +9,11 @@ export default function RestaurantCard({ restaurant }: { restaurant: Restaurant 
   const hasPrice = typeof restaurant.averagePricePerPersonUsd === "number";
   const websiteHref =
     restaurant.officialWebsite ?? buildOfficialWebsiteSearchUrl(restaurant.name, restaurant.address);
+  const transitHref = buildTransitPlannerUrl({
+    name: restaurant.name,
+    address: restaurant.address,
+    location: restaurant.location,
+  });
   return (
     <article className="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
       <div className="relative h-56 w-full">
@@ -28,7 +34,7 @@ export default function RestaurantCard({ restaurant }: { restaurant: Restaurant 
         )}
         <div className="flex flex-wrap gap-2">
           <Link href={restaurant.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-3 py-1 text-sm">Google Maps</Link>
-          <Link href={restaurant.directionsUrl ?? restaurant.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-3 py-1 text-sm">Como llegar</Link>
+          <Link href={transitHref} className="rounded-full border border-slate-300 px-3 py-1 text-sm">Como llegar</Link>
           {restaurant.officialWebsite ? (
             <Link href={restaurant.officialWebsite} target="_blank" className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-sm">Website</Link>
           ) : (

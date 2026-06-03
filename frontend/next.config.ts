@@ -22,11 +22,19 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
+        hostname: "commons.wikimedia.org",
+      },
+      {
+        protocol: "https",
         hostname: "logo.clearbit.com",
       },
       {
         protocol: "https",
         hostname: "www.google.com",
+      },
+      {
+        protocol: "https",
+        hostname: "assets-sail4th.s3.us-east-1.amazonaws.com",
       },
     ],
   },

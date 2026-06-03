@@ -7,6 +7,9 @@ import { RestaurantWebEnrichmentAgent } from './restaurant-web-enrichment.agent'
 import { SpecializedFoodAgent } from './specialized-food.agent';
 import { RestaurantPhotoAgent } from './restaurant-photo.agent';
 import { RestaurantDesignSupervisorAgent } from './restaurant-design-supervisor.agent';
+import { PatriotEventsAgent } from './patriot-events.agent';
+import { NycTransitAgent } from './nyc-transit.agent';
+import { HomeVisualCuratorAgent } from './home-visual-curator.agent';
 
 @Module({
   imports: [],
@@ -19,6 +22,9 @@ import { RestaurantDesignSupervisorAgent } from './restaurant-design-supervisor.
     SpecializedFoodAgent,
     RestaurantPhotoAgent,
     RestaurantDesignSupervisorAgent,
+    PatriotEventsAgent,
+    NycTransitAgent,
+    HomeVisualCuratorAgent,
   ],
 })
 export class AppModule {}

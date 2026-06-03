@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import type { TripInput } from './app.service';
 import { RestaurantDiscoveryAgent } from './restaurant-discovery.agent';
@@ -6,6 +6,9 @@ import { RestaurantKnowledgeService } from './restaurant-knowledge.service';
 import { SpecializedFoodAgent } from './specialized-food.agent';
 import { RestaurantPhotoAgent } from './restaurant-photo.agent';
 import { RestaurantDesignSupervisorAgent } from './restaurant-design-supervisor.agent';
+import { PatriotEventsAgent } from './patriot-events.agent';
+import { NycTransitAgent } from './nyc-transit.agent';
+import { HomeVisualCuratorAgent } from './home-visual-curator.agent';
 
 @Controller()
 export class AppController {
@@ -16,6 +19,9 @@ export class AppController {
     private readonly specializedFoodAgent: SpecializedFoodAgent,
     private readonly restaurantPhotoAgent: RestaurantPhotoAgent,
     private readonly restaurantDesignSupervisorAgent: RestaurantDesignSupervisorAgent,
+    private readonly patriotEventsAgent: PatriotEventsAgent,
+    private readonly nycTransitAgent: NycTransitAgent,
+    private readonly homeVisualCuratorAgent: HomeVisualCuratorAgent,
   ) {}
 
   @Get('health')
@@ -74,6 +80,11 @@ export class AppController {
     return this.appService.createTrip(body);
   }
 
+  @Put('trips/:tripId')
+  updateTrip(@Param('tripId') tripId: string, @Body() body: TripInput) {
+    return this.appService.updateTrip(tripId, body);
+  }
+
   @Get('trips/:tripId')
   getTrip(@Param('tripId') tripId: string) {
     return this.appService.getTripById(tripId);
@@ -119,5 +130,39 @@ export class AppController {
   @Get('agents/restaurants/design-audit')
   auditRestaurantDesign() {
     return this.restaurantDesignSupervisorAgent.auditRestaurantVisuals();
+  }
+
+  @Get('agents/patriot-events/briefing')
+  getPatriotEventsBriefing() {
+    return this.patriotEventsAgent.getBriefing();
+  }
+
+  @Post('agents/patriot-events/recommend')
+  recommendPatriotEvents(@Body() body: { ageGroup?: string; weather?: string; preference?: string }) {
+    return this.patriotEventsAgent.recommend(body);
+  }
+
+  @Get('agents/nyc-transit/briefing')
+  getNycTransitBriefing() {
+    return this.nycTransitAgent.getBriefing();
+  }
+
+  @Post('agents/nyc-transit/recommend')
+  recommendNycTransit(
+    @Body()
+    body: {
+      destination?: string;
+      originLat?: number;
+      originLng?: number;
+      travelers?: number;
+      priority?: 'fastest' | 'fewest_transfers' | 'accessible' | 'scenic';
+    },
+  ) {
+    return this.nycTransitAgent.recommend(body);
+  }
+
+  @Get('agents/home-visual-curator/audit')
+  auditHomeVisuals() {
+    return this.homeVisualCuratorAgent.getHomeVisualAudit();
   }
 }

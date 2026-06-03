@@ -4,6 +4,7 @@ import RooftopsHallOfFameSection from "@/components/restaurants/RooftopsHallOfFa
 import UseMyRooftopLocationButton from "@/components/viewpoints/UseMyRooftopLocationButton";
 import { buildGoogleDirectionsUrl } from "@/lib/api/google-places";
 import { getNycRooftopsHallOfFame } from "@/lib/restaurants/enrich-nyc-rooftops";
+import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 import type { Coordinates, NycRooftopHallOfFamePlace } from "@/types/restaurants";
 
 const VIEWPOINTS = [
@@ -182,7 +183,15 @@ export default async function ViewpointsPage({ searchParams }: ViewpointsPagePro
             </Link>
           </div>
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {VIEWPOINTS.map((spot) => (
+            {VIEWPOINTS.map((spot) => {
+              const hallPlace = viewpointToHallPlace(spot, userLocation);
+              const transitHref = buildTransitPlannerUrl({
+                name: spot.name,
+                address: spot.area,
+                lat: hallPlace.lat,
+                lng: hallPlace.lng,
+              });
+              return (
               <article key={spot.name} className="overflow-hidden rounded-lg border-2 border-slate-950 bg-white shadow-[5px_5px_0_#111827]">
                 <div className="relative h-48 w-full">
                   <Image src={spot.imageUrl} alt={spot.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
@@ -200,12 +209,13 @@ export default async function ViewpointsPage({ searchParams }: ViewpointsPagePro
                   </div>
                   <div className="flex flex-wrap gap-2 text-xs">
                     <a href={spot.mapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">Google Maps</a>
-                    <a href={spot.mapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">Como llegar</a>
+                    <a href={transitHref} className="rounded-full border border-slate-300 px-2 py-1">Como llegar</a>
                     <a href={spot.websiteUrl} target="_blank" className="rounded-full border border-red-700 bg-red-700 px-2 py-1 font-bold text-white">Entradas / Web oficial</a>
                   </div>
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         </section>
 

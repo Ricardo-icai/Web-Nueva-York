@@ -1,94 +1,117 @@
-import Link from "next/link";
 import Image from "next/image";
-import HeroCarousel from "@/components/home/HeroCarousel";
-import { categoryCards } from "@/lib/visuals";
+import Link from "next/link";
+
+type HomeCard = {
+  title: string;
+  subtitle: string;
+  href: string;
+  image: string;
+  label: string;
+};
+
+const mainCards: HomeCard[] = [
+  {
+    title: "Transporte publico",
+    subtitle: "Metro, OMNY, AirTrain, ferries, buses y trucos para moverte.",
+    href: "/map",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Train_stopping_at_a_New_York_subway_station_%28Unsplash%29.jpg",
+    label: "Primero",
+  },
+  {
+    title: "Tengo Hambre",
+    subtitle: "Restaurantes, pizza, hamburguesas, favoritos y mapa de locales.",
+    href: "/restaurants",
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=84",
+    label: "Food",
+  },
+  {
+    title: "Cultura",
+    subtitle: "Museos, planes historicos, barrios y experiencias bajo techo.",
+    href: "/culture",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/New_York_City_%28New_York%2C_USA%29%2C_Statue_of_Liberty_--_2012_--_6814.jpg",
+    label: "Cultura",
+  },
+  {
+    title: "Roof Tops",
+    subtitle: "Miradores, rooftops, vistas virales y enlaces para entradas.",
+    href: "/viewpoints",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/2022-0402-NYC-Summit_One_Vanderbilt-02.jpg",
+    label: "Skyline",
+  },
+  {
+    title: "4 de Julio",
+    subtitle: "Fuegos, Sail4th 250, Elcano, grandes veleros y eventos oficiales.",
+    href: "/fourth-of-july",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Fireworks_around_the_Freedom_Tower_%2848201561146%29.jpg",
+    label: "Eventos",
+  },
+  {
+    title: "Mundial 2026",
+    subtitle: "Todo lo importante para vivir el Mundial cerca de Nueva York.",
+    href: "/world-cup-2026",
+    image: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=1600&q=82",
+    label: "Sports",
+  },
+  {
+    title: "Editar perfil",
+    subtitle: "Cambia fechas, alojamiento, viajeros y ritmo del viaje.",
+    href: "/onboarding",
+    image: "https://commons.wikimedia.org/wiki/Special:FilePath/Times_square_at_night.jpg",
+    label: "Tu viaje",
+  },
+];
+
+function VisualCard({ card, featured = false }: { card: HomeCard; featured?: boolean }) {
+  return (
+    <Link
+      href={card.href}
+      className={`group relative block overflow-hidden rounded-md border border-white/12 bg-slate-900 shadow-[0_24px_70px_rgba(15,23,42,0.22)] ${
+        featured ? "min-h-[360px] md:col-span-2 md:row-span-2" : "min-h-[230px]"
+      }`}
+    >
+      <Image
+        src={card.image}
+        alt={card.title}
+        fill
+        priority={featured}
+        className="object-cover transition duration-700 group-hover:scale-105"
+        sizes={featured ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, 25vw"}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/42 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+        <span className="rounded-full border border-white/35 bg-white/12 px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-white backdrop-blur">
+          {card.label}
+        </span>
+        <h2 className={`${featured ? "text-4xl sm:text-5xl" : "text-2xl"} mt-3 font-display font-bold leading-tight text-white`}>
+          {card.title}
+        </h2>
+        <p className="mt-2 max-w-xl text-sm leading-6 text-white/78">{card.subtitle}</p>
+      </div>
+    </Link>
+  );
+}
 
 export default function Home() {
   return (
-    <div>
-      <section className="relative min-h-[78vh] overflow-hidden">
-        <HeroCarousel />
-        <div className="relative mx-auto flex min-h-[78vh] max-w-6xl items-end px-6 pb-14 pt-20">
-          <div className="max-w-3xl text-stone-50">
-            <p className="mb-4 text-xs uppercase tracking-[0.28em] text-amber-300">NYC Family Planner</p>
-            <h1 className="font-display text-5xl leading-tight md:text-7xl">
-              Discover New York Intelligently
+    <main className="bg-stone-50">
+      <section className="mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:py-8">
+        <div className="mb-5 flex flex-wrap items-end justify-between gap-3 pt-2">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">NYC Family Planner</p>
+            <h1 className="mt-1 font-display text-4xl font-bold leading-tight text-slate-950 sm:text-5xl">
+              Pick Your New York Moment
             </h1>
-            <p className="mt-5 max-w-2xl text-base text-stone-200 md:text-lg">
-              La plataforma que decide por ti que hacer en Nueva York, segun tu familia,
-              las fechas, la ubicacion del alojamiento y el clima real.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/onboarding"
-                className="rounded-full bg-stone-50 px-6 py-3 text-sm font-semibold text-slate-900"
-              >
-                Start Planning
-              </Link>
-              <Link
-                href="/planner"
-                className="rounded-full border border-stone-300/70 px-6 py-3 text-sm font-semibold text-stone-50"
-              >
-                Explore NYC
-              </Link>
-            </div>
           </div>
         </div>
-      </section>
 
-      <section className="mx-auto max-w-6xl px-6 py-14">
-        <div className="mb-6 flex items-end justify-between">
-          <h2 className="font-display text-3xl text-slate-900 md:text-4xl">Categorias destacadas</h2>
-          <p className="text-sm text-slate-500">Curadas para familias en primera visita</p>
-        </div>
-        <div className="grid gap-4 md:grid-cols-3">
-          {categoryCards.map((card) => (
-            <article
-              key={card.title}
-              className="group overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm"
-            >
-              <div className="relative h-52 w-full overflow-hidden">
-                <Image
-                  src={card.image}
-                  alt={card.title}
-                  fill
-                  className="object-cover transition duration-500 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/55 to-transparent" />
-                <h3 className="absolute bottom-4 left-4 font-display text-2xl text-stone-50">
-                  {card.title}
-                </h3>
-              </div>
-            </article>
+        <div className="grid gap-4 md:grid-cols-4">
+          <VisualCard card={mainCards[0]} featured />
+          {mainCards.slice(1).map((card) => (
+            <VisualCard key={card.href} card={card} />
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-16">
-        <article className="grid overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm md:grid-cols-2">
-          <div className="relative min-h-[260px]">
-            <Image
-              src="https://images.unsplash.com/photo-1513828583688-c52646db42da?auto=format&fit=crop&w=1600&q=80"
-              alt="Tema maritimo inspirado en Elcano"
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          </div>
-          <div className="p-7 md:p-10">
-            <p className="text-xs uppercase tracking-[0.22em] text-amber-600">Edicion especial 2026</p>
-            <h3 className="mt-3 font-display text-3xl text-slate-900">Sail4th, Elcano y Mundial en una sola experiencia</h3>
-            <p className="mt-4 text-slate-600">
-              Integramos eventos oficiales, logistica de transporte y recomendaciones adaptadas
-              para que vivas Nueva York sin perderte lo importante.
-            </p>
-            <Link href="/onboarding" className="mt-6 inline-block rounded-full bg-slate-900 px-5 py-2.5 text-sm font-semibold text-stone-50">
-              Crear mi viaje ahora
-            </Link>
-          </div>
-        </article>
-      </section>
-    </div>
+    </main>
   );
 }

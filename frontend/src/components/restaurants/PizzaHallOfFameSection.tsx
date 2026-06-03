@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { buildOfficialWebsiteSearchUrl } from "@/lib/restaurants/build-restaurant-links";
+import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 import type { NycPizzaHallOfFamePlace } from "@/types/restaurants";
 
 type Props = {
@@ -128,7 +129,7 @@ export default function PizzaHallOfFameSection({ places }: Props) {
                 <a href={place.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">
                   Google Maps
                 </a>
-                <a href={place.directionsUrl ?? place.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">
+                <a href={buildTransitPlannerUrl({ name: place.name, address: place.address, lat: place.lat, lng: place.lng })} className="rounded-full border border-slate-300 px-2 py-1">
                   Como llegar
                 </a>
                 <a
