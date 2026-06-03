@@ -10,7 +10,7 @@ const menuLinks = [
   { href: "/map", label: "Mapa" },
   { href: "/restaurants", label: "Tengo Hambre" },
   { href: "/culture", label: "Cultura" },
-  { href: "/viewpoints", label: "Miradores" },
+  { href: "/viewpoints", label: "Roof Tops" },
   { href: "/photo-spots", label: "Photo Spots" },
   { href: "/sail4th-elcano", label: "Sail4th / Elcano" },
   { href: "/fourth-of-july", label: "4 de Julio" },

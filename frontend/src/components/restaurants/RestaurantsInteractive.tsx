@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import RestaurantLogoImage from "@/components/restaurants/RestaurantLogoImage";
+import { readSession, userScopedStorageKey } from "@/lib/auth";
 import { buildOfficialWebsiteSearchUrl } from "@/lib/restaurants/build-restaurant-links";
 import type { Restaurant } from "@/types/restaurants";
 
@@ -61,10 +62,11 @@ function groupKey(r: Restaurant) {
 }
 
 export default function RestaurantsInteractive({ restaurants, mapRestaurants, userLocation, afterMapSlot }: Props) {
+  const favoritesKey = useMemo(() => userScopedStorageKey(FAVORITES_KEY, readSession()?.email), []);
   const [favorites, setFavorites] = useState<string[]>(() => {
     if (typeof window === "undefined") return [];
     try {
-      const raw = localStorage.getItem(FAVORITES_KEY);
+      const raw = localStorage.getItem(userScopedStorageKey(FAVORITES_KEY, readSession()?.email));
       if (!raw) return [];
       const ids = JSON.parse(raw) as string[];
       return Array.isArray(ids) ? ids : [];
@@ -75,8 +77,8 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
   const [geocodedMapRestaurants, setGeocodedMapRestaurants] = useState<{ key: string; items: Restaurant[] } | null>(null);
 
   useEffect(() => {
-    localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
-  }, [favorites]);
+    localStorage.setItem(favoritesKey, JSON.stringify(favorites));
+  }, [favorites, favoritesKey]);
 
   const uniqueRestaurants = useMemo(() => {
     const seen = new Set<string>();

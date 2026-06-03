@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Inter, Playfair_Display } from "next/font/google";
+import AuthGate from "@/components/auth/AuthGate";
+import AuthStatus from "@/components/auth/AuthStatus";
 import BackButton from "@/components/navigation/BackButton";
 import MenuDropdown from "@/components/navigation/MenuDropdown";
 import "./globals.css";
@@ -29,24 +31,27 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${inter.variable} ${playfair.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-stone-50 text-slate-900">
-        <header className="sticky top-0 z-40 border-b border-stone-200/70 bg-white/80 backdrop-blur">
-          <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
-            <div className="flex items-center gap-3">
-              <BackButton />
-              <Link href="/" className="text-sm font-bold tracking-[0.16em] text-slate-900">
-                NYC FAMILY PLANNER
-              </Link>
-            </div>
+        <AuthGate>
+          <header className="sticky top-0 z-40 border-b border-stone-200/70 bg-white/80 backdrop-blur">
+            <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
+              <div className="flex items-center gap-3">
+                <BackButton />
+                <Link href="/" className="text-sm font-bold tracking-[0.16em] text-slate-900">
+                  NYC FAMILY PLANNER
+                </Link>
+              </div>
 
-            <div className="flex items-center gap-3">
-              <Link href="/onboarding" className="rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-stone-100">
-                Crear viaje
-              </Link>
-              <MenuDropdown />
-            </div>
-          </nav>
-        </header>
-        <main className="flex-1">{children}</main>
+              <div className="flex items-center gap-3">
+                <Link href="/onboarding" className="rounded-full border border-stone-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-stone-100">
+                  Crear viaje
+                </Link>
+                <AuthStatus />
+                <MenuDropdown />
+              </div>
+            </nav>
+          </header>
+          <main className="flex-1">{children}</main>
+        </AuthGate>
       </body>
     </html>
   );
