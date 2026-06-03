@@ -1,5 +1,6 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 export type CulturalMapPoint = {
@@ -35,6 +36,10 @@ type MarkerLike = {
   addTo: (layer: unknown) => void;
 };
 
+type PolylineLike = {
+  addTo: (layer: unknown) => void;
+};
+
 type LeafletLike = {
   map: (node: HTMLElement, opts: { zoomControl: boolean; scrollWheelZoom: boolean }) => {
     setView: (coords: [number, number], zoom: number) => unknown;
@@ -47,6 +52,12 @@ type LeafletLike = {
     coords: [number, number],
     opts: { radius: number; color: string; fillColor: string; fillOpacity: number; weight: number },
   ) => MarkerLike;
+  marker: (coords: [number, number], opts: { icon: unknown }) => MarkerLike;
+  divIcon: (opts: { className: string; html: string; iconSize: [number, number]; iconAnchor: [number, number] }) => unknown;
+  polyline: (
+    coords: [number, number][],
+    opts: { color: string; weight: number; opacity: number; dashArray?: string },
+  ) => PolylineLike;
 };
 
 const categoryColors: Record<string, string> = {
@@ -74,16 +85,53 @@ function escapeHtml(value: string) {
 }
 
 export default function CulturalMap({ points, routes }: Props) {
+  const searchParams = useSearchParams();
+  const routeFromUrl = searchParams.get("route") ?? "";
   const mapHostRef = useRef<HTMLDivElement | null>(null);
   const leafletMapRef = useRef<ReturnType<LeafletLike["map"]> | null>(null);
   const markersLayerRef = useRef<{ remove: () => void } | null>(null);
   const [activeCategory, setActiveCategory] = useState("Todos");
+  const [activeRoute, setActiveRoute] = useState(routeFromUrl);
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [locationError, setLocationError] = useState("");
 
   const categories = useMemo(() => ["Todos", ...Array.from(new Set(points.map((point) => point.category)))], [points]);
-  const visiblePoints = useMemo(
-    () => (activeCategory === "Todos" ? points : points.filter((point) => point.category === activeCategory)),
-    [activeCategory, points],
+  const pointByName = useMemo(() => new Map(points.map((point) => [point.name, point])), [points]);
+  const selectedRoute = useMemo(
+    () => routes.find((route) => route.name === activeRoute) ?? null,
+    [activeRoute, routes],
   );
+  const selectedRoutePoints = useMemo(
+    () => selectedRoute?.stops.map((stop) => pointByName.get(stop)).filter((point): point is CulturalMapPoint => Boolean(point)) ?? [],
+    [pointByName, selectedRoute],
+  );
+  const visiblePoints = useMemo(
+    () => {
+      if (selectedRoutePoints.length) return selectedRoutePoints;
+      return activeCategory === "Todos" ? points : points.filter((point) => point.category === activeCategory);
+    },
+    [activeCategory, points, selectedRoutePoints],
+  );
+
+  useEffect(() => {
+    if (routeFromUrl) {
+      setActiveRoute(routeFromUrl);
+      setActiveCategory("Todos");
+    }
+  }, [routeFromUrl]);
+
+  function locateUser() {
+    setLocationError("");
+    if (!navigator.geolocation) {
+      setLocationError("Tu navegador no permite geolocalizacion.");
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+      () => setLocationError("No he podido obtener tu ubicacion. Revisa permisos del navegador."),
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },
+    );
+  }
 
   useEffect(() => {
     let disposed = false;
@@ -138,6 +186,19 @@ export default function CulturalMap({ points, routes }: Props) {
       markersLayerRef.current = layer;
 
       const bounds: [number, number][] = [];
+      const routeCoords: [number, number][] = selectedRoutePoints.map((point) => [point.lat, point.lng]);
+      if (routeCoords.length > 1) {
+        L.polyline(routeCoords, { color: "#D4AF37", weight: 6, opacity: 0.95 }).addTo(layer);
+      }
+      if (userLocation && routeCoords.length > 0) {
+        L.polyline([[userLocation.lat, userLocation.lng], routeCoords[0]], {
+          color: "#7A1E2C",
+          weight: 4,
+          opacity: 0.75,
+          dashArray: "8 8",
+        }).addTo(layer);
+      }
+
       for (const point of visiblePoints) {
         const marker = L.circleMarker([point.lat, point.lng], {
           radius: 10,
@@ -156,6 +217,19 @@ export default function CulturalMap({ points, routes }: Props) {
         bounds.push([point.lat, point.lng]);
       }
 
+      if (userLocation) {
+        const userIcon = L.divIcon({
+          className: "",
+          html: `<div style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#16a34a;color:#fff;font-weight:900;font-size:11px;box-shadow:0 1px 6px rgba(0,0,0,.35);border:2px solid white">TU</div>`,
+          iconSize: [28, 28],
+          iconAnchor: [14, 14],
+        });
+        const userMarker = L.marker([userLocation.lat, userLocation.lng], { icon: userIcon });
+        userMarker.bindTooltip("Tu ubicacion", { direction: "top", offset: [0, -12], opacity: 0.95 });
+        userMarker.addTo(layer);
+        bounds.push([userLocation.lat, userLocation.lng]);
+      }
+
       if (bounds.length > 1) {
         leafletMapRef.current.fitBounds(bounds, { padding: [28, 28] });
       }
@@ -165,7 +239,7 @@ export default function CulturalMap({ points, routes }: Props) {
     return () => {
       disposed = true;
     };
-  }, [visiblePoints]);
+  }, [selectedRoutePoints, userLocation, visiblePoints]);
 
   return (
     <div className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
@@ -185,7 +259,10 @@ export default function CulturalMap({ points, routes }: Props) {
               <button
                 key={category}
                 type="button"
-                onClick={() => setActiveCategory(category)}
+                onClick={() => {
+                  setActiveRoute("");
+                  setActiveCategory(category);
+                }}
                 className={`rounded-full border px-3 py-2 text-xs font-black uppercase tracking-wide ${
                   activeCategory === category
                     ? "border-[#0A2342] bg-[#0A2342] text-white"
@@ -200,6 +277,23 @@ export default function CulturalMap({ points, routes }: Props) {
         </div>
 
         <div className="rounded-md border border-[#0A2342]/15 bg-white p-4 shadow-sm">
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">Tu ubicacion</p>
+          <button
+            type="button"
+            onClick={locateUser}
+            className="mt-3 rounded-sm bg-[#0A2342] px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-white"
+          >
+            Saber donde estoy
+          </button>
+          {userLocation ? (
+            <p className="mt-2 text-sm font-semibold text-emerald-800">
+              Ubicacion detectada: {userLocation.lat.toFixed(4)}, {userLocation.lng.toFixed(4)}
+            </p>
+          ) : null}
+          {locationError ? <p className="mt-2 text-sm font-bold text-[#7A1E2C]">{locationError}</p> : null}
+        </div>
+
+        <div className="rounded-md border border-[#0A2342]/15 bg-white p-4 shadow-sm">
           <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">Conexiones de transporte</p>
           <p className="mt-2 text-sm leading-6 text-slate-700">
             Cada punto abre la pestana Transporte con el destino precargado. Desde ahi puedes usar tu ubicacion y ver conexiones de metro, bus, ferry o AirTrain.
@@ -210,12 +304,31 @@ export default function CulturalMap({ points, routes }: Props) {
           <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">Rutas culturales</p>
           <div className="mt-3 space-y-3">
             {routes.map((route) => (
-              <div key={route.name} className="rounded-md bg-[#F8F4EA] p-3">
-                <p className="font-display text-xl font-bold text-[#0A2342]">{route.name}</p>
-                <p className="mt-1 text-xs leading-5 text-slate-700">{route.stops.join(" -> ")}</p>
-              </div>
+              <button
+                key={route.name}
+                type="button"
+                onClick={() => {
+                  setActiveRoute(route.name);
+                  setActiveCategory("Todos");
+                }}
+                className={`w-full rounded-md p-3 text-left transition ${
+                  activeRoute === route.name ? "bg-[#0A2342] text-white" : "bg-[#F8F4EA] text-[#0A2342]"
+                }`}
+              >
+                <p className={`font-display text-xl font-bold ${activeRoute === route.name ? "text-white" : "text-[#0A2342]"}`}>
+                  {route.name}
+                </p>
+                <p className={`mt-1 text-xs leading-5 ${activeRoute === route.name ? "text-white/76" : "text-slate-700"}`}>
+                  {route.stops.join(" -> ")}
+                </p>
+              </button>
             ))}
           </div>
+          {selectedRoute ? (
+            <p className="mt-3 text-sm font-semibold text-slate-700">
+              Ruta activa: {selectedRoute.name}. La linea dorada une las paradas; la linea granate conecta tu ubicacion con la primera parada.
+            </p>
+          ) : null}
         </div>
       </aside>
     </div>

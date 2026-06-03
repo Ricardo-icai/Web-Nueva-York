@@ -554,7 +554,7 @@ const routes: CultureRoute[] = [
   {
     name: "Harlem Route",
     focus: "Jazz, Apollo y Renacimiento de Harlem",
-    stops: ["Harlem Jazz history", "Apollo Theater", "125 St", "Strivers Row"],
+    stops: ["Harlem", "Harlem Jazz history", "Apollo Theater"],
     weather: "Mejor de dia; gospel/jazz segun calendario.",
     bestFor: "adultos, adolescentes y amantes de musica",
     transport: "A/B/C/D o 2/3 hasta 125 St.",
@@ -763,6 +763,12 @@ export default function CulturePage() {
                 <p><strong>Transporte:</strong> {route.transport}</p>
                 <p><strong>Adaptacion:</strong> Priorizar paradas cercanas al alojamiento, fechas del viaje, clima y edades del grupo.</p>
               </div>
+              <a
+                href={`/culture?route=${encodeURIComponent(route.name)}#mapa-cultural`}
+                className="mt-5 inline-block rounded-sm border border-[#D4AF37] bg-[#D4AF37]/12 px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-[#D4AF37]"
+              >
+                Ver ruta en el mapa
+              </a>
             </article>
           ))}
         </div>
