@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import RestaurantLogoImage from "@/components/restaurants/RestaurantLogoImage";
+import { buildOfficialWebsiteSearchUrl } from "@/lib/restaurants/build-restaurant-links";
 import type { Restaurant } from "@/types/restaurants";
 
 type Props = {
@@ -140,6 +141,8 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
   const renderCard = (restaurant: Restaurant, cardKey?: string) => {
     const favorite = favorites.includes(restaurant.id);
     const estimated = restaurant.averagePricePerPersonUsd ?? null;
+    const websiteHref =
+      restaurant.officialWebsite ?? buildOfficialWebsiteSearchUrl(restaurant.name, restaurant.address);
     return (
       <article key={cardKey ?? restaurant.id} className="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
         <div className="relative h-56 w-full">
@@ -162,8 +165,10 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
           <p className="text-sm text-slate-900">{typeof estimated === "number" ? `Estimated from $${estimated}/person` : "Price estimate unavailable"}</p>
           <div className="flex flex-wrap gap-2">
             <Link href={restaurant.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-3 py-1 text-sm">Google Maps</Link>
-            <Link href={restaurant.directionsUrl ?? restaurant.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-3 py-1 text-sm">Directions</Link>
-            {restaurant.officialWebsite ? <Link href={restaurant.officialWebsite} target="_blank" className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-sm">Website</Link> : <span className="rounded-full border border-stone-300 px-3 py-1 text-sm text-stone-500">Official website unavailable</span>}
+            <Link href={restaurant.directionsUrl ?? restaurant.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-3 py-1 text-sm">Como llegar</Link>
+            <Link href={websiteHref} target="_blank" className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-sm">
+              {restaurant.officialWebsite ? "Website" : "Buscar web oficial"}
+            </Link>
           </div>
         </div>
       </article>
@@ -301,12 +306,12 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
           weight: 3,
         });
 
-        const websiteUrl = r.officialWebsite ?? r.googleMapsUrl;
+        const websiteUrl = r.officialWebsite ?? buildOfficialWebsiteSearchUrl(r.name, r.address);
         const directionsUrl = r.directionsUrl ?? r.googleMapsUrl;
         marker.bindTooltip(r.name, { direction: "top", offset: [0, -12], opacity: 0.95 });
         marker.on("mouseover", () => marker.openTooltip());
         marker.on("mouseout", () => marker.closeTooltip());
-        marker.bindPopup(`<div style="min-width:190px"><strong>${r.name}</strong><br/>${typeof r.googleRating === "number" ? `Rating ${r.googleRating.toFixed(1)} - ${r.googleReviewCount ?? 0} reviews` : "No rating"}<br/>${r.cuisine[0] ?? "Restaurant"}<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a href="${websiteUrl}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">Web</a><a href="${directionsUrl}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">Como llegar</a></div></div>`);
+        marker.bindPopup(`<div style="min-width:190px"><strong>${r.name}</strong><br/>${typeof r.googleRating === "number" ? `Rating ${r.googleRating.toFixed(1)} - ${r.googleReviewCount ?? 0} reviews` : "No rating"}<br/>${r.cuisine[0] ?? "Restaurant"}<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a href="${websiteUrl}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">${r.officialWebsite ? "Web oficial" : "Buscar web oficial"}</a><a href="${directionsUrl}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">Como llegar</a></div></div>`);
         marker.addTo(layer);
         bounds.push([r.location.lat, r.location.lng]);
       }

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import { buildOfficialWebsiteSearchUrl } from "@/lib/restaurants/build-restaurant-links";
 import type { NycPizzaHallOfFamePlace } from "@/types/restaurants";
 
 type Props = {
@@ -128,17 +129,15 @@ export default function PizzaHallOfFameSection({ places }: Props) {
                   Google Maps
                 </a>
                 <a href={place.directionsUrl ?? place.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">
-                  Directions
+                  Como llegar
                 </a>
-                {place.officialWebsite ? (
-                  <a href={place.officialWebsite} target="_blank" className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-1">
-                    Official Website
-                  </a>
-                ) : (
-                  <span className="rounded-full border border-stone-300 px-2 py-1 text-stone-500">
-                    Official website unavailable
-                  </span>
-                )}
+                <a
+                  href={place.officialWebsite ?? buildOfficialWebsiteSearchUrl(place.name, place.address)}
+                  target="_blank"
+                  className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-1"
+                >
+                  {place.officialWebsite ? "Official Website" : "Buscar web oficial"}
+                </a>
               </div>
             </div>
           </article>

@@ -21,6 +21,11 @@ export function buildDirectionsLink(
   return buildGoogleDirectionsUrl(origin, destination);
 }
 
+export function buildOfficialWebsiteSearchUrl(name: string, address?: string | null) {
+  const query = [name, address, "official website"].filter(Boolean).join(" ");
+  return `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+}
+
 export function resolveOfficialWebsite(
   googleWebsite?: string | null,
   overpassWebsite?: string | null,
@@ -28,4 +33,3 @@ export function resolveOfficialWebsite(
 ) {
   return googleWebsite ?? overpassWebsite ?? curatedWebsite ?? null;
 }
-

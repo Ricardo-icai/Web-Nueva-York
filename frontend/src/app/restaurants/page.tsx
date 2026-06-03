@@ -7,6 +7,7 @@ import RestaurantLogoImage from "@/components/restaurants/RestaurantLogoImage";
 import { getNycPizzaHallOfFame } from "@/lib/restaurants/enrich-nyc-pizza";
 import { getRestaurantsIntelligence } from "@/lib/restaurants/enrich-restaurant";
 import { isInPriceRange } from "@/lib/restaurants/estimate-price";
+import { buildOfficialWebsiteSearchUrl } from "@/lib/restaurants/build-restaurant-links";
 import type { NycPizzaHallOfFamePlace, Restaurant } from "@/types/restaurants";
 
 type RestaurantsPageProps = {
@@ -297,12 +298,10 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
                           </div>
                           <div className="mt-2 flex flex-wrap gap-2 text-xs">
                             <a href={r.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">Google Maps</a>
-                            <a href={r.directionsUrl ?? r.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">Directions</a>
-                            {r.officialWebsite ? (
-                              <a href={r.officialWebsite} target="_blank" className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-1">Website</a>
-                            ) : (
-                              <span className="rounded-full border border-stone-300 px-2 py-1 text-stone-500">Official website unavailable</span>
-                            )}
+                            <a href={r.directionsUrl ?? r.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">Como llegar</a>
+                            <a href={r.officialWebsite ?? buildOfficialWebsiteSearchUrl(r.name, r.address)} target="_blank" className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-1">
+                              {r.officialWebsite ? "Website" : "Buscar web oficial"}
+                            </a>
                           </div>
                         </div>
                       </article>
@@ -358,8 +357,10 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
                         </p>
                         <div className="mt-2 flex flex-wrap gap-2 text-xs">
                           <a href={r.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">Google Maps</a>
-                          <a href={r.directionsUrl ?? r.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">Directions</a>
-                          <a href={r.officialWebsite ?? r.googleMapsUrl} target="_blank" className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-1">Website</a>
+                          <a href={r.directionsUrl ?? r.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">Como llegar</a>
+                          <a href={r.officialWebsite ?? buildOfficialWebsiteSearchUrl(r.name, r.address)} target="_blank" className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-1">
+                            {r.officialWebsite ? "Website" : "Buscar web oficial"}
+                          </a>
                         </div>
                       </div>
                     </article>
