@@ -1,6 +1,5 @@
--- NYC Family Planner Supabase schema.
--- Run this in Supabase SQL Editor for project:
--- https://itectpofhngpeausakzg.supabase.co
+-- NYC Family Planner user-account data schema.
+-- Apply with Supabase CLI or paste into Supabase SQL Editor.
 
 create extension if not exists pgcrypto;
 
@@ -152,9 +151,3 @@ on public.user_routes
 for all
 using (auth.uid() = user_id)
 with check (auth.uid() = user_id);
-
--- Auth setup:
--- In Supabase Dashboard > Authentication > Providers > Email:
--- enable Email provider and disable "Confirm email".
--- Users register with email + password only.
--- Supabase stores passwords hashed in auth.users.

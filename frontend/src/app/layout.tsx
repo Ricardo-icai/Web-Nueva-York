@@ -5,6 +5,7 @@ import AuthGate from "@/components/auth/AuthGate";
 import AuthStatus from "@/components/auth/AuthStatus";
 import BackButton from "@/components/navigation/BackButton";
 import MenuDropdown from "@/components/navigation/MenuDropdown";
+import NavigationFeedback from "@/components/navigation/NavigationFeedback";
 import ProfileCompletionBanner from "@/components/profile/ProfileCompletionBanner";
 import "./globals.css";
 
@@ -31,13 +32,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${inter.variable} ${playfair.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-stone-50 text-slate-900">
+      <body className="min-h-full flex flex-col bg-[#fff3d1] text-slate-900">
+        <NavigationFeedback />
         <AuthGate>
-          <header className="sticky top-0 z-40 border-b border-stone-200/70 bg-white/80 backdrop-blur">
+          <header className="sticky top-0 z-40 border-b-2 border-slate-950 bg-[#fff3d1]/95 shadow-[0_4px_0_#111827] backdrop-blur">
             <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
               <div className="flex items-center gap-3">
                 <BackButton />
-                <Link href="/" className="text-sm font-bold tracking-[0.16em] text-slate-900">
+                <Link href="/" className="font-american-diner text-sm tracking-[0.08em] text-slate-950">
                   NYC FAMILY PLANNER
                 </Link>
               </div>

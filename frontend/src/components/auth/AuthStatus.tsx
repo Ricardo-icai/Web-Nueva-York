@@ -24,7 +24,7 @@ export default function AuthStatus() {
     <div className="hidden items-center gap-2 sm:flex">
       <Link
         href="/profile"
-        className="max-w-44 truncate rounded-full border border-stone-300 bg-white px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-stone-100"
+        className="max-w-44 truncate rounded-md border-2 border-slate-950 bg-white px-3 py-2 text-xs font-black text-slate-800 shadow-[3px_3px_0_#111827] transition hover:-translate-y-0.5 hover:bg-[#fffdf4]"
         title={email}
       >
         {email}
@@ -32,7 +32,7 @@ export default function AuthStatus() {
       <button
         type="button"
         onClick={() => void signOutCurrentUser()}
-        className="rounded-full border border-red-200 bg-red-50 px-3 py-2 text-xs font-black uppercase tracking-wide text-red-700 hover:bg-red-100"
+        className="rounded-md border-2 border-slate-950 bg-red-700 px-3 py-2 text-xs font-black uppercase tracking-wide text-white shadow-[3px_3px_0_#111827] transition hover:-translate-y-0.5 hover:bg-red-800"
       >
         Salir
       </button>

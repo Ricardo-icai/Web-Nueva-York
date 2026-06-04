@@ -1,5 +1,8 @@
 import Image from "next/image";
+import FavoriteToggleButton from "@/components/favorites/FavoriteToggleButton";
+import FavoritesRail, { type FavoriteRailItem } from "@/components/favorites/FavoritesRail";
 import CulturalMap, { type CulturalMapPoint } from "@/components/culture/CulturalMap";
+import CultureExperienceImage from "@/components/culture/CultureExperienceImage";
 import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 
 type CultureExperience = {
@@ -27,6 +30,7 @@ type CultureRoute = {
   bestFor: string;
   transport: string;
 };
+const CULTURE_FAVORITES_KEY = "nyc_culture_favorites_v1";
 
 const BADGES = [
   "Imprescindible",
@@ -43,6 +47,74 @@ const BADGES = [
 
 function maps(query: string) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+function commonsFile(fileName: string) {
+  return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(fileName)}`;
+}
+
+const CULTURE_IMAGE_OVERRIDES: Record<string, string> = {
+  "The Metropolitan Museum of Art": commonsFile("Metropolitan Museum of Art.jpg"),
+  "Museum of Modern Art (MoMA)": commonsFile("Museum of Modern Art, 11 W. 53rd St., New York City. LOC gsc.5a08719.jpg"),
+  "American Museum of Natural History": commonsFile("American Museum of Natural History, New York, N.Y. NYPL-805860.jpg"),
+  "Guggenheim Museum": commonsFile("Solomon R. Guggenheim Museum (48059131351).jpg"),
+  "Whitney Museum": commonsFile("Square, Whitney Museum of American Art (Unsplash).jpg"),
+  "The Frick Collection": commonsFile("The Frick Collection (49958273187).jpg"),
+  "New Museum": commonsFile("The New Museum on the Bowery. - panoramio.jpg"),
+  "Brooklyn Museum": commonsFile("Brooklyn Museum - Brooklyn, NY - DSC07980.JPG"),
+  "Intrepid Museum": commonsFile("USS Intrepid (CV-11) at Intrepid Sea, Air & Space Museum, NYC, 20231002 1342 1710.jpg"),
+  "Tenement Museum": commonsFile("Tenement Museum, New York City.jpg"),
+  "Statue of Liberty": commonsFile("New York City (New York, USA), Statue of Liberty -- 2012 -- 6814.jpg"),
+  "Ellis Island": commonsFile("Ellis Island Main Building.jpg"),
+  "Federal Hall": commonsFile("Federal Hall National Memorial 26 Wall Street.jpg"),
+  "Trinity Church": commonsFile("Trinity Church Wall Street New York.jpg"),
+  "St. Patrick's Cathedral": commonsFile("St. Patrick's Cathedral NYC.jpg"),
+  "Grand Central Terminal": commonsFile("Grand Central Terminal Main Concourse Jan 2006.jpg"),
+  "Rockefeller Center": commonsFile("Rockefeller Center New York City.jpg"),
+  "Brooklyn Bridge": commonsFile("Brooklyn Bridge Postdlf.jpg"),
+  "One World Trade Center": commonsFile("One World Trade Center, September 2017.jpg"),
+  "9/11 Memorial & Museum": commonsFile("National September 11 Memorial (South Pool).jpg"),
+  "Empire State Building": commonsFile("Empire State Building all.jpg"),
+  "Chrysler Building": commonsFile("Chrysler Building, New York.jpg"),
+  "Flatiron Building": commonsFile("Flatiron building.jpg"),
+  "Woolworth Building": commonsFile("WoolworthBuilding.JPG"),
+  "The Vessel": commonsFile("Vessel, Hudson Yards, New York City.jpg"),
+  "The Oculus": commonsFile("Westfield World Trade Center Oculus.jpg"),
+  "Seagram Building": commonsFile("Seagram Building (51552718926).jpg"),
+  "Lever House": commonsFile("Lever House 390 Park Avenue.jpg"),
+  Harlem: commonsFile("Apollo Theater, Harlem (51516410245).jpg"),
+  "Greenwich Village": commonsFile("Washington Square Park in Greenwich Village.jpg"),
+  SoHo: commonsFile("Greene Street, SoHo, NYC.jpg"),
+  Tribeca: commonsFile("Tribeca - New York City.jpg"),
+  Chinatown: commonsFile("Doyers Street Chinatown NYC.jpg"),
+  "Little Italy": commonsFile("Mulberry Street, Little Italy, Manhattan.jpg"),
+  "Lower East Side": commonsFile("Orchard Street Lower East Side Manhattan.jpg"),
+  Williamsburg: commonsFile("Williamsburg Bridge from Domino Park.jpg"),
+  DUMBO: commonsFile("Manhattan Bridge from Dumbo.jpg"),
+  "Bushwick Collective": commonsFile("Bushwick Collective street art.jpg"),
+  "DUMBO murals": commonsFile("Dumbo Walls Brooklyn.jpg"),
+  "Lower East Side street art": commonsFile("Lower East Side street art.jpg"),
+  "Williamsburg murals": commonsFile("Williamsburg Brooklyn mural.jpg"),
+  "Broadway theatres": commonsFile("Broadway Theatre District NYC.jpg"),
+  "Lincoln Center": commonsFile("Lincoln Center Metropolitan Opera House.jpg"),
+  "Carnegie Hall": commonsFile("Carnegie Hall, NYC.jpg"),
+  "Radio City Music Hall": commonsFile("Radio City Music Hall NYC.jpg"),
+  "New York Public Library": commonsFile("New York Public Library Main Branch 2012.jpg"),
+  "Strand Book Store": commonsFile("Strand Bookstore NYC.jpg"),
+  "Hotel Chelsea": commonsFile("Hotel Chelsea NYC.jpg"),
+  "Film locations route": commonsFile("Times Square at night.jpg"),
+  "Harlem Jazz history": commonsFile("Apollo Theater, Harlem (51516410245).jpg"),
+  "Apollo Theater": commonsFile("Apollo Theater, Harlem (51516410245).jpg"),
+  "Birdland Jazz Club": commonsFile("Birdland Jazz Club NYC.jpg"),
+  "Blue Note": commonsFile("Blue Note Jazz Club New York.jpg"),
+};
+
+function cultureImageFor(item: CultureExperience) {
+  return CULTURE_IMAGE_OVERRIDES[item.name] ?? item.image;
+}
+
+function experienceAnchor(name: string) {
+  return `culture-${name.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 }
 
 const museums: CultureExperience[] = [
@@ -579,16 +651,19 @@ const familyFilters = [
 function ExperienceCard({ item }: { item: CultureExperience }) {
   const transitHref = buildTransitPlannerUrl({ name: item.name, lat: item.lat, lng: item.lng });
   return (
-    <article className="overflow-hidden rounded-md border border-[#0A2342]/12 bg-white shadow-[0_18px_50px_rgba(10,35,66,0.12)]">
-      <div className="relative h-52 bg-stone-100">
-        <Image src={item.image} alt={item.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
+    <article id={experienceAnchor(item.name)} className="nyc-hard-card-white scroll-mt-28 overflow-hidden rounded-md">
+      <div className="relative h-52 border-b-2 border-slate-950 bg-stone-100">
+        <CultureExperienceImage name={item.name} primary={cultureImageFor(item)} fallback={item.image} />
       </div>
       <div className="space-y-3 p-4">
         <div>
-          <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#7A1E2C]">{item.category}</p>
-          <h3 className="mt-1 font-display text-2xl font-bold text-[#0A2342]">{item.name}</h3>
+          <p className="text-[11px] font-black uppercase tracking-[0.18em] text-red-700">{item.category}</p>
+          <div className="mt-1 flex items-start justify-between gap-3">
+            <h3 className="font-american-diner text-2xl text-slate-950">{item.name}</h3>
+            <FavoriteToggleButton baseKey={CULTURE_FAVORITES_KEY} favoriteType="culture" itemId={item.name} />
+          </div>
         </div>
-        <p className="text-sm leading-6 text-slate-700">{item.description}</p>
+        <p className="text-sm font-semibold leading-6 text-slate-700">{item.description}</p>
         <div className="grid gap-1 text-xs font-semibold text-slate-700">
           <p><span className="text-[#7A1E2C]">Horario:</span> {item.openingHours}</p>
           <p><span className="text-[#7A1E2C]">Tickets:</span> {item.ticketInfo}</p>
@@ -597,16 +672,16 @@ function ExperienceCard({ item }: { item: CultureExperience }) {
           <p><span className="text-[#7A1E2C]">Transporte:</span> {item.transportRecommendation}</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          {item.badges.map((badge) => (
-            <span key={badge} className="rounded-full bg-[#0A2342] px-2 py-1 text-[10px] font-black uppercase tracking-wide text-white">
+          {item.badges.map((badge, index) => (
+            <span key={`${item.name}-${badge}-${index}`} className="rounded-md border-2 border-slate-950 bg-[#0A2342] px-2 py-1 text-[10px] font-black uppercase tracking-wide text-white">
               {badge}
             </span>
           ))}
         </div>
         <div className="flex flex-wrap gap-2 text-xs font-black uppercase tracking-[0.1em]">
-          <a href={item.officialWebsite} target="_blank" className="rounded-sm bg-[#7A1E2C] px-3 py-2 text-white">Web oficial</a>
-          <a href={item.googleMapsUrl} target="_blank" className="rounded-sm border border-[#0A2342]/25 px-3 py-2 text-[#0A2342]">Google Maps</a>
-          <a href={transitHref} className="rounded-sm border border-[#D4AF37] bg-[#D4AF37]/12 px-3 py-2 text-[#0A2342]">Como llegar</a>
+          <a href={item.officialWebsite} target="_blank" className="nyc-action rounded-md px-3 py-2">Web oficial</a>
+          <a href={item.googleMapsUrl} target="_blank" className="rounded-md border-2 border-slate-950 bg-white px-3 py-2 text-[#0A2342] shadow-[3px_3px_0_#111827]">Google Maps</a>
+          <a href={transitHref} className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-3 py-2 text-[#0A2342] shadow-[3px_3px_0_#111827]">Como llegar</a>
         </div>
       </div>
     </article>
@@ -627,10 +702,10 @@ function Section({
   dark?: boolean;
 }) {
   return (
-    <section id={id} className={`${dark ? "bg-[#0A2342] text-white" : "bg-[#F8F4EA] text-[#0A2342]"} px-5 py-12 sm:px-8 lg:py-16`}>
+    <section id={id} className={`${dark ? "bg-[#0A2342] text-white" : "bg-[#fffdf4] text-[#0A2342]"} border-t-2 border-slate-950 px-5 py-12 sm:px-8 lg:py-16`}>
       <div className="mx-auto max-w-7xl">
         <p className={`text-xs font-black uppercase tracking-[0.22em] ${dark ? "text-[#D4AF37]" : "text-[#7A1E2C]"}`}>{eyebrow}</p>
-        <h2 className="mt-2 font-display text-4xl font-bold leading-tight sm:text-5xl">{title}</h2>
+        <h2 className="mt-2 font-american-diner text-4xl leading-tight sm:text-5xl">{title}</h2>
         <div className="mt-7">{children}</div>
       </div>
     </section>
@@ -648,12 +723,32 @@ export default function CulturePage() {
     googleMapsUrl: item.googleMapsUrl,
     transitUrl: buildTransitPlannerUrl({ name: item.name, lat: item.lat, lng: item.lng }),
   }));
+  const favoriteItems: FavoriteRailItem[] = allExperiences.map((item) => ({
+    id: item.name,
+    name: item.name,
+    meta: `${item.category} - ${item.estimatedDuration}`,
+    href: `#${experienceAnchor(item.name)}`,
+  }));
+  const sectionShortcuts = [
+    ["Museos", "#museos"],
+    ["Monumentos", "#monumentos"],
+    ["Arquitectura", "#arquitectura"],
+    ["Barrios", "#barrios"],
+    ["Street Art", "#street-art"],
+    ["Broadway", "#escena"],
+    ["Literatura", "#literatura"],
+    ["Musica", "#musica"],
+    ["Familias", "#familias"],
+    ["Rutas", "#rutas"],
+    ["Mapa", "#mapa-cultural"],
+  ];
 
   return (
-    <main className="bg-[#F8F4EA] text-[#0A2342]">
-      <section className="relative min-h-[92vh] overflow-hidden">
+    <main className="nyc-page-shell page-bg-culture text-[#0A2342]">
+      <div className="nyc-content-shell mx-auto max-w-7xl overflow-hidden">
+      <section className="relative min-h-[76vh] overflow-hidden border-b-2 border-slate-950">
         <Image
-          src="https://commons.wikimedia.org/wiki/Special:FilePath/New_York_City_%28New_York%2C_USA%29%2C_Statue_of_Liberty_--_2012_--_6814.jpg"
+          src="https://images.pexels.com/photos/6133108/pexels-photo-6133108.jpeg?auto=compress&cs=tinysrgb&w=2400"
           alt="Estatua de la Libertad al atardecer"
           fill
           priority
@@ -661,21 +756,38 @@ export default function CulturePage() {
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,35,66,0.96),rgba(10,35,66,0.65),rgba(122,30,44,0.32)),linear-gradient(180deg,rgba(10,35,66,0.12),rgba(10,35,66,0.94))]" />
-        <div className="relative z-10 mx-auto flex min-h-[92vh] max-w-7xl flex-col justify-end px-5 pb-10 pt-24 text-white sm:px-8">
+        <div className="relative z-10 mx-auto flex min-h-[76vh] max-w-7xl flex-col justify-end px-5 pb-10 pt-24 text-white sm:px-8">
           <p className="w-fit border border-[#D4AF37]/60 bg-[#D4AF37]/12 px-3 py-2 text-xs font-black uppercase tracking-[0.25em] text-[#D4AF37]">
             Cultura flagship
           </p>
-          <h1 className="mt-5 max-w-5xl font-display text-5xl font-bold leading-[0.94] sm:text-7xl lg:text-8xl">
+          <h1 className="mt-5 max-w-5xl font-american-diner text-5xl leading-[0.94] sm:text-7xl lg:text-8xl">
             CULTURA VIVA NYC
           </h1>
           <p className="mt-5 max-w-4xl text-base leading-7 text-white/84 sm:text-xl">
             Descubre el alma de Nueva York a traves de sus museos, monumentos, barrios historicos, arte urbano, arquitectura, musica, literatura y experiencias culturales unicas.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#museos" className="rounded-sm bg-[#7A1E2C] px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white">Museos</a>
-            <a href="#mapa-cultural" className="rounded-sm border border-white/35 bg-white/10 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white backdrop-blur">Mapa cultural</a>
-            <a href="#rutas" className="rounded-sm border border-[#D4AF37] bg-[#D4AF37]/12 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-[#D4AF37]">Rutas inteligentes</a>
+            <a href="#museos" className="nyc-action rounded-md px-5 py-3 text-sm">Museos</a>
+            <a href="#mapa-cultural" className="rounded-md border-2 border-white bg-white/10 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white backdrop-blur">Mapa cultural</a>
+            <a href="#rutas" className="rounded-md border-2 border-[#D4AF37] bg-[#D4AF37]/12 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-[#D4AF37]">Rutas inteligentes</a>
           </div>
+        </div>
+      </section>
+
+      <section className="border-b-2 border-slate-950 bg-[#fff3d1] px-5 py-5 sm:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex gap-2 overflow-x-auto pb-2">
+            {sectionShortcuts.map(([label, href]) => (
+              <a
+                key={href}
+                href={href}
+                className="shrink-0 rounded-md border-2 border-slate-950 bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-slate-950 shadow-[3px_3px_0_#111827]"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+          <FavoritesRail baseKey={CULTURE_FAVORITES_KEY} favoriteType="culture" items={favoriteItems} title="Favoritos culturales" />
         </div>
       </section>
 
@@ -694,8 +806,8 @@ export default function CulturePage() {
       <Section id="arquitectura" eyebrow="03 / Skyline con historia" title="Arquitectura de Nueva York">
         <div className="mb-6 grid gap-3 md:grid-cols-3">
           {["Midtown Art Deco: Grand Central -> Chrysler -> Empire State", "Downtown Icons: Woolworth -> Oculus -> One World", "Modern Park Avenue: Seagram -> Lever House -> Rockefeller"].map((route) => (
-            <div key={route} className="rounded-md border border-[#0A2342]/15 bg-white p-4 shadow-sm">
-              <p className="font-display text-2xl font-bold">{route}</p>
+            <div key={route} className="nyc-hard-card-white rounded-md p-4">
+              <p className="font-american-diner text-2xl font-bold">{route}</p>
             </div>
           ))}
         </div>
@@ -742,8 +854,8 @@ export default function CulturePage() {
       <Section id="familias" eyebrow="09 / Por edades" title="Cultura para Familias">
         <div className="grid gap-4 md:grid-cols-4">
           {familyFilters.map(([age, copy]) => (
-            <div key={age} className="rounded-md border border-[#0A2342]/15 bg-white p-5 shadow-sm">
-              <p className="font-display text-3xl font-bold capitalize">{age}</p>
+            <div key={age} className="nyc-hard-card-white rounded-md p-5">
+              <p className="font-american-diner text-3xl font-bold capitalize">{age}</p>
               <p className="mt-2 text-sm leading-6 text-slate-700">{copy}</p>
             </div>
           ))}
@@ -755,7 +867,7 @@ export default function CulturePage() {
           {routes.map((route) => (
             <article key={route.name} className="rounded-md border border-white/15 bg-white/8 p-5">
               <p className="text-xs font-black uppercase tracking-[0.18em] text-[#D4AF37]">{route.focus}</p>
-              <h3 className="mt-2 font-display text-3xl font-bold text-white">{route.name}</h3>
+              <h3 className="mt-2 font-american-diner text-3xl font-bold text-white">{route.name}</h3>
               <p className="mt-3 text-sm leading-6 text-white/74">{route.stops.join(" -> ")}</p>
               <div className="mt-4 grid gap-2 text-sm text-white/78">
                 <p><strong>Clima:</strong> {route.weather}</p>
@@ -785,14 +897,15 @@ export default function CulturePage() {
             Agente preparado para descubrir museos, exposiciones temporales, eventos culturales, Broadway, horarios de museos, festivales y rankings de calidad usando Google Places, NYC Open Data, Metropolitan Museum Open Access, Smithsonian Open Access, Eventbrite, Ticketmaster y OpenWeather cuando haya claves disponibles.
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
-            {BADGES.map((badge) => (
-              <span key={badge} className="rounded-full border border-white/20 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-white">
+            {BADGES.map((badge, index) => (
+              <span key={`culture-agent-${badge}-${index}`} className="rounded-full border border-white/20 px-3 py-1 text-[11px] font-black uppercase tracking-wide text-white">
                 {badge}
               </span>
             ))}
           </div>
         </div>
       </section>
+      </div>
     </main>
   );
 }

@@ -97,9 +97,6 @@ export async function signUpWithEmailPassword(email: string, password: string) {
   const { data, error } = await supabase!.auth.signUp({
     email: normalizeEmail(email),
     password,
-    options: {
-      emailRedirectTo: typeof window === "undefined" ? undefined : `${window.location.origin}/profile`,
-    },
   });
   if (error) return { handledBySupabase: true as const, error: error.message };
   if (data.session && data.user?.email) saveSession(data.user.email);

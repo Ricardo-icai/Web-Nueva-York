@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import UseMyLocationButton from "@/components/restaurants/UseMyLocationButton";
-import { readSession, userScopedStorageKey } from "@/lib/auth";
+import { loadTravelProfile } from "@/lib/user-data";
 
 type Props = {
   cuisine: string;
@@ -35,11 +35,9 @@ export default function RestaurantFilters(props: Props) {
   const hotelLng = props.hotelLng || savedHotel?.lng || "";
 
   useEffect(() => {
-    try {
-      const key = userScopedStorageKey(TRAVEL_PROFILE_KEY, readSession()?.email);
-      const raw = localStorage.getItem(key);
-      if (!raw) return;
-      const profile = JSON.parse(raw) as SavedTravelProfile;
+    async function loadSavedHotel() {
+      const profile = (await loadTravelProfile(TRAVEL_PROFILE_KEY)) as SavedTravelProfile | null;
+      if (!profile) return;
       const accommodation = profile.accommodation;
       if (
         accommodation?.address &&
@@ -54,9 +52,8 @@ export default function RestaurantFilters(props: Props) {
           lng: String(accommodation.lng),
         });
       }
-    } catch {
-      setSavedHotel(null);
     }
+    void loadSavedHotel();
   }, []);
 
   return (

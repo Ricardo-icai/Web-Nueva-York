@@ -1,5 +1,7 @@
 import Image from "next/image";
 import UseMyLocationMapButton from "@/components/common/UseMyLocationMapButton";
+import FavoriteToggleButton from "@/components/favorites/FavoriteToggleButton";
+import FavoritesRail, { type FavoriteRailItem } from "@/components/favorites/FavoritesRail";
 import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 
 type EventCard = {
@@ -24,6 +26,7 @@ type Ship = {
   location: string;
   publicVisit: string;
 };
+const JULY_FAVORITES_KEY = "nyc_fourth_of_july_favorites_v1";
 
 const fireworksEvent: EventCard = {
   name: "Macy's 4th of July Fireworks 2026",
@@ -212,17 +215,20 @@ const mapPoints = [
 function EventCardView({ event }: { event: EventCard }) {
   const transitHref = buildTransitPlannerUrl({ name: event.name, address: event.location });
   return (
-    <article className="overflow-hidden rounded-md border border-white/15 bg-white/8 shadow-[0_24px_70px_rgba(0,0,0,0.28)] backdrop-blur">
-      <div className="relative h-48">
+    <article className="nyc-hard-card-white overflow-hidden rounded-md">
+      <div className="relative h-48 border-b-2 border-slate-950">
         <Image src={event.image} alt={event.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
       </div>
       <div className="space-y-3 p-4">
         <div>
-          <p className="text-[11px] font-black uppercase tracking-[0.16em] text-[#D4AF37]">{event.tags.join(" / ")}</p>
-          <h3 className="mt-1 font-display text-2xl font-bold text-white">{event.name}</h3>
+          <p className="text-[11px] font-black uppercase tracking-[0.16em] text-red-700">{event.tags.join(" / ")}</p>
+          <div className="mt-1 flex items-start justify-between gap-3">
+            <h3 className="font-american-diner text-2xl text-slate-950">{event.name}</h3>
+            <FavoriteToggleButton baseKey={JULY_FAVORITES_KEY} favoriteType="fourth-of-july" itemId={event.name} />
+          </div>
         </div>
-        <p className="text-sm leading-6 text-white/78">{event.description}</p>
-        <div className="grid gap-2 text-sm text-white/82">
+        <p className="text-sm font-semibold leading-6 text-slate-700">{event.description}</p>
+        <div className="grid gap-2 text-sm font-semibold text-slate-700">
           <p><strong>Fecha:</strong> {event.date}</p>
           <p><strong>Hora:</strong> {event.time}</p>
           <p><strong>Ubicación:</strong> {event.location}</p>
@@ -231,18 +237,18 @@ function EventCardView({ event }: { event: EventCard }) {
           <p><strong>Cómo llegar:</strong> {event.directions}</p>
         </div>
         <div className="flex flex-wrap gap-2 pt-1">
-          <a href={event.officialUrl} target="_blank" className="rounded-sm bg-[#C1121F] px-3 py-2 text-xs font-black uppercase tracking-[0.12em] text-white">
+          <a href={event.officialUrl} target="_blank" className="nyc-action rounded-md px-3 py-2 text-xs">
             Enlace oficial
           </a>
           {event.ticketsUrl ? (
-            <a href={event.ticketsUrl} target="_blank" className="rounded-sm border border-[#D4AF37] px-3 py-2 text-xs font-black uppercase tracking-[0.12em] text-[#D4AF37]">
+            <a href={event.ticketsUrl} target="_blank" className="rounded-md border-2 border-slate-950 bg-[#fff3d1] px-3 py-2 text-xs font-black uppercase tracking-[0.12em] text-slate-950 shadow-[3px_3px_0_#111827]">
               Entradas
             </a>
           ) : null}
-          <a href={event.mapsUrl} target="_blank" className="rounded-sm border border-white/30 px-3 py-2 text-xs font-black uppercase tracking-[0.12em] text-white">
+          <a href={event.mapsUrl} target="_blank" className="rounded-md border-2 border-slate-950 bg-white px-3 py-2 text-xs font-black uppercase tracking-[0.12em] text-slate-950 shadow-[3px_3px_0_#111827]">
             Google Maps
           </a>
-          <a href={transitHref} className="rounded-sm border border-[#D4AF37] bg-[#D4AF37]/10 px-3 py-2 text-xs font-black uppercase tracking-[0.12em] text-[#D4AF37]">
+          <a href={transitHref} className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-3 py-2 text-xs font-black uppercase tracking-[0.12em] text-slate-950 shadow-[3px_3px_0_#111827]">
             Como llegar
           </a>
         </div>
@@ -266,10 +272,10 @@ function SectionShell({
 }) {
   const isWhite = tone === "white";
   return (
-    <section id={id} className={`${isWhite ? "bg-white text-[#0A2342]" : tone === "deep" ? "bg-[#07192f] text-white" : "bg-[#0A2342] text-white"} px-5 py-12 sm:px-8 lg:py-16`}>
+    <section id={id} className={`${isWhite ? "bg-white text-[#0A2342]" : tone === "deep" ? "bg-[#07192f] text-white" : "bg-[#0A2342] text-white"} border-t-2 border-slate-950 px-5 py-12 sm:px-8 lg:py-16`}>
       <div className="mx-auto max-w-7xl">
-        <p className={`text-xs font-black uppercase tracking-[0.22em] ${isWhite ? "text-[#C1121F]" : "text-[#D4AF37]"}`}>{eyebrow}</p>
-        <h2 className="mt-2 font-display text-4xl font-bold leading-tight sm:text-5xl">{title}</h2>
+        <p className={`text-xs font-black uppercase tracking-[0.22em] ${isWhite ? "text-red-700" : "text-[#D4AF37]"}`}>{eyebrow}</p>
+        <h2 className="mt-2 font-american-diner text-4xl leading-tight sm:text-5xl">{title}</h2>
         <div className="mt-7">{children}</div>
       </div>
     </section>
@@ -279,12 +285,31 @@ function SectionShell({
 export default function FourthOfJulyPage() {
   const freeEvents = majorEvents.filter((event) => event.price.toLowerCase().includes("gratis"));
   const ticketedEvents = majorEvents.filter((event) => event.ticketsUrl);
+  const favoriteItems: FavoriteRailItem[] = majorEvents.map((event) => ({
+    id: event.name,
+    name: event.name,
+    meta: `${event.date} - ${event.location}`,
+    href: event.officialUrl,
+  }));
+  const sectionShortcuts = [
+    ["Fuegos", "#fuegos"],
+    ["Sail4th", "#sail4th"],
+    ["Elcano", "#elcano"],
+    ["Conciertos", "#conciertos"],
+    ["Familias", "#familias"],
+    ["Cultura", "#cultura"],
+    ["Gratis", "#gratis"],
+    ["Entrada", "#entrada"],
+    ["Mapa", "#mapa"],
+    ["Clima", "#clima"],
+  ];
 
   return (
-    <main className="bg-[#0A2342] text-white">
-      <section className="relative min-h-[92vh] overflow-hidden">
+    <main className="nyc-page-shell page-bg-july">
+      <div className="nyc-content-shell mx-auto max-w-7xl overflow-hidden">
+      <section className="relative min-h-[76vh] overflow-hidden border-b-2 border-slate-950">
         <Image
-          src="https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=2400&q=86"
+          src="https://images.pexels.com/photos/12674747/pexels-photo-12674747.jpeg?auto=compress&cs=tinysrgb&w=2400"
           alt="Skyline de Manhattan al atardecer"
           fill
           priority
@@ -292,12 +317,12 @@ export default function FourthOfJulyPage() {
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,35,66,0.96),rgba(10,35,66,0.68),rgba(193,18,31,0.3)),linear-gradient(180deg,rgba(10,35,66,0.18),rgba(10,35,66,0.96))]" />
-        <div className="relative z-10 mx-auto flex min-h-[92vh] max-w-7xl flex-col justify-end px-5 pb-10 pt-24 sm:px-8 lg:px-10">
+        <div className="relative z-10 mx-auto flex min-h-[76vh] max-w-7xl flex-col justify-end px-5 pb-10 pt-24 sm:px-8 lg:px-10">
           <div className="max-w-5xl">
             <p className="w-fit border border-[#D4AF37]/60 bg-[#D4AF37]/12 px-3 py-2 text-xs font-black uppercase tracking-[0.25em] text-[#D4AF37]">
               4 de Julio en Nueva York
             </p>
-            <h1 className="mt-5 font-display text-5xl font-bold leading-[0.92] text-white sm:text-7xl lg:text-8xl">
+            <h1 className="mt-5 font-american-diner text-5xl leading-[0.92] text-white sm:text-7xl lg:text-8xl">
               ESTRELLAS, BANDERAS Y ESPECTÁCULOS
             </h1>
             <p className="mt-5 max-w-4xl text-base leading-7 text-white/84 sm:text-xl">
@@ -305,10 +330,10 @@ export default function FourthOfJulyPage() {
               conciertos, desfiles y los eventos más importantes de la ciudad.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <a href="#fuegos" className="rounded-sm bg-[#C1121F] px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white shadow-[0_18px_45px_rgba(193,18,31,0.35)]">
+              <a href="#fuegos" className="nyc-action rounded-md px-5 py-3 text-sm">
                 Ver eventos
               </a>
-              <a href="#mapa" className="rounded-sm border border-white/35 bg-white/10 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white backdrop-blur">
+              <a href="#mapa" className="rounded-md border-2 border-white bg-white/10 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white backdrop-blur">
                 Mapa 4 de Julio
               </a>
             </div>
@@ -319,12 +344,29 @@ export default function FourthOfJulyPage() {
               ["Sail4th 250", "más de 50 veleros previstos"],
               ["NYC", "eventos culturales, familiares y premium"],
             ].map(([value, label]) => (
-              <div key={value} className="border-l-2 border-[#D4AF37] bg-white/8 p-4 backdrop-blur">
-                <p className="font-display text-3xl font-bold text-white">{value}</p>
+              <div key={value} className="rounded-md border-2 border-white/70 bg-white/10 p-4 backdrop-blur">
+                <p className="font-american-diner text-3xl text-white">{value}</p>
                 <p className="mt-1 text-xs font-bold uppercase tracking-[0.14em] text-white/70">{label}</p>
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="border-b-2 border-slate-950 bg-[#fff3d1] px-5 py-5 sm:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex gap-2 overflow-x-auto pb-2">
+            {sectionShortcuts.map(([label, href]) => (
+              <a
+                key={href}
+                href={href}
+                className="shrink-0 rounded-md border-2 border-slate-950 bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-slate-950 shadow-[3px_3px_0_#111827]"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
+          <FavoritesRail baseKey={JULY_FAVORITES_KEY} favoriteType="fourth-of-july" items={favoriteItems} title="Favoritos del 4 de Julio" />
         </div>
       </section>
 
@@ -333,7 +375,7 @@ export default function FourthOfJulyPage() {
           <EventCardView event={fireworksEvent} />
           <div className="rounded-md border border-white/15 bg-white/8 p-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
-              <h3 className="font-display text-3xl font-bold">Mejores zonas para verlo</h3>
+              <h3 className="font-american-diner text-3xl font-bold">Mejores zonas para verlo</h3>
               <UseMyLocationMapButton destinationQuery="Brooklyn Bridge New York" compact />
             </div>
             <ul className="mt-4 space-y-3 text-sm leading-6 text-white/80">
@@ -352,7 +394,7 @@ export default function FourthOfJulyPage() {
       <SectionShell id="sail4th" eyebrow="02 / America 250 en el puerto" title="Sail4th 250 y Grandes Veleros" tone="deep">
         <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
           <div className="space-y-4">
-            <div className="relative min-h-[430px] overflow-hidden rounded-md border border-white/15 bg-white/5 shadow-[0_28px_80px_rgba(0,0,0,0.35)]">
+            <div className="relative min-h-[430px] overflow-hidden rounded-md border-2 border-white/70 bg-white/5 shadow-[6px_6px_0_#111827]">
               <Image
                 src={sail4thVisuals[0].src}
                 alt={sail4thVisuals[0].alt}
@@ -363,7 +405,7 @@ export default function FourthOfJulyPage() {
               <div className="absolute inset-0 bg-gradient-to-t from-[#07192f] via-[#07192f]/20 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-5">
                 <p className="text-xs font-black uppercase tracking-[0.22em] text-[#D4AF37]">Sail4th 250 official media</p>
-                <h3 className="mt-2 font-display text-4xl font-bold text-white">Tall ships, Liberty y skyline.</h3>
+                <h3 className="mt-2 font-american-diner text-4xl font-bold text-white">Tall ships, Liberty y skyline.</h3>
                 <p className="mt-2 max-w-xl text-sm leading-6 text-white/78">
                   Esta sección se lee como una guía visual: primero qué se ve, después cuándo ir, dónde colocarse y qué barcos buscar.
                 </p>
@@ -385,7 +427,7 @@ export default function FourthOfJulyPage() {
           <div>
             <div className="rounded-md border border-[#D4AF37]/35 bg-[#D4AF37]/10 p-5">
               <p className="text-xs font-black uppercase tracking-[0.2em] text-[#D4AF37]">Flow americano</p>
-              <h3 className="mt-2 font-display text-3xl font-bold text-white">Cómo vivir Sail4th sin perderte</h3>
+              <h3 className="mt-2 font-american-diner text-3xl font-bold text-white">Cómo vivir Sail4th sin perderte</h3>
               <p className="mt-3 text-sm leading-6 text-white/78">
                 Mira esta parte como un festival por zonas: desfile grande por el Hudson, barcos visitables en muelles y ambiente
                 patriótico por todo el puerto. No hace falta verlo todo: elige una ruta y quédate ahí.
@@ -400,7 +442,7 @@ export default function FourthOfJulyPage() {
                       {idx + 1}
                     </span>
                     <div>
-                      <p className="font-display text-2xl font-bold text-white">{route.title}</p>
+                      <p className="font-american-diner text-2xl font-bold text-white">{route.title}</p>
                       <p className="mt-1 text-xs font-black uppercase tracking-[0.14em] text-[#D4AF37]">{route.time}</p>
                       <p className="mt-2 text-sm font-semibold text-white/82">{route.place}</p>
                       <p className="mt-1 text-sm leading-6 text-white/68">{route.note}</p>
@@ -487,7 +529,7 @@ export default function FourthOfJulyPage() {
           {majorEvents.filter((event) => event.tags.includes("Actuaciones") || event.name.includes("Macy")).map((event) => (
             <article key={event.name} className="rounded-md border border-[#0A2342]/15 p-4">
               <p className="text-xs font-black uppercase tracking-[0.16em] text-[#C1121F]">{event.date} / {event.time}</p>
-              <h3 className="mt-2 font-display text-2xl font-bold">{event.name}</h3>
+              <h3 className="mt-2 font-american-diner text-2xl font-bold">{event.name}</h3>
               <p className="mt-2 text-sm leading-6 text-[#0A2342]/72">{event.description}</p>
               <a href={event.officialUrl} target="_blank" className="mt-4 inline-block rounded-sm bg-[#0A2342] px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-white">Entradas / oficial</a>
             </article>
@@ -503,7 +545,7 @@ export default function FourthOfJulyPage() {
             ["Programación histórica America 250", "Ideal para niños curiosos: barcos, historia naval y ceremonias públicas."],
           ].map(([title, copy]) => (
             <div key={title} className="rounded-md border border-white/15 bg-white/8 p-5">
-              <h3 className="font-display text-2xl font-bold">{title}</h3>
+              <h3 className="font-american-diner text-2xl font-bold">{title}</h3>
               <p className="mt-2 text-sm leading-6 text-white/75">{copy}</p>
             </div>
           ))}
@@ -530,7 +572,7 @@ export default function FourthOfJulyPage() {
         <div className="grid gap-4 md:grid-cols-3">
           {freeEvents.map((event) => (
             <article key={event.name} className="rounded-md border border-[#0A2342]/15 p-4">
-              <h3 className="font-display text-2xl font-bold">{event.name}</h3>
+              <h3 className="font-american-diner text-2xl font-bold">{event.name}</h3>
               <p className="mt-2 text-sm text-[#0A2342]/70">{event.time}</p>
               <p className="mt-1 text-sm text-[#0A2342]/70">{event.location}</p>
               <a href={event.officialUrl} target="_blank" className="mt-4 inline-block text-sm font-black text-[#C1121F] underline underline-offset-4">Ver oficial</a>
@@ -580,7 +622,7 @@ export default function FourthOfJulyPage() {
             ["Recomendación según clima", "Con lluvia: priorizar visitas cubiertas, Broadway y observatorios. Con calor: itinerario por bloques cortos y sombra."],
           ].map(([title, copy]) => (
             <div key={title} className="rounded-md border border-[#0A2342]/15 p-5">
-              <h3 className="font-display text-2xl font-bold">{title}</h3>
+              <h3 className="font-american-diner text-2xl font-bold">{title}</h3>
               <p className="mt-2 text-sm leading-6 text-[#0A2342]/72">{copy}</p>
             </div>
           ))}
@@ -593,6 +635,7 @@ export default function FourthOfJulyPage() {
           </p>
         </div>
       </SectionShell>
+      </div>
     </main>
   );
 }

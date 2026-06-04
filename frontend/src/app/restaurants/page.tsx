@@ -1,4 +1,5 @@
 import RestaurantDetailsDrawer from "@/components/restaurants/RestaurantDetailsDrawer";
+import FavoriteToggleButton from "@/components/favorites/FavoriteToggleButton";
 import RestaurantFilters from "@/components/restaurants/RestaurantFilters";
 import PizzaHallOfFameSection from "@/components/restaurants/PizzaHallOfFameSection";
 import RestaurantsHero from "@/components/restaurants/RestaurantsHero";
@@ -14,6 +15,7 @@ import type { NycPizzaHallOfFamePlace, Restaurant } from "@/types/restaurants";
 type RestaurantsPageProps = {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
+const RESTAURANT_FAVORITES_KEY = "nyc_restaurant_favorites_v1";
 
 function one(v: string | string[] | undefined, fallback = "") {
   return Array.isArray(v) ? (v[0] ?? fallback) : (v ?? fallback);
@@ -86,6 +88,46 @@ function pizzaPlaceToRestaurant(place: NycPizzaHallOfFamePlace): Restaurant {
     distanceFromAccommodationKm: place.distanceFromAccommodationKm,
     qualityScore: place.nycReputationScore,
     editorialTags: [...place.badges, place.pizzaStyle, ...place.signaturePizzas],
+  };
+}
+
+function slimRestaurant(restaurant: Restaurant): Restaurant {
+  return {
+    id: restaurant.id,
+    source: restaurant.source,
+    dataQuality: restaurant.dataQuality,
+    name: restaurant.name,
+    description: restaurant.description ? restaurant.description.slice(0, 220) : restaurant.description,
+    cuisine: restaurant.cuisine.slice(0, 4),
+    categories: restaurant.categories.slice(0, 6),
+    address: restaurant.address,
+    neighborhood: restaurant.neighborhood,
+    borough: restaurant.borough,
+    location: restaurant.location,
+    googlePlaceId: restaurant.googlePlaceId,
+    googleRating: restaurant.googleRating,
+    googleReviewCount: restaurant.googleReviewCount,
+    googleReviews: [],
+    priceLevel: restaurant.priceLevel,
+    averagePricePerPersonUsd: restaurant.averagePricePerPersonUsd,
+    officialWebsite: restaurant.officialWebsite,
+    googleMapsUrl: restaurant.googleMapsUrl,
+    directionsUrl: restaurant.directionsUrl,
+    reservationUrl: restaurant.reservationUrl,
+    imageUrl: restaurant.imageUrl,
+    imageSource: restaurant.imageSource,
+    phone: restaurant.phone,
+    openingHours: restaurant.openingHours?.slice(0, 2),
+    familyFriendly: restaurant.familyFriendly,
+    vegetarianOptions: restaurant.vegetarianOptions,
+    veganOptions: restaurant.veganOptions,
+    halalOptions: restaurant.halalOptions,
+    kosherOptions: restaurant.kosherOptions,
+    distanceFromAccommodationKm: restaurant.distanceFromAccommodationKm,
+    estimatedTransitMinutes: restaurant.estimatedTransitMinutes,
+    estimatedWalkingMinutes: restaurant.estimatedWalkingMinutes,
+    qualityScore: restaurant.qualityScore,
+    editorialTags: restaurant.editorialTags?.slice(0, 8),
   };
 }
 
@@ -206,10 +248,14 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
     { title: "Ice Cream", keys: ["ice_cream"] },
     { title: "Chocolate & Babka", keys: ["chocolate_babka"] },
   ];
+  const restaurantsForClient = restaurants.map(slimRestaurant);
+  const mapRestaurantsForClient = mapFilteredLocales.map(slimRestaurant);
+  const burgerHallOfFameForClient = burgerHallOfFame.map(slimRestaurant);
+  const featuredForClient = restaurantsForClient[0];
 
   return (
-    <main className="min-h-screen bg-[url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=80')] bg-cover bg-fixed bg-center px-6 py-10 md:px-10">
-      <div className="min-h-screen bg-stone-50/95 p-0">
+    <main className="nyc-page-shell page-bg-food">
+      <div className="nyc-content-shell mx-auto max-w-7xl p-0">
         <RestaurantsHero total={totalLocales} />
 
         <section className="mx-auto mt-6 max-w-6xl rounded-3xl border border-stone-200 bg-white p-5 shadow-sm">
@@ -226,21 +272,21 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
         </section>
 
         <RestaurantsInteractive
-          restaurants={restaurants}
-          mapRestaurants={mapFilteredLocales}
+          restaurants={restaurantsForClient}
+          mapRestaurants={mapRestaurantsForClient}
           userLocation={userLocation}
           afterMapSlot={
             <>
               <PizzaHallOfFameSection places={pizzaHallOfFame} />
 
-              {burgerHallOfFame.length > 0 ? (
+              {burgerHallOfFameForClient.length > 0 ? (
               <section className="mx-auto mt-8 max-w-6xl space-y-4">
                 <h2 className="font-american-diner text-3xl text-slate-900">NYC Burger Hall of Fame</h2>
                 <p className="text-sm text-slate-700">
                   Los burgers mejor valorados y de moda, ordenados por calidad, distancia, rating y resenas.
                 </p>
                 <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-                  {burgerHallOfFame
+                  {burgerHallOfFameForClient
                     .sort((a, b) => {
                       const distanceA = a.distanceFromAccommodationKm ?? 9999;
                       const distanceB = b.distanceFromAccommodationKm ?? 9999;
@@ -269,7 +315,10 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
                           />
                         </div>
                         <div className="space-y-2 p-4">
-                          <p className="text-sm font-semibold text-slate-900">{r.name}</p>
+                          <div className="flex items-start justify-between gap-3">
+                            <p className="text-sm font-semibold text-slate-900">{r.name}</p>
+                            <FavoriteToggleButton baseKey={RESTAURANT_FAVORITES_KEY} favoriteType="restaurants" itemId={r.id} />
+                          </div>
                           <p className="text-xs text-slate-600">
                             Signature burger: {r.editorialTags?.[0] ?? r.cuisine[0] ?? "Burger house"}
                           </p>
@@ -318,7 +367,7 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
         <section className="mx-auto mt-8 max-w-6xl space-y-6">
           <h2 className="text-2xl font-bold text-slate-900">Must-Try NYC Food & Desserts</h2>
           {mustTryGroups.map((group) => {
-            const groupItems = restaurants.filter((r) =>
+            const groupItems = restaurantsForClient.filter((r) =>
               group.keys.some((k) => r.categories.join(" ").toLowerCase().includes(k)),
             );
             if (!groupItems.length) return null;
@@ -343,7 +392,10 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
                         />
                       </div>
                       <div className="space-y-2 p-4">
-                        <p className="text-sm font-semibold text-slate-900">{r.name}</p>
+                        <div className="flex items-start justify-between gap-3">
+                          <p className="text-sm font-semibold text-slate-900">{r.name}</p>
+                          <FavoriteToggleButton baseKey={RESTAURANT_FAVORITES_KEY} favoriteType="restaurants" itemId={r.id} />
+                        </div>
                         <p className="text-xs text-slate-600">{r.cuisine.join(", ")}</p>
                         <p className="text-xs text-slate-600">{r.description ?? "No editorial note."}</p>
                         <p className="text-xs text-slate-700">
@@ -374,7 +426,7 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
           })}
         </section>
 
-        <RestaurantDetailsDrawer restaurant={featured} />
+        <RestaurantDetailsDrawer restaurant={featuredForClient} />
       </div>
     </main>
   );

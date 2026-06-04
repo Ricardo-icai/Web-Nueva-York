@@ -50,8 +50,8 @@ export default function ProfilePage() {
   const { session, user } = profile;
 
   return (
-    <main className="mx-auto max-w-4xl px-6 py-10">
-      <section className="rounded-lg border-2 border-slate-950 bg-[#fff3d1] p-6 shadow-[6px_6px_0_#111827]">
+    <main className="nyc-page-shell page-bg-profile">
+      <section className="nyc-content-shell mx-auto max-w-4xl p-6">
         <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">Perfil</p>
         <h1 className="mt-2 font-american-diner text-5xl text-slate-950">Tu sesion</h1>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -62,7 +62,7 @@ export default function ProfilePage() {
           <div className="rounded-md border-2 border-slate-950 bg-white p-4">
             <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-600">Estado</p>
             <p className="mt-2 text-lg font-black text-slate-950">
-              {profile.confirmed || user?.confirmed ? "Correo confirmado" : "Pendiente"}
+              {session?.email ? "Cuenta activa" : "Sin sesion"}
             </p>
           </div>
           <div className="rounded-md border-2 border-slate-950 bg-white p-4">

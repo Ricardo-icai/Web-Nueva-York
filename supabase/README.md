@@ -1,11 +1,43 @@
 # Supabase setup
 
-1. Create a Supabase project.
-2. In Authentication > Providers, enable Email.
-3. In Authentication > URL Configuration, add `http://localhost:3000/profile` as a redirect URL.
-4. Run `supabase/schema.sql` in the SQL Editor.
-5. Copy `frontend/.env.local.example` to `frontend/.env.local` and fill:
-   - `NEXT_PUBLIC_SUPABASE_URL`
-   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+Project URL:
 
-The app will then register users with Supabase Auth and keep each account separated.
+`https://itectpofhngpeausakzg.supabase.co`
+
+## 1. Create database tables
+
+Open Supabase Dashboard > SQL Editor and run:
+
+`supabase/schema.sql`
+
+This creates:
+
+- `user_accounts`
+- `travel_profiles`
+- `user_favorites`
+- `user_routes`
+
+All tables have Row Level Security enabled, so each user can only read/write their own data. Passwords are not stored in public tables; Supabase Auth stores them hashed in `auth.users`.
+
+## 2. Configure email/password auth
+
+Open Authentication > Providers > Email:
+
+- Enable Email provider.
+- Disable Confirm email.
+
+Users register with email + password only. No verification code, no email confirmation step.
+
+## 3. Frontend environment
+
+`frontend/.env.local` is configured with:
+
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+
+## Direct remote setup
+
+The publishable key cannot create tables, policies, auth templates, or project settings. To create everything remotely without using the dashboard, an admin credential is required:
+
+- Supabase access token for CLI/Management API, or
+- Database connection string/password for direct SQL execution.

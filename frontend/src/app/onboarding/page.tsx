@@ -4,6 +4,7 @@ import Image from "next/image";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { readSession, userScopedStorageKey } from "@/lib/auth";
+import { loadTravelProfile, saveTravelProfile } from "@/lib/user-data";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
@@ -79,10 +80,9 @@ export default function OnboardingPage() {
   const [selectedLocation, setSelectedLocation] = useState<LocationSuggestion | null>(null);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(storageKey);
-      if (!raw) return;
-      const saved = JSON.parse(raw) as SavedTravelProfile;
+    async function loadSavedProfile() {
+      const saved = (await loadTravelProfile(TRAVEL_PROFILE_KEY)) as SavedTravelProfile | null;
+      if (!saved) return;
       setTripId(saved.tripId ?? null);
       setTripName(saved.name ?? "");
       setNationality(saved.nationality ?? "ES");
@@ -99,9 +99,8 @@ export default function OnboardingPage() {
           provider: "saved",
         });
       }
-    } catch {
-      // Ignore broken local profiles and allow the user to save a fresh one.
     }
+    void loadSavedProfile();
   }, [storageKey]);
 
   useEffect(() => {
@@ -217,13 +216,7 @@ export default function OnboardingPage() {
       if (!finalResponse.ok) throw new Error(`No se pudo guardar el perfil del viaje (${finalResponse.status})`);
       const trip = (await finalResponse.json()) as { id: string };
       setTripId(trip.id);
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({
-          tripId: trip.id,
-          ...payload,
-        }),
-      );
+      await saveTravelProfile(TRAVEL_PROFILE_KEY, { tripId: trip.id, ...payload });
       router.push("/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Error inesperado");
@@ -233,24 +226,25 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-10">
-      <section className="grid gap-8 rounded-3xl border border-stone-200 bg-white p-6 shadow-sm md:grid-cols-2 md:p-10">
+    <main className="nyc-page-shell page-bg-profile">
+    <div className="nyc-content-shell mx-auto max-w-6xl px-6 py-10">
+      <section className="grid gap-8 overflow-hidden rounded-md border-2 border-slate-950 bg-[#fff3d1] p-6 shadow-[6px_6px_0_#111827] md:grid-cols-2 md:p-10">
         <div>
-          <p className="text-xs uppercase tracking-[0.24em] text-amber-700">Perfil del viaje</p>
-          <h1 className="mt-3 font-display text-4xl leading-tight md:text-5xl">
+          <p className="text-xs font-black uppercase tracking-[0.24em] text-red-700">Perfil del viaje</p>
+          <h1 className="mt-3 font-american-diner text-4xl leading-tight text-slate-950 md:text-5xl">
             Edita los datos base de tu viaje a Nueva York
           </h1>
-          <p className="mt-4 text-slate-600">
+          <p className="mt-4 text-sm font-semibold leading-6 text-slate-700">
             Cambia alojamiento, fechas, numero de viajeros y ritmo. Guardaremos este perfil para tu usuario.
           </p>
         </div>
-        <div className="relative min-h-[260px] overflow-hidden rounded-2xl">
+        <div className="relative min-h-[260px] overflow-hidden rounded-md border-2 border-slate-950">
           <Image src={heroImage} alt="Nueva York premium" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" priority />
         </div>
       </section>
 
-      <form noValidate onSubmit={handleSubmit} className="mt-8 grid gap-4 rounded-3xl border border-stone-200 bg-white p-6 shadow-sm md:p-8">
-        <h2 className="font-display text-3xl text-slate-900">Datos del perfil</h2>
+      <form noValidate onSubmit={handleSubmit} className="mt-8 grid gap-4 rounded-md border-2 border-slate-950 bg-white p-6 shadow-[6px_6px_0_#111827] md:p-8">
+        <h2 className="font-american-diner text-3xl text-slate-900">Datos del perfil</h2>
         {missingFields.length > 0 ? (
           <div className="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
             <p className="font-bold">Completa tu perfil para que la experiencia sea mejor y mas precisa.</p>
@@ -264,7 +258,7 @@ export default function OnboardingPage() {
           value={tripName}
           onChange={(event) => setTripName(event.target.value)}
           placeholder="Nombre del viaje"
-          className="rounded-xl border border-stone-300 bg-stone-50 px-4 py-3"
+          className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-4 py-3 font-bold"
         />
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -276,7 +270,7 @@ export default function OnboardingPage() {
               required
               value={nationality}
               onChange={(event) => setNationality(event.target.value)}
-              className="rounded-xl border border-stone-300 bg-stone-50 px-4 py-3"
+              className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-4 py-3 font-bold"
             >
               {countries.map((country) => (
                 <option key={country.code} value={country.code}>{country.flag} {country.name}</option>
@@ -293,7 +287,7 @@ export default function OnboardingPage() {
               name="travelers"
               value={travelers}
               onChange={(event) => setTravelers(Number(event.target.value))}
-              className="rounded-xl border border-stone-300 bg-stone-50 px-4 py-3"
+              className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-4 py-3 font-bold"
             />
           </div>
         </div>
@@ -310,10 +304,10 @@ export default function OnboardingPage() {
               setSuggestions([]);
             }}
             placeholder="Hotel, direccion o zona"
-            className="rounded-xl border border-stone-300 bg-stone-50 px-4 py-3"
+            className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-4 py-3 font-bold"
           />
           {suggestions.length > 0 ? (
-            <div className="rounded-xl border border-stone-300 bg-white p-2 shadow-sm">
+            <div className="rounded-md border-2 border-slate-950 bg-white p-2 shadow-[4px_4px_0_#111827]">
               {suggestions.map((item) => (
                 <button
                   type="button"
@@ -338,7 +332,7 @@ export default function OnboardingPage() {
               name="startDate"
               value={startDate}
               onChange={(event) => setStartDate(event.target.value)}
-              className="rounded-xl border border-stone-300 bg-stone-50 px-4 py-3"
+              className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-4 py-3 font-bold"
             />
           </div>
           <div className="grid gap-2">
@@ -350,7 +344,7 @@ export default function OnboardingPage() {
               name="endDate"
               value={endDate}
               onChange={(event) => setEndDate(event.target.value)}
-              className="rounded-xl border border-stone-300 bg-stone-50 px-4 py-3"
+              className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-4 py-3 font-bold"
             />
           </div>
         </div>
@@ -363,7 +357,7 @@ export default function OnboardingPage() {
             required
             value={pace}
             onChange={(event) => setPace(event.target.value as Pace)}
-            className="rounded-xl border border-stone-300 bg-stone-50 px-4 py-3"
+            className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-4 py-3 font-bold"
           >
             <option value="relajado">Relajado</option>
             <option value="normal">Normal</option>
@@ -373,10 +367,11 @@ export default function OnboardingPage() {
 
         {error ? <p className="text-sm text-rose-600">{error}</p> : null}
 
-        <button disabled={loading} className="rounded-full bg-slate-900 px-6 py-3 font-semibold text-stone-50 hover:bg-slate-800 disabled:opacity-60">
+        <button disabled={loading} className="nyc-action rounded-md px-6 py-3 text-sm disabled:opacity-60">
           {loading ? "Guardando perfil..." : tripId ? "Guardar cambios" : "Guardar perfil del viaje"}
         </button>
       </form>
     </div>
+    </main>
   );
 }

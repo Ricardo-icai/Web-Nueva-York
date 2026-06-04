@@ -3,8 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { readSession, userScopedStorageKey } from "@/lib/auth";
 import { buildTransitPlannerUrl } from "@/lib/transit-planner";
+import { loadTravelProfile, saveRoute } from "@/lib/user-data";
 
 type Pace = "relajado" | "normal" | "intenso";
 
@@ -286,14 +286,15 @@ export default function RoutePlannerPage() {
   const [profile, setProfile] = useState<SavedTravelProfile | null>(null);
 
   useEffect(() => {
-    const session = readSession();
-    const key = userScopedStorageKey(TRAVEL_PROFILE_KEY, session?.email);
-    try {
-      const raw = localStorage.getItem(key);
-      setProfile(raw ? (JSON.parse(raw) as SavedTravelProfile) : null);
-    } catch {
-      setProfile(null);
+    let active = true;
+    async function loadProfile() {
+      const saved = (await loadTravelProfile(TRAVEL_PROFILE_KEY)) as SavedTravelProfile | null;
+      if (active) setProfile(saved);
     }
+    void loadProfile();
+    return () => {
+      active = false;
+    };
   }, []);
 
   const missing = useMemo(() => missingProfileFields(profile), [profile]);
@@ -301,16 +302,30 @@ export default function RoutePlannerPage() {
   const totalDays = dayCount(profile);
   const totalStops = plan.reduce((sum, day) => sum + day.stops.length, 0);
 
+  useEffect(() => {
+    if (!profile || plan.length === 0) return;
+    void saveRoute({
+      routeKey: "auto-essential-route",
+      title: "Organizame la ruta",
+      payload: {
+        profile,
+        days: plan,
+        totalDays,
+        totalStops,
+      },
+    });
+  }, [plan, profile, totalDays, totalStops]);
+
   if (missing.length > 0) {
     return (
-      <main className="min-h-screen bg-[#F8F4EA] px-5 py-10 text-[#0A2342] sm:px-8">
-        <section className="mx-auto max-w-4xl rounded-md border-2 border-[#0A2342] bg-white p-6 shadow-[6px_6px_0_#111827]">
+      <main className="nyc-page-shell page-bg-route text-[#0A2342]">
+        <section className="nyc-content-shell mx-auto max-w-4xl p-6">
           <p className="text-xs font-black uppercase tracking-[0.2em] text-[#7A1E2C]">Organizame la ruta</p>
-          <h1 className="mt-2 font-display text-4xl font-bold">Necesito tu perfil completo</h1>
+          <h1 className="mt-2 font-american-diner text-4xl">Necesito tu perfil completo</h1>
           <p className="mt-3 text-sm font-semibold leading-6 text-slate-700">
             Para hacer un planning real segun personas, dias, ritmo y alojamiento, completa primero: {missing.join(", ")}.
           </p>
-          <Link href="/onboarding" className="mt-6 inline-block rounded-sm bg-[#0A2342] px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white">
+          <Link href="/onboarding" className="nyc-action mt-6 inline-block rounded-sm px-5 py-3 text-sm">
             Completar perfil
           </Link>
         </section>
@@ -319,8 +334,9 @@ export default function RoutePlannerPage() {
   }
 
   return (
-    <main className="bg-[#F8F4EA] text-[#0A2342]">
-      <section className="relative min-h-[72vh] overflow-hidden">
+    <main className="nyc-page-shell page-bg-route text-[#0A2342]">
+      <div className="nyc-content-shell mx-auto max-w-7xl overflow-hidden">
+      <section className="relative min-h-[64vh] overflow-hidden border-b-2 border-slate-950">
         <Image
           src="https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=2200&q=84"
           alt="Skyline de Nueva York para organizar ruta"
@@ -334,17 +350,17 @@ export default function RoutePlannerPage() {
           <p className="w-fit border border-[#D4AF37]/60 bg-[#D4AF37]/12 px-3 py-2 text-xs font-black uppercase tracking-[0.24em] text-[#D4AF37]">
             Ruta automatica
           </p>
-          <h1 className="mt-5 max-w-5xl font-display text-5xl font-bold leading-[0.94] sm:text-7xl">
+          <h1 className="mt-5 max-w-5xl font-american-diner text-5xl leading-[0.94] sm:text-7xl">
             Organizame la ruta
           </h1>
           <p className="mt-5 max-w-3xl text-base font-semibold leading-7 text-white/84">
             Planning automatico para {profile?.travelers} viajeros, {totalDays} dias, ritmo {profile?.pace}, saliendo desde {profile?.accommodation?.address}.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
-            <a href="#planning" className="rounded-sm bg-[#C1121F] px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white">
+            <a href="#planning" className="nyc-action rounded-sm px-5 py-3 text-sm">
               Ver planning
             </a>
-            <Link href="/onboarding" className="rounded-sm border border-white/35 bg-white/10 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white">
+            <Link href="/onboarding" className="rounded-sm border-2 border-white bg-white/10 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white">
               Editar perfil
             </Link>
           </div>
@@ -358,24 +374,24 @@ export default function RoutePlannerPage() {
           ["Personas", String(profile?.travelers ?? 1)],
           ["Ritmo", profile?.pace ?? "normal"],
         ].map(([label, value]) => (
-          <div key={label} className="rounded-md border border-[#0A2342]/15 bg-white p-4 shadow-sm">
+          <div key={label} className="nyc-hard-card-white rounded-md p-4">
             <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">{label}</p>
-            <p className="mt-1 font-display text-4xl font-bold">{value}</p>
+            <p className="mt-1 font-american-diner text-4xl">{value}</p>
           </div>
         ))}
       </section>
 
       <section id="planning" className="mx-auto max-w-7xl space-y-6 px-5 pb-14 sm:px-8">
         {plan.map((day) => (
-          <article key={day.title} className="overflow-hidden rounded-md border border-[#0A2342]/15 bg-white shadow-[0_18px_55px_rgba(10,35,66,0.12)]">
-            <div className="border-b border-[#0A2342]/10 bg-[#0A2342] p-5 text-white">
+          <article key={day.title} className="overflow-hidden rounded-md border-2 border-slate-950 bg-white shadow-[6px_6px_0_#111827]">
+            <div className="border-b-2 border-slate-950 bg-[#0A2342] p-5 text-white">
               <div className="flex flex-wrap items-end justify-between gap-3">
                 <div>
                   <p className="text-xs font-black uppercase tracking-[0.2em] text-[#D4AF37]">{day.date}</p>
-                  <h2 className="mt-1 font-display text-4xl font-bold">{day.title}: {day.theme}</h2>
+                  <h2 className="mt-1 font-american-diner text-4xl">{day.title}: {day.theme}</h2>
                   <p className="mt-2 text-sm font-semibold text-white/78">{day.notes}</p>
                 </div>
-                <a href={routeMapUrl(day)} target="_blank" className="rounded-sm border border-[#D4AF37] px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-[#D4AF37]">
+                <a href={routeMapUrl(day)} target="_blank" className="rounded-sm border-2 border-[#D4AF37] px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-[#D4AF37]">
                   Ver ruta completa
                 </a>
               </div>
@@ -392,7 +408,7 @@ export default function RoutePlannerPage() {
                   </div>
                   <div className="mt-4 space-y-2">
                     <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">{stop.time} / {stop.type}</p>
-                    <h3 className="font-display text-2xl font-bold">{stop.title}</h3>
+                    <h3 className="font-american-diner text-2xl">{stop.title}</h3>
                     <p className="text-sm font-semibold text-slate-600">{stop.area} - {stop.duration} - mejor: {stop.bestTime}</p>
                     <p className="text-sm leading-6 text-slate-700">{stop.reason}</p>
                     <div className="flex flex-wrap gap-2 pt-2 text-xs font-black uppercase tracking-[0.1em]">
@@ -410,6 +426,7 @@ export default function RoutePlannerPage() {
           </article>
         ))}
       </section>
+      </div>
     </main>
   );
 }

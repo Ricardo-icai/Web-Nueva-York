@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useMemo, useState } from "react";
 import { getRestaurantLogoCandidates } from "@/lib/restaurants/restaurant-logos";
 
@@ -25,13 +24,13 @@ export default function RestaurantLogoImage({
   const isLogo = candidateIndex < logoCandidates.length;
 
   return (
-    <Image
+    <img
       src={src}
       alt={isLogo ? `${name} logo` : name}
-      fill
-      className={isLogo ? className : "object-cover"}
-      sizes={sizes}
+      className={isLogo ? className : "h-full w-full object-cover"}
       onError={() => setCandidateIndex((current) => current + 1)}
+      loading="lazy"
+      decoding="async"
     />
   );
 }

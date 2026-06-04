@@ -133,8 +133,8 @@ export default async function ViewpointsPage({ searchParams }: ViewpointsPagePro
   const skylinePlaces = [...VIEWPOINTS.map((spot) => viewpointToHallPlace(spot, userLocation)), ...rooftops];
 
   return (
-    <main className="min-h-screen bg-[url('https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2?auto=format&fit=crop&w=1800&q=85')] bg-cover bg-fixed bg-center px-6 py-10 md:px-10">
-      <div className="min-h-screen bg-stone-50/95 pb-10">
+    <main className="nyc-page-shell page-bg-rooftops">
+      <div className="nyc-content-shell mx-auto max-w-7xl pb-10">
         <section className="mx-auto grid max-w-6xl overflow-hidden rounded-3xl border border-stone-200 bg-[#fff8eb] shadow-sm md:grid-cols-[1fr_420px]">
           <div className="space-y-3 p-5 md:p-7">
             <p className="text-xs font-black uppercase tracking-[0.24em] text-red-700">NYC Skyline Guide</p>
@@ -201,8 +201,8 @@ export default async function ViewpointsPage({ searchParams }: ViewpointsPagePro
                   <p className="text-xs font-bold uppercase tracking-wide text-slate-600">{spot.area} - {spot.style}</p>
                   <p className="text-sm text-slate-700">{spot.bestFor}</p>
                   <div className="flex flex-wrap gap-2 text-[11px]">
-                    {spot.badges.map((badge) => (
-                      <span key={badge} className="rounded-full bg-slate-950 px-2 py-1 font-bold text-white">
+                    {spot.badges.map((badge, index) => (
+                      <span key={`${spot.name}-${badge}-${index}`} className="rounded-full bg-slate-950 px-2 py-1 font-bold text-white">
                         {badge}
                       </span>
                     ))}

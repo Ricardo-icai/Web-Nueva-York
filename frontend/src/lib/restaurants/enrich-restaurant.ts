@@ -2,6 +2,7 @@ import curatedDb from "@/data/restaurants/nyc-restaurants-curated.json";
 import bestBurgersDb from "@/data/restaurants/nyc-best-burgers-restaurants.json";
 import mustHaveDb from "@/data/restaurants/nyc-must-have-restaurants.json";
 import socialTrendingDb from "@/data/restaurants/nyc-social-trending-restaurants.json";
+import knowledgeDbFile from "../../../../backend/data/restaurants-knowledge-db.json";
 import { RESTAURANT_CATEGORY_IMAGES } from "@/data/restaurants/restaurant-category-images";
 import {
   buildGoogleDirectionsUrl,
@@ -43,6 +44,9 @@ type CuratedRow = {
   veganOptions?: boolean | null;
   halalOptions?: boolean | null;
   kosherOptions?: boolean | null;
+  googlePlaceId?: string | null;
+  googleRating?: number | null;
+  googleReviewCount?: number | null;
   editorialTags?: string[];
   qualityScore?: number;
   whyItMatters?: string;
@@ -51,6 +55,26 @@ type CuratedRow = {
 };
 
 export const MAX_GOOGLE_ENRICHMENT = 50;
+const MAX_LOCAL_KNOWLEDGE_RESTAURANTS = 520;
+
+type KnowledgeRecord = {
+  id?: string;
+  name?: string;
+  address?: string;
+  lat?: number;
+  lng?: number;
+  cuisine?: string;
+  imageUrl?: string;
+  officialUrl?: string;
+  sourceNames?: string[];
+  sections?: string[];
+};
+
+type KnowledgeDb = {
+  records?: KnowledgeRecord[];
+};
+
+let knowledgeRestaurantsCache: CuratedRow[] | null = null;
 
 type NycOpenDataRow = {
   camis?: string;
@@ -89,6 +113,27 @@ function fixTextArray(values?: string[]) {
   return (values ?? []).map((value) => fixText(value) ?? value);
 }
 
+function humanizeName(value: string) {
+  const fixed = fixText(value) ?? value;
+  const hasLowercase = /[a-z]/.test(fixed);
+  if (hasLowercase) return fixed.replace(/\s+/g, " ").trim();
+
+  return fixed
+    .toLowerCase()
+    .split(/\s+/)
+    .map((part) => {
+      if (part.length <= 3 && /^(nyc|usa|bbq|kfc|jfk)$/.test(part)) return part.toUpperCase();
+      return part
+        .split(/([/&'-])/)
+        .map((piece) => (/[a-z]/.test(piece) ? piece.charAt(0).toUpperCase() + piece.slice(1) : piece))
+        .join("");
+    })
+    .join(" ")
+    .replace(/\bIi\b/g, "II")
+    .replace(/\bIii\b/g, "III")
+    .trim();
+}
+
 function canonicalRestaurantName(name: string) {
   return (fixText(name) ?? name)
     .normalize("NFD")
@@ -100,6 +145,113 @@ function canonicalRestaurantName(name: string) {
     .replace(/\b(nyc|new york|restaurant|pizzeria|pizza)\b/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function boroughFromAddress(address?: string | null) {
+  const text = (address ?? "").toLowerCase();
+  if (text.includes("manhattan")) return "Manhattan";
+  if (text.includes("brooklyn")) return "Brooklyn";
+  if (text.includes("queens")) return "Queens";
+  if (text.includes("bronx")) return "Bronx";
+  if (text.includes("staten island")) return "Staten Island";
+  return null;
+}
+
+function categoryKeysForCuisine(cuisine?: string | null, sections?: string[]) {
+  const text = `${cuisine ?? ""} ${(sections ?? []).join(" ")}`.toLowerCase();
+  const categories = new Set(["best_nyc_500", "local_knowledge"]);
+  for (const section of sections ?? []) categories.add(section);
+  if (text.includes("pizza")) categories.add("pizza");
+  if (text.includes("hamburger") || text.includes("burger")) categories.add("burgers");
+  if (text.includes("coffee") || text.includes("tea")) categories.add("brunch");
+  if (text.includes("bakery") || text.includes("dessert") || text.includes("donut")) categories.add("dessert");
+  if (text.includes("chinese") || text.includes("asian")) categories.add("asian");
+  if (text.includes("japanese") || text.includes("sushi")) categories.add("japanese");
+  if (text.includes("korean")) categories.add("korean");
+  if (text.includes("italian")) categories.add("italian");
+  if (text.includes("mexican") || text.includes("tex-mex")) categories.add("mexican");
+  if (text.includes("steak")) categories.add("steakhouse");
+  if (text.includes("deli") || text.includes("sandwich")) categories.add("deli");
+  if (text.includes("bagel")) categories.add("bagels");
+  return Array.from(categories);
+}
+
+function knowledgeRecordScore(record: KnowledgeRecord) {
+  const name = record.name ?? "";
+  const cuisine = record.cuisine ?? "";
+  const sections = record.sections ?? [];
+  let score = 45;
+  if (record.lat && record.lng && record.lat !== 0 && record.lng !== 0) score += 35;
+  if (cuisine && !/^(restaurant|other)$/i.test(cuisine)) score += 18;
+  if (sections.length > 0) score += sections.length * 10;
+  if (record.imageUrl) score += 4;
+  if (record.officialUrl && !record.officialUrl.includes("data.cityofnewyork.us")) score += 12;
+  if (/(pizza|burger|bagel|deli|steak|sushi|thai|korean|italian|mexican|chinese|japanese|caribbean|french|indian)/i.test(cuisine)) {
+    score += 8;
+  }
+  if (/^(?:[0-9/ -]+|new york inc|.* inc)$/i.test(name.trim())) score -= 25;
+  if (/(airport|school|hospital|cafeteria|news inc|global news)/i.test(`${name} ${record.address ?? ""}`)) score -= 12;
+  return score;
+}
+
+async function loadKnowledgeRestaurants(): Promise<CuratedRow[]> {
+  if (knowledgeRestaurantsCache) return knowledgeRestaurantsCache;
+
+  const db = knowledgeDbFile as KnowledgeDb;
+  const rows = (db.records ?? [])
+    .filter((record) => {
+      if (!record.name || !record.address) return false;
+      if (typeof record.lat !== "number" || typeof record.lng !== "number") return false;
+      if (record.lat === 0 || record.lng === 0) return false;
+      return true;
+    })
+    .sort((a, b) => knowledgeRecordScore(b) - knowledgeRecordScore(a))
+    .slice(0, MAX_LOCAL_KNOWLEDGE_RESTAURANTS)
+    .map((record, index): CuratedRow => {
+      const name = humanizeName(record.name ?? "NYC Restaurant");
+      const address = fixText(record.address ?? null);
+      const cuisineName = fixText(record.cuisine ?? "Restaurant") ?? "Restaurant";
+      const sections = fixTextArray(record.sections ?? []);
+      const categories = categoryKeysForCuisine(cuisineName, sections);
+      const officialWebsite =
+        record.officialUrl && !record.officialUrl.includes("data.cityofnewyork.us")
+          ? record.officialUrl
+          : null;
+
+      return {
+        id: `knowledge-${record.id ?? canonicalRestaurantName(`${name}-${address ?? index}`)}`,
+        name,
+        type: "restaurant",
+        description: `${name} es una opcion destacada de ${cuisineName} en Nueva York, incluida en la seleccion ampliada de locales para explorar por barrio, precio y distancia.`,
+        cuisine: [cuisineName],
+        categories,
+        signatureDishes: sections,
+        neighborhood: null,
+        borough: boroughFromAddress(address),
+        address,
+        lat: record.lat ?? null,
+        lng: record.lng ?? null,
+        officialWebsite,
+        googleMapsUrl: buildGoogleMapsSearchUrl(name, address ?? undefined),
+        reservationUrl: null,
+        imageUrl: "",
+        priceLevel: null,
+        averagePricePerPersonUsd: null,
+        familyFriendly: !sections.includes("date-night"),
+        vegetarianOptions: null,
+        veganOptions: cuisineName.toLowerCase().includes("vegetarian") || undefined,
+        halalOptions: null,
+        kosherOptions: null,
+        googlePlaceId: null,
+        googleRating: null,
+        googleReviewCount: null,
+        editorialTags: ["best_nyc_500", ...sections],
+        qualityScore: knowledgeRecordScore(record),
+      };
+    });
+
+  knowledgeRestaurantsCache = rows;
+  return rows;
 }
 
 function fallbackLocationFor(row: CuratedRow) {
@@ -300,12 +452,13 @@ async function enrichWithGoogle(
 export async function getRestaurantsIntelligence(
   accommodation?: Coordinates,
 ): Promise<Restaurant[]> {
-  let overpassRaw = await fetchOverpassRestaurants();
-  if (!overpassRaw.length) {
+  const enableLiveDiscovery = process.env.NEXT_PUBLIC_ENABLE_LIVE_RESTAURANT_DISCOVERY === "true";
+  let overpassRaw = enableLiveDiscovery ? await fetchOverpassRestaurants() : [];
+  if (enableLiveDiscovery && !overpassRaw.length) {
     try {
       const response = await fetch(
         "https://data.cityofnewyork.us/resource/43nn-pn8j.json?$select=camis,dba,boro,cuisine_description,building,street,zipcode,latitude,longitude&$where=latitude%20IS%20NOT%20NULL%20AND%20longitude%20IS%20NOT%20NULL&$limit=3000",
-        { cache: "no-store" },
+        { next: { revalidate: 86400 } },
       );
       if (response.ok) {
         const rows = (await response.json()) as NycOpenDataRow[];
@@ -339,11 +492,13 @@ export async function getRestaurantsIntelligence(
     }
   }
   const overpass = overpassRaw.map(normalizeOverpassRestaurant);
+  const knowledgeDb = await loadKnowledgeRestaurants();
   const curated = [
     ...(curatedDb as CuratedRow[]),
     ...(bestBurgersDb as CuratedRow[]),
     ...(mustHaveDb as CuratedRow[]),
     ...(socialTrendingDb as CuratedRow[]),
+    ...knowledgeDb,
   ].map(curatedToRestaurant);
   const merged = mergeByName(curated, overpass).map((r) => ({
     ...r,

@@ -20,7 +20,7 @@ export default function BackButton() {
     <button
       type="button"
       onClick={goBack}
-      className="rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-slate-800 hover:bg-stone-100"
+      className="rounded-md border-2 border-slate-950 bg-white px-4 py-2 text-sm font-black uppercase tracking-wide text-slate-900 shadow-[3px_3px_0_#111827] transition hover:-translate-y-0.5 hover:bg-[#fffdf4]"
     >
       Volver
     </button>

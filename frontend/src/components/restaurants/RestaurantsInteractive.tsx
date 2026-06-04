@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { FAVORITES_UPDATED_EVENT } from "@/components/favorites/FavoriteToggleButton";
 import RestaurantLogoImage from "@/components/restaurants/RestaurantLogoImage";
-import { readSession, userScopedStorageKey } from "@/lib/auth";
 import { buildOfficialWebsiteSearchUrl } from "@/lib/restaurants/build-restaurant-links";
 import { buildTransitPlannerUrl } from "@/lib/transit-planner";
+import { loadFavorites, saveFavorites } from "@/lib/user-data";
 import type { Restaurant } from "@/types/restaurants";
 
 type Props = {
@@ -63,23 +64,42 @@ function groupKey(r: Restaurant) {
 }
 
 export default function RestaurantsInteractive({ restaurants, mapRestaurants, userLocation, afterMapSlot }: Props) {
-  const favoritesKey = useMemo(() => userScopedStorageKey(FAVORITES_KEY, readSession()?.email), []);
-  const [favorites, setFavorites] = useState<string[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      const raw = localStorage.getItem(userScopedStorageKey(FAVORITES_KEY, readSession()?.email));
-      if (!raw) return [];
-      const ids = JSON.parse(raw) as string[];
-      return Array.isArray(ids) ? ids : [];
-    } catch {
-      return [];
-    }
-  });
+  const [favoritesLoaded, setFavoritesLoaded] = useState(false);
+  const [favorites, setFavorites] = useState<string[]>([]);
   const [geocodedMapRestaurants, setGeocodedMapRestaurants] = useState<{ key: string; items: Restaurant[] } | null>(null);
+  const [visibleGroups, setVisibleGroups] = useState(8);
+  const [visibleItemsByGroup, setVisibleItemsByGroup] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    localStorage.setItem(favoritesKey, JSON.stringify(favorites));
-  }, [favorites, favoritesKey]);
+    let active = true;
+    async function loadSavedFavorites() {
+      const ids = await loadFavorites(FAVORITES_KEY, "restaurants");
+      if (active) {
+        setFavorites(ids);
+        setFavoritesLoaded(true);
+      }
+    }
+    void loadSavedFavorites();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!favoritesLoaded) return;
+    void saveFavorites(FAVORITES_KEY, "restaurants", favorites);
+  }, [favorites, favoritesLoaded]);
+
+  useEffect(() => {
+    async function refreshFavorites(event: Event) {
+      const detail = (event as CustomEvent<{ baseKey?: string; favoriteType?: string }>).detail;
+      if (detail?.baseKey !== FAVORITES_KEY || detail?.favoriteType !== "restaurants") return;
+      setFavorites(await loadFavorites(FAVORITES_KEY, "restaurants"));
+    }
+
+    window.addEventListener(FAVORITES_UPDATED_EVENT, refreshFavorites);
+    return () => window.removeEventListener(FAVORITES_UPDATED_EVENT, refreshFavorites);
+  }, []);
 
   const uniqueRestaurants = useMemo(() => {
     const seen = new Set<string>();
@@ -131,7 +151,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
     return Array.from(map.entries()).map(([name, items]) => ({ name, items })).sort((a, b) => b.items.length - a.items.length);
   }, [uniqueRestaurants]);
 
-  const favoriteRestaurants = useMemo(() => uniqueRestaurants.filter((r) => favorites.includes(r.id)), [uniqueRestaurants, favorites]);
+  const favoriteRestaurants = useMemo(() => uniqueMapRestaurants.filter((r) => favorites.includes(r.id)), [uniqueMapRestaurants, favorites]);
 
   const mapHostRef = useRef<HTMLDivElement | null>(null);
   const leafletMapRef = useRef<unknown>(null);
@@ -353,21 +373,46 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
         <div ref={mapHostRef} className="h-96 w-full" />
       </section>
 
-      {afterMapSlot}
-
       <section className="mx-auto mt-8 max-w-6xl">
         <h2 className="text-2xl font-bold text-slate-900">Favoritos</h2>
         {favoriteRestaurants.length === 0 ? <p className="mt-2 text-sm text-slate-600">Aun no has marcado favoritos.</p> : <div className="mt-4 grid gap-6 md:grid-cols-2 xl:grid-cols-3">{favoriteRestaurants.map((r, idx) => renderCard(r, `fav-${r.id}-${idx}`))}</div>}
       </section>
 
+      {afterMapSlot}
+
       <section className="mx-auto mt-8 max-w-6xl space-y-6">
         <h2 className="text-2xl font-bold text-slate-900">Restaurants By Food Type</h2>
-        {grouped.map((group) => (
+        {grouped.slice(0, visibleGroups).map((group) => (
           <div key={group.name} className="space-y-3">
             <h3 className="text-lg font-semibold text-slate-900">{group.name}</h3>
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">{group.items.map((r, idx) => renderCard(r, `${group.name}-${r.id}-${idx}`))}</div>
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {group.items.slice(0, visibleItemsByGroup[group.name] ?? 12).map((r, idx) => renderCard(r, `${group.name}-${r.id}-${idx}`))}
+            </div>
+            {(visibleItemsByGroup[group.name] ?? 12) < group.items.length ? (
+              <button
+                type="button"
+                onClick={() =>
+                  setVisibleItemsByGroup((current) => ({
+                    ...current,
+                    [group.name]: Math.min((current[group.name] ?? 12) + 12, group.items.length),
+                  }))
+                }
+                className="rounded-md border-2 border-slate-950 bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-slate-950 shadow-[3px_3px_0_#111827]"
+              >
+                Ver mas {group.name}
+              </button>
+            ) : null}
           </div>
         ))}
+        {visibleGroups < grouped.length ? (
+          <button
+            type="button"
+            onClick={() => setVisibleGroups((current) => Math.min(current + 6, grouped.length))}
+            className="rounded-md border-2 border-slate-950 bg-red-700 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white shadow-[4px_4px_0_#111827]"
+          >
+            Ver mas categorias
+          </button>
+        ) : null}
       </section>
     </>
   );

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useMemo, useState } from "react";
+import FavoriteToggleButton from "@/components/favorites/FavoriteToggleButton";
 import { buildOfficialWebsiteSearchUrl } from "@/lib/restaurants/build-restaurant-links";
 import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 import type { NycPizzaHallOfFamePlace } from "@/types/restaurants";
@@ -30,6 +31,7 @@ const FILTERS = [
 ] as const;
 
 type Filter = (typeof FILTERS)[number];
+const FAVORITES_KEY = "nyc_restaurant_favorites_v1";
 
 function matchesFilter(place: NycPizzaHallOfFamePlace, filter: Filter) {
   const hay = `${place.categories.join(" ")} ${place.badges.join(" ")} ${place.bestFor.join(" ")} ${place.pizzaStyle}`.toLowerCase();
@@ -94,7 +96,10 @@ export default function PizzaHallOfFameSection({ places }: Props) {
             </div>
             <div className="space-y-2 p-4">
               <div>
-                <p className="text-sm font-semibold text-slate-900">{place.name}</p>
+                <div className="flex items-start justify-between gap-3">
+                  <p className="text-sm font-semibold text-slate-900">{place.name}</p>
+                  <FavoriteToggleButton baseKey={FAVORITES_KEY} favoriteType="restaurants" itemId={place.id} />
+                </div>
                 <p className="text-xs text-slate-600">
                   {place.borough} - {place.neighborhood} - {place.pizzaStyle}
                 </p>
@@ -119,8 +124,8 @@ export default function PizzaHallOfFameSection({ places }: Props) {
                   : "Distance from hotel unavailable"}
               </p>
               <div className="flex flex-wrap gap-2 text-[11px]">
-                {place.badges.map((badge) => (
-                  <span key={badge} className="rounded-full bg-slate-900 px-2 py-1 text-white">
+                {place.badges.map((badge, index) => (
+                  <span key={`${place.id}-${badge}-${index}`} className="rounded-full bg-slate-900 px-2 py-1 text-white">
                     {badge}
                   </span>
                 ))}

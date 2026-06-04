@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import RooftopCocktailLoader from "@/components/restaurants/RooftopCocktailLoader";
 import RooftopsMap from "@/components/restaurants/RooftopsMap";
-import { readSession, userScopedStorageKey } from "@/lib/auth";
 import { buildOfficialWebsiteSearchUrl } from "@/lib/restaurants/build-restaurant-links";
 import { buildTransitPlannerUrl } from "@/lib/transit-planner";
+import { loadFavorites, saveFavorites } from "@/lib/user-data";
 import type { Coordinates, NycRooftopHallOfFamePlace } from "@/types/restaurants";
 
 type Props = {
@@ -75,20 +75,11 @@ function matchesFilter(place: NycRooftopHallOfFamePlace, filter: Filter) {
 }
 
 export default function RooftopsHallOfFameSection({ places, accommodation }: Props) {
-  const favoritesKey = useMemo(() => userScopedStorageKey(ROOFTOP_FAVORITES_KEY, readSession()?.email), []);
   const [activeFilter, setActiveFilter] = useState<Filter>("Hall of Fame");
   const [selectedId, setSelectedId] = useState<string | null>(places[0]?.id ?? null);
   const [loading, setLoading] = useState(false);
-  const [favorites, setFavorites] = useState<string[]>(() => {
-    if (typeof window === "undefined") return [];
-    try {
-      const raw = localStorage.getItem(userScopedStorageKey(ROOFTOP_FAVORITES_KEY, readSession()?.email));
-      const parsed = raw ? (JSON.parse(raw) as string[]) : [];
-      return Array.isArray(parsed) ? parsed : [];
-    } catch {
-      return [];
-    }
-  });
+  const [favoritesLoaded, setFavoritesLoaded] = useState(false);
+  const [favorites, setFavorites] = useState<string[]>([]);
 
   const visiblePlaces = useMemo(
     () => places.filter((place) => matchesFilter(place, activeFilter)).slice(0, 24),
@@ -109,8 +100,24 @@ export default function RooftopsHallOfFameSection({ places, accommodation }: Pro
   }, [activeFilter]);
 
   useEffect(() => {
-    localStorage.setItem(favoritesKey, JSON.stringify(favorites));
-  }, [favorites, favoritesKey]);
+    let active = true;
+    async function loadSavedFavorites() {
+      const ids = await loadFavorites(ROOFTOP_FAVORITES_KEY, "rooftops");
+      if (active) {
+        setFavorites(ids);
+        setFavoritesLoaded(true);
+      }
+    }
+    void loadSavedFavorites();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!favoritesLoaded) return;
+    void saveFavorites(ROOFTOP_FAVORITES_KEY, "rooftops", favorites);
+  }, [favorites, favoritesLoaded]);
 
   function toggleFavorite(id: string) {
     setFavorites((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
@@ -344,8 +351,8 @@ export default function RooftopsHallOfFameSection({ places, accommodation }: Pro
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2 text-[11px]">
-                  {place.badges.map((badge) => (
-                    <span key={badge} className="rounded-full bg-slate-950 px-2 py-1 font-bold text-white">
+                  {place.badges.map((badge, index) => (
+                    <span key={`${place.id}-${badge}-${index}`} className="rounded-full bg-slate-950 px-2 py-1 font-bold text-white">
                       {badge}
                     </span>
                   ))}

@@ -265,7 +265,7 @@ export default function PublicTransitPlanner() {
         <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
           <div className="relative min-h-[260px]">
             <Image
-              src="https://commons.wikimedia.org/wiki/Special:FilePath/Train_stopping_at_a_New_York_subway_station_%28Unsplash%29.jpg"
+              src="https://images.pexels.com/photos/30228466/pexels-photo-30228466.jpeg?auto=compress&cs=tinysrgb&w=1800"
               alt="Metro de Nueva York en una estacion"
               fill
               priority

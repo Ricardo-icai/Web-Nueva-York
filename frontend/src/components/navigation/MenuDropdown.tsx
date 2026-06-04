@@ -7,7 +7,6 @@ const menuLinks = [
   { href: "/", label: "Home" },
   { href: "/route-planner", label: "Organizame la ruta" },
   { href: "/onboarding", label: "Editar perfil" },
-  { href: "/map", label: "Mapa" },
   { href: "/restaurants", label: "Tengo Hambre" },
   { href: "/culture", label: "Cultura" },
   { href: "/viewpoints", label: "Roof Tops" },
@@ -22,7 +21,7 @@ export default function MenuDropdown() {
       <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        className="rounded-full bg-slate-900 px-4 py-2 text-sm font-semibold text-stone-50 hover:bg-slate-800"
+        className="rounded-md border-2 border-slate-950 bg-red-700 px-4 py-2 text-sm font-black uppercase tracking-wide text-white shadow-[3px_3px_0_#111827] hover:-translate-y-0.5"
         aria-expanded={open}
         aria-controls="main-navigation-drawer"
       >
@@ -38,7 +37,7 @@ export default function MenuDropdown() {
 
       <aside
         id="main-navigation-drawer"
-        className={`fixed left-0 top-0 z-50 h-dvh w-[min(82vw,340px)] border-r border-stone-200 bg-white shadow-2xl transition-transform duration-300 ease-out ${
+        className={`fixed left-0 top-0 z-50 h-dvh w-[min(82vw,340px)] border-r-2 border-slate-950 bg-[#fff3d1] shadow-2xl transition-transform duration-300 ease-out ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -47,12 +46,12 @@ export default function MenuDropdown() {
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#D4AF37]">NYC Family Planner</p>
-                <p className="mt-1 font-display text-2xl font-bold">Menu</p>
+                <p className="mt-1 font-american-diner text-2xl">Menu</p>
               </div>
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="flex h-9 w-9 items-center justify-center rounded-full border border-white/30 text-xl font-bold hover:bg-white/10"
+                className="flex h-9 w-9 items-center justify-center rounded-md border-2 border-white text-xl font-black shadow-[3px_3px_0_rgba(255,255,255,0.55)] hover:bg-white/10"
                 aria-label="Cerrar menu"
               >
                 x
@@ -60,13 +59,13 @@ export default function MenuDropdown() {
             </div>
           </div>
 
-          <nav className="flex-1 overflow-y-auto p-3">
+          <nav className="flex-1 space-y-2 overflow-y-auto p-3">
             {menuLinks.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="block rounded-md px-4 py-3 text-base font-semibold text-slate-700 transition hover:bg-stone-100 hover:text-[#C1121F]"
+                className="block rounded-md border-2 border-slate-950 bg-white px-4 py-3 text-base font-black text-slate-800 shadow-[3px_3px_0_#111827] transition hover:-translate-y-0.5 hover:bg-[#fffdf4] hover:text-[#C1121F]"
               >
                 {item.label}
               </Link>
