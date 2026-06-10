@@ -22,11 +22,17 @@ export type SavedRoutePayload = {
   payload: unknown;
 };
 
+function requireSupabase() {
+  if (!isSupabaseConfigured()) {
+    throw new Error("La aplicacion no esta conectada a Supabase.");
+  }
+}
+
 async function currentSupabaseUserId() {
-  if (!isSupabaseConfigured()) return null;
+  requireSupabase();
   const supabase = await getSupabaseBrowserClient();
   const { data, error } = (await supabase?.auth.getUser()) ?? { data: null, error: null };
-  if (error || !data?.user?.id) return null;
+  if (error || !data?.user?.id) throw new Error("No hay una sesion valida en Supabase.");
   return data.user.id;
 }
 
@@ -34,78 +40,60 @@ function localEmail() {
   return readSession()?.email;
 }
 
-function readLocalTravelProfile(localKey: string) {
-  try {
-    const raw = localStorage.getItem(localKey);
-    return raw ? (JSON.parse(raw) as Partial<TravelProfilePayload>) : null;
-  } catch {
-    return null;
-  }
-}
-
-function mergeTravelProfiles(
-  remote: Partial<TravelProfilePayload>,
-  local: Partial<TravelProfilePayload> | null,
-): TravelProfilePayload {
-  const localAccommodation = local?.accommodation;
+function normalizeRemoteTravelProfile(remote: Partial<TravelProfilePayload>): TravelProfilePayload {
   const remoteAccommodation = remote.accommodation;
   return {
-    tripId: remote.tripId ?? local?.tripId,
-    name: remote.name?.trim() || local?.name?.trim() || "",
-    nationality: remote.nationality?.trim() || local?.nationality?.trim() || "",
-    startDate: remote.startDate || local?.startDate || "",
-    endDate: remote.endDate || local?.endDate || "",
-    travelers: remote.travelers && remote.travelers > 0 ? remote.travelers : (local?.travelers ?? 0),
-    pace: remote.pace?.trim() || local?.pace?.trim() || "",
+    tripId: remote.tripId,
+    name: remote.name?.trim() || "",
+    nationality: remote.nationality?.trim() || "",
+    startDate: remote.startDate || "",
+    endDate: remote.endDate || "",
+    travelers: remote.travelers && remote.travelers > 0 ? remote.travelers : 0,
+    pace: remote.pace?.trim() || "",
     accommodation: {
-      address: remoteAccommodation?.address?.trim() || localAccommodation?.address?.trim() || "",
-      lat: Number.isFinite(remoteAccommodation?.lat) ? remoteAccommodation!.lat : (localAccommodation?.lat ?? 0),
-      lng: Number.isFinite(remoteAccommodation?.lng) ? remoteAccommodation!.lng : (localAccommodation?.lng ?? 0),
+      address: remoteAccommodation?.address?.trim() || "",
+      lat: Number.isFinite(remoteAccommodation?.lat) ? remoteAccommodation!.lat : 0,
+      lng: Number.isFinite(remoteAccommodation?.lng) ? remoteAccommodation!.lng : 0,
     },
   };
 }
 
 export async function loadTravelProfile(baseKey: string) {
+  requireSupabase();
   const localKey = userScopedStorageKey(baseKey, localEmail());
-  const localProfile = readLocalTravelProfile(localKey);
-  if (isSupabaseConfigured()) {
-    const userId = await currentSupabaseUserId();
-    if (userId) {
-      const supabase = await getSupabaseBrowserClient();
-      const { data } = await supabase!
-        .from("travel_profiles")
-        .select("trip_id,name,nationality,start_date,end_date,travelers,pace,accommodation")
-        .eq("user_id", userId)
-        .maybeSingle();
+  const userId = await currentSupabaseUserId();
+  const supabase = await getSupabaseBrowserClient();
+  const { data } = await supabase!
+    .from("travel_profiles")
+    .select("trip_id,name,nationality,start_date,end_date,travelers,pace,accommodation")
+    .eq("user_id", userId)
+    .maybeSingle();
 
-      if (data) {
-        const remoteProfile = {
-          tripId: data.trip_id ?? undefined,
-          name: data.name,
-          nationality: data.nationality,
-          startDate: data.start_date,
-          endDate: data.end_date,
-          travelers: data.travelers,
-          pace: data.pace,
-          accommodation: data.accommodation,
-        } as Partial<TravelProfilePayload>;
-        const profile = mergeTravelProfiles(remoteProfile, localProfile);
-        localStorage.setItem(localKey, JSON.stringify(profile));
-        return profile;
-      }
-    }
+  if (data) {
+    const remoteProfile = {
+      tripId: data.trip_id ?? undefined,
+      name: data.name,
+      nationality: data.nationality,
+      startDate: data.start_date,
+      endDate: data.end_date,
+      travelers: data.travelers,
+      pace: data.pace,
+      accommodation: data.accommodation,
+    } as Partial<TravelProfilePayload>;
+    const profile = normalizeRemoteTravelProfile(remoteProfile);
+    localStorage.setItem(localKey, JSON.stringify(profile));
+    return profile;
   }
 
-  return localProfile ? mergeTravelProfiles({}, localProfile) : null;
+  return null;
 }
 
 export async function saveTravelProfile(baseKey: string, profile: TravelProfilePayload) {
+  requireSupabase();
   const localKey = userScopedStorageKey(baseKey, localEmail());
   localStorage.setItem(localKey, JSON.stringify(profile));
 
   const userId = await currentSupabaseUserId();
-  if (!userId) return;
-
   const supabase = await getSupabaseBrowserClient();
   await supabase!.from("travel_profiles").upsert(
     {
@@ -125,41 +113,31 @@ export async function saveTravelProfile(baseKey: string, profile: TravelProfileP
 }
 
 export async function loadFavorites(baseKey: string, favoriteType: string) {
+  requireSupabase();
   const localKey = userScopedStorageKey(baseKey, localEmail());
-  if (isSupabaseConfigured()) {
-    const userId = await currentSupabaseUserId();
-    if (userId) {
-      const supabase = await getSupabaseBrowserClient();
-      const { data } = await supabase!
-        .from("user_favorites")
-        .select("item_ids")
-        .eq("user_id", userId)
-        .eq("favorite_type", favoriteType)
-        .maybeSingle();
+  const userId = await currentSupabaseUserId();
+  const supabase = await getSupabaseBrowserClient();
+  const { data } = await supabase!
+    .from("user_favorites")
+    .select("item_ids")
+    .eq("user_id", userId)
+    .eq("favorite_type", favoriteType)
+    .maybeSingle();
 
-      if (Array.isArray(data?.item_ids)) {
-        localStorage.setItem(localKey, JSON.stringify(data.item_ids));
-        return data.item_ids as string[];
-      }
-    }
+  if (Array.isArray(data?.item_ids)) {
+    localStorage.setItem(localKey, JSON.stringify(data.item_ids));
+    return data.item_ids as string[];
   }
 
-  try {
-    const raw = localStorage.getItem(localKey);
-    const parsed = raw ? (JSON.parse(raw) as string[]) : [];
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
+  return [];
 }
 
 export async function saveFavorites(baseKey: string, favoriteType: string, itemIds: string[]) {
+  requireSupabase();
   const localKey = userScopedStorageKey(baseKey, localEmail());
   localStorage.setItem(localKey, JSON.stringify(itemIds));
 
   const userId = await currentSupabaseUserId();
-  if (!userId) return;
-
   const supabase = await getSupabaseBrowserClient();
   await supabase!.from("user_favorites").upsert(
     {
@@ -173,9 +151,8 @@ export async function saveFavorites(baseKey: string, favoriteType: string, itemI
 }
 
 export async function saveRoute(route: SavedRoutePayload) {
+  requireSupabase();
   const userId = await currentSupabaseUserId();
-  if (!userId) return;
-
   const supabase = await getSupabaseBrowserClient();
   await supabase!.from("user_routes").upsert(
     {

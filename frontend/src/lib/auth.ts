@@ -63,6 +63,11 @@ export function clearSession() {
   window.dispatchEvent(new Event(AUTH_UPDATED_EVENT));
 }
 
+export function clearLegacyLocalUsers() {
+  if (typeof window === "undefined") return;
+  window.localStorage.removeItem(AUTH_USERS_KEY);
+}
+
 export async function signOutCurrentUser() {
   if (isSupabaseConfigured()) {
     await (await getSupabaseBrowserClient())?.auth.signOut();

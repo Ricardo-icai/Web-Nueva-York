@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { isSupabaseConfigured, readSession, readUsers, type StoredSession, type StoredUser } from "@/lib/auth";
+import { isSupabaseConfigured, readSession, type StoredSession } from "@/lib/auth";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
 
 type ProfileState = {
   session: StoredSession | null;
-  user: StoredUser | null;
-  provider: "supabase" | "local";
+  provider: "supabase";
   confirmed: boolean;
   createdAt?: string;
 };
@@ -15,13 +14,10 @@ type ProfileState = {
 export default function ProfilePage() {
   const [profile, setProfile] = useState<ProfileState>(() => {
     const currentSession = readSession();
-    const localUser = currentSession?.email ? readUsers()[currentSession.email] ?? null : null;
     return {
       session: currentSession,
-      user: localUser,
-      provider: isSupabaseConfigured() ? "supabase" : "local",
-      confirmed: Boolean(localUser?.confirmed),
-      createdAt: localUser?.createdAt,
+      provider: "supabase",
+      confirmed: false,
     };
   });
 
@@ -34,7 +30,6 @@ export default function ProfilePage() {
       if (!active || !data.user?.email) return;
       setProfile({
         session: { email: data.user.email, startedAt: data.user.last_sign_in_at ?? new Date().toISOString() },
-        user: null,
         provider: "supabase",
         confirmed: Boolean(data.user.email_confirmed_at),
         createdAt: data.user.created_at,
@@ -68,7 +63,7 @@ export default function ProfilePage() {
           <div className="rounded-md border-2 border-slate-950 bg-white p-4">
             <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-600">Sistema</p>
             <p className="mt-2 text-lg font-black text-slate-950">
-              {profile.provider === "supabase" ? "Supabase Auth" : "Local"}
+              Supabase Auth
             </p>
           </div>
           <div className="rounded-md border-2 border-slate-950 bg-white p-4">

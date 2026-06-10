@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { getDeviceCoordinates } from "@/lib/geolocation";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -235,22 +236,13 @@ export default function PublicTransitPlanner() {
 
   function locateUser() {
     setError("");
-    if (!navigator.geolocation) {
-      setError("Tu navegador no permite geolocalizacion.");
-      return;
-    }
     setLoading(true);
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setOrigin({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-        setLoading(false);
-      },
-      () => {
-        setError("No he podido obtener tu ubicacion. Revisa permisos del navegador.");
-        setLoading(false);
-      },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },
-    );
+    void getDeviceCoordinates()
+      .then(({ lat, lng }) => setOrigin({ lat, lng }))
+      .catch((message: unknown) => {
+        setError(message instanceof Error ? message.message : "No he podido obtener tu ubicacion. Revisa permisos del navegador.");
+      })
+      .finally(() => setLoading(false));
   }
 
   useEffect(() => {

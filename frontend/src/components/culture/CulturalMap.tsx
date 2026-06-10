@@ -1,5 +1,6 @@
 "use client";
 
+import { getDeviceCoordinates } from "@/lib/geolocation";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -115,15 +116,11 @@ export default function CulturalMap({ points, routes }: Props) {
 
   function locateUser() {
     setLocationError("");
-    if (!navigator.geolocation) {
-      setLocationError("Tu navegador no permite geolocalizacion.");
-      return;
-    }
-    navigator.geolocation.getCurrentPosition(
-      (pos) => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-      () => setLocationError("No he podido obtener tu ubicacion. Revisa permisos del navegador."),
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },
-    );
+    void getDeviceCoordinates()
+      .then(({ lat, lng }) => setUserLocation({ lat, lng }))
+      .catch((message: unknown) => {
+        setLocationError(message instanceof Error ? message.message : "No he podido obtener tu ubicacion. Revisa permisos del navegador.");
+      });
   }
 
   useEffect(() => {

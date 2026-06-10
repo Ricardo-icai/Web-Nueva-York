@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { buildTransitPlannerUrl } from "@/lib/transit-planner";
+import { getDeviceCoordinates } from "@/lib/geolocation";
 
 type Props = {
   destinationQuery: string;
@@ -15,23 +16,13 @@ export default function UseMyLocationMapButton({ destinationQuery, compact = fal
 
   function handleClick() {
     setError("");
-    if (!navigator.geolocation) {
-      setError("Tu navegador no permite geolocalizacion.");
-      return;
-    }
-
     setLoading(true);
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        setCoords({ lat: pos.coords.latitude, lng: pos.coords.longitude });
-        setLoading(false);
-      },
-      () => {
-        setError("No he podido obtener tu ubicacion.");
-        setLoading(false);
-      },
-      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 },
-    );
+    void getDeviceCoordinates()
+      .then(({ lat, lng }) => setCoords({ lat, lng }))
+      .catch((message: unknown) => {
+        setError(message instanceof Error ? message.message : "No he podido obtener tu ubicacion.");
+      })
+      .finally(() => setLoading(false));
   }
 
   const directionsUrl = coords

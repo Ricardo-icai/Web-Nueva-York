@@ -4,14 +4,11 @@ import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   AUTH_UPDATED_EVENT,
+  clearLegacyLocalUsers,
   getCurrentAuthUser,
-  hashPassword,
   isSupabaseConfigured,
   normalizeEmail,
-  readSession,
-  readUsers,
   saveSession,
-  saveUsers,
   signInWithEmailPassword,
   signUpWithEmailPassword,
 } from "@/lib/auth";
@@ -39,19 +36,18 @@ export default function AuthGate({ children }: Props) {
   useEffect(() => {
     let active = true;
     const refresh = async () => {
-      if (isSupabaseConfigured()) {
-        const user = await getCurrentAuthUser();
+      if (!isSupabaseConfigured()) {
         if (active) {
-          setAuthenticated(Boolean(user?.email));
+          setAuthenticated(false);
           setReady(true);
         }
         return;
       }
 
-      const session = readSession();
-      const users = readUsers();
+      clearLegacyLocalUsers();
+      const user = await getCurrentAuthUser();
       if (active) {
-        setAuthenticated(Boolean(session?.email && users[session.email]));
+        setAuthenticated(Boolean(user?.email));
         setReady(true);
       }
     };
@@ -85,28 +81,14 @@ export default function AuthGate({ children }: Props) {
     setMessage("");
     try {
       const supabaseLogin = await signInWithEmailPassword(cleanEmail, password);
-      if (supabaseLogin.handledBySupabase) {
-        if (supabaseLogin.error) {
-          setMessage("Correo o contrasena incorrectos.");
-          return;
-        }
-        setAuthenticated(true);
-        router.replace("/");
+      if (!supabaseLogin.handledBySupabase) {
+        setMessage("La aplicacion no esta conectada a Supabase.");
         return;
       }
-
-      const users = readUsers();
-      const user = users[cleanEmail];
-      const passwordHash = await hashPassword(cleanEmail, password);
-
-      if (!user || user.passwordHash !== passwordHash) {
+      if (supabaseLogin.error) {
         setMessage("Correo o contrasena incorrectos.");
         return;
       }
-
-      users[cleanEmail] = { ...user, lastLoginAt: new Date().toISOString() };
-      saveUsers(users);
-      saveSession(cleanEmail);
       setAuthenticated(true);
       router.replace("/");
     } finally {
@@ -129,41 +111,23 @@ export default function AuthGate({ children }: Props) {
       }
 
       const supabaseSignup = await signUpWithEmailPassword(cleanEmail, password);
-      if (supabaseSignup.handledBySupabase) {
-        if (supabaseSignup.emailAlreadyRegistered) {
-          setEmail("");
-          setMessage("Este correo ya esta registrado. Introduce otro correo para crear una cuenta nueva.");
-          return;
-        }
-        if (supabaseSignup.error) {
-          setMessage(supabaseSignup.error);
-          return;
-        }
-        if (supabaseSignup.needsEmailConfirmation) {
-          setMessage("Supabase tiene activada la confirmacion por email. Desactiva 'Confirm email' en Authentication > Providers > Email para registrar solo con correo y contrasena.");
-          return;
-        }
-        setAuthenticated(true);
-        router.replace("/");
+      if (!supabaseSignup.handledBySupabase) {
+        setMessage("La aplicacion no esta conectada a Supabase.");
         return;
       }
-
-      const users = readUsers();
-      if (users[cleanEmail]) {
+      if (supabaseSignup.emailAlreadyRegistered) {
         setEmail("");
         setMessage("Este correo ya esta registrado. Introduce otro correo para crear una cuenta nueva.");
         return;
       }
-
-      users[cleanEmail] = {
-        email: cleanEmail,
-        passwordHash: await hashPassword(cleanEmail, password),
-        confirmed: true,
-        createdAt: new Date().toISOString(),
-        lastLoginAt: new Date().toISOString(),
-      };
-      saveUsers(users);
-      saveSession(cleanEmail);
+      if (supabaseSignup.error) {
+        setMessage(supabaseSignup.error);
+        return;
+      }
+      if (supabaseSignup.needsEmailConfirmation) {
+        setMessage("Supabase tiene activada la confirmacion por email. Desactiva 'Confirm email' en Authentication > Providers > Email para registrar solo con correo y contrasena.");
+        return;
+      }
       setAuthenticated(true);
       router.replace("/");
     } finally {
@@ -239,7 +203,7 @@ export default function AuthGate({ children }: Props) {
             <p className="max-w-xl text-sm font-bold text-red-700">
               {isSupabaseConfigured()
                 ? "Conectado a Supabase Auth: cada usuario queda registrado con su propia cuenta."
-                : "Modo local hasta que anadas las claves de Supabase en .env.local."}
+                : "Falta la configuracion de Supabase para poder entrar en la web."}
             </p>
           </div>
         </div>
@@ -258,6 +222,11 @@ export default function AuthGate({ children }: Props) {
           </div>
 
           <div className="mt-5 space-y-4">
+            {!isSupabaseConfigured() ? (
+              <div className="rounded-md border-2 border-slate-950 bg-[#fff3d1] p-4 text-sm font-bold text-slate-900">
+                Esta web funciona solo con Supabase. Anade las variables `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` en Render para activar el acceso.
+              </div>
+            ) : null}
             <label className="block space-y-1">
               <span className="text-xs font-black uppercase tracking-[0.16em] text-slate-700">Correo</span>
               <input
@@ -288,7 +257,7 @@ export default function AuthGate({ children }: Props) {
 
           <button
             type="submit"
-            disabled={busy}
+            disabled={busy || !isSupabaseConfigured()}
             className="mt-5 h-12 w-full rounded-md border-2 border-slate-950 bg-red-700 px-4 text-sm font-black uppercase tracking-[0.16em] text-white shadow-[4px_4px_0_#111827] transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70"
           >
             {busy ? "Procesando..." : mode === "login" ? "Entrar" : "Crear usuario"}
