@@ -22,7 +22,9 @@ export class RestaurantWebEnrichmentAgent {
     }
   }
 
-  private toPriceLevel(value?: string): '$' | '$$' | '$$$' | '$$$$' | undefined {
+  private toPriceLevel(
+    value?: string,
+  ): '$' | '$$' | '$$$' | '$$$$' | undefined {
     if (!value) return undefined;
     const dollarCount = (value.match(/\$/g) ?? []).length;
     if (dollarCount <= 0) return undefined;
@@ -33,7 +35,10 @@ export class RestaurantWebEnrichmentAgent {
   }
 
   private parseJsonLd(html: string) {
-    const blocks = html.match(/<script[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi) ?? [];
+    const blocks =
+      html.match(
+        /<script[^>]*type=["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi,
+      ) ?? [];
     const parsed: unknown[] = [];
     for (const block of blocks) {
       const raw = block
@@ -42,8 +47,8 @@ export class RestaurantWebEnrichmentAgent {
         .trim();
       if (!raw) continue;
       try {
-        const obj = JSON.parse(raw);
-        if (Array.isArray(obj)) parsed.push(...obj);
+        const obj: unknown = JSON.parse(raw);
+        if (Array.isArray(obj)) parsed.push(...(obj as unknown[]));
         else parsed.push(obj);
       } catch {
         // ignore malformed block
@@ -79,7 +84,9 @@ export class RestaurantWebEnrichmentAgent {
     const schema = this.pickRestaurantSchema(jsonLd);
     if (!schema) return {};
 
-    const aggregate = schema.aggregateRating as Record<string, unknown> | undefined;
+    const aggregate = schema.aggregateRating as
+      | Record<string, unknown>
+      | undefined;
     const ratingRaw = aggregate?.ratingValue;
     const countRaw = aggregate?.reviewCount;
     const priceRaw = schema.priceRange;
@@ -97,11 +104,15 @@ export class RestaurantWebEnrichmentAgent {
 
     return {
       rating: Number.isFinite(rating) && rating > 0 ? rating : undefined,
-      reviewCount: Number.isFinite(reviewCount) && reviewCount > 0 ? reviewCount : undefined,
-      priceLevel: this.toPriceLevel(typeof priceRaw === 'string' ? priceRaw : undefined),
+      reviewCount:
+        Number.isFinite(reviewCount) && reviewCount > 0
+          ? reviewCount
+          : undefined,
+      priceLevel: this.toPriceLevel(
+        typeof priceRaw === 'string' ? priceRaw : undefined,
+      ),
       imageUrl,
       officialUrl: typeof urlRaw === 'string' ? urlRaw : undefined,
     };
   }
 }
-

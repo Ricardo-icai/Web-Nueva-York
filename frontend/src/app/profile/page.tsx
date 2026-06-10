@@ -47,7 +47,7 @@ export default function ProfilePage() {
     };
   }, []);
 
-  const { session, user } = profile;
+  const { session } = profile;
 
   return (
     <main className="nyc-page-shell page-bg-profile">

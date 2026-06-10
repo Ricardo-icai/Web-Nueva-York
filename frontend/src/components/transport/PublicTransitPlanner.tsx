@@ -233,7 +233,7 @@ export default function PublicTransitPlanner() {
       : destination || "New York City Subway";
   const mapUrl = `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed`;
 
-  function useMyLocation() {
+  function locateUser() {
     setError("");
     if (!navigator.geolocation) {
       setError("Tu navegador no permite geolocalizacion.");
@@ -256,7 +256,7 @@ export default function PublicTransitPlanner() {
   useEffect(() => {
     if (!fromSite || autoLocatedRef.current || origin) return;
     autoLocatedRef.current = true;
-    useMyLocation();
+    locateUser();
   }, [fromSite, origin]);
 
   return (
@@ -332,7 +332,7 @@ export default function PublicTransitPlanner() {
 
           <button
             type="button"
-            onClick={useMyLocation}
+            onClick={locateUser}
             disabled={loading}
             className="w-full rounded-md border-2 border-slate-950 bg-[#D4AF37] px-4 py-3 text-sm font-black uppercase tracking-[0.14em] text-slate-950 shadow-[4px_4px_0_#111827] disabled:opacity-60"
           >

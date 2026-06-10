@@ -8,7 +8,6 @@ type Props = {
   officialWebsite?: string | null;
   fallbackImageUrl: string;
   className?: string;
-  sizes?: string;
 };
 
 export default function RestaurantLogoImage({
@@ -16,7 +15,6 @@ export default function RestaurantLogoImage({
   officialWebsite,
   fallbackImageUrl,
   className = "h-full w-full bg-white object-contain p-6",
-  sizes = "(max-width: 768px) 100vw, 33vw",
 }: Props) {
   const logoCandidates = useMemo(() => getRestaurantLogoCandidates(officialWebsite), [officialWebsite]);
   const [candidateIndex, setCandidateIndex] = useState(0);

@@ -6,6 +6,10 @@ import { RestaurantDesignSupervisorAgent } from './restaurant-design-supervisor.
 import { RestaurantKnowledgeService } from './restaurant-knowledge.service';
 import { RestaurantPhotoAgent } from './restaurant-photo.agent';
 import { SpecializedFoodAgent } from './specialized-food.agent';
+import { PatriotEventsAgent } from './patriot-events.agent';
+import { NycTransitAgent } from './nyc-transit.agent';
+import { HomeVisualCuratorAgent } from './home-visual-curator.agent';
+import { CultureCuratorAgent } from './culture-curator.agent';
 
 describe('AppController', () => {
   let appController: AppController;
@@ -15,11 +19,30 @@ describe('AppController', () => {
       controllers: [AppController],
       providers: [
         AppService,
-        { provide: RestaurantDiscoveryAgent, useValue: { discoverRestaurants: jest.fn() } },
-        { provide: RestaurantKnowledgeService, useValue: { readDb: jest.fn(), syncAll: jest.fn() } },
-        { provide: SpecializedFoodAgent, useValue: { discoverByFoodType: jest.fn() } },
-        { provide: RestaurantPhotoAgent, useValue: { findPhotoForRestaurant: jest.fn() } },
-        { provide: RestaurantDesignSupervisorAgent, useValue: { auditRestaurantVisuals: jest.fn() } },
+        {
+          provide: RestaurantDiscoveryAgent,
+          useValue: { discoverRestaurants: jest.fn() },
+        },
+        {
+          provide: RestaurantKnowledgeService,
+          useValue: { readDb: jest.fn(), syncAll: jest.fn() },
+        },
+        {
+          provide: SpecializedFoodAgent,
+          useValue: { discoverByFoodType: jest.fn() },
+        },
+        {
+          provide: RestaurantPhotoAgent,
+          useValue: { findPhotoForRestaurant: jest.fn() },
+        },
+        {
+          provide: RestaurantDesignSupervisorAgent,
+          useValue: { auditRestaurantVisuals: jest.fn() },
+        },
+        { provide: PatriotEventsAgent, useValue: {} },
+        { provide: NycTransitAgent, useValue: {} },
+        { provide: HomeVisualCuratorAgent, useValue: {} },
+        { provide: CultureCuratorAgent, useValue: {} },
       ],
     }).compile();
 

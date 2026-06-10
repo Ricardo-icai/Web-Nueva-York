@@ -228,7 +228,6 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
     return scoreB - scoreA;
   });
 
-  const featured = restaurants[0];
   const totalLocales = mapFilteredLocales.length;
   const mustTryGroups: Array<{ title: string; keys: string[] }> = [
     { title: "Pizza", keys: ["pizza"] },

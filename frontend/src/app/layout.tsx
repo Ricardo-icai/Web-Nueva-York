@@ -35,7 +35,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[#fff3d1] text-slate-900">
         <NavigationFeedback />
         <AuthGate>
-          <header className="sticky top-0 z-40 border-b-2 border-slate-950 bg-[#fff3d1]/95 shadow-[0_4px_0_#111827] backdrop-blur">
+          <header className="sticky top-0 z-[5000] border-b-2 border-slate-950 bg-[#fff3d1]/95 shadow-[0_4px_0_#111827] backdrop-blur">
             <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
               <div className="flex items-center gap-3">
                 <BackButton />

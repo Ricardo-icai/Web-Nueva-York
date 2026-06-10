@@ -29,7 +29,7 @@ export default function MenuDropdown() {
       </button>
 
       <div
-        className={`fixed inset-0 z-50 bg-slate-950/45 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[5100] bg-slate-950/45 backdrop-blur-sm transition-opacity duration-300 ${
           open ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         onClick={() => setOpen(false)}
@@ -37,7 +37,7 @@ export default function MenuDropdown() {
 
       <aside
         id="main-navigation-drawer"
-        className={`fixed left-0 top-0 z-50 h-dvh w-[min(82vw,340px)] border-r-2 border-slate-950 bg-[#fff3d1] shadow-2xl transition-transform duration-300 ease-out ${
+        className={`fixed left-0 top-0 z-[5200] h-dvh w-[min(82vw,340px)] border-r-2 border-slate-950 bg-[#fff3d1] shadow-2xl transition-transform duration-300 ease-out ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >

@@ -113,13 +113,6 @@ export default function CulturalMap({ points, routes }: Props) {
     [activeCategory, points, selectedRoutePoints],
   );
 
-  useEffect(() => {
-    if (routeFromUrl) {
-      setActiveRoute(routeFromUrl);
-      setActiveCategory("Todos");
-    }
-  }, [routeFromUrl]);
-
   function locateUser() {
     setLocationError("");
     if (!navigator.geolocation) {

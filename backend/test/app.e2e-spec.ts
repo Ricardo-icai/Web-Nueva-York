@@ -16,11 +16,16 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/health (GET)', () => {
     return request(app.getHttpServer())
-      .get('/')
+      .get('/health')
       .expect(200)
-      .expect('Hello World!');
+      .expect(({ body }: { body: { status?: string; service?: string } }) => {
+        expect(body).toMatchObject({
+          status: 'ok',
+          service: 'nyc-family-planner-api',
+        });
+      });
   });
 
   afterEach(async () => {
