@@ -23,7 +23,7 @@ export default function UseMyLocationButton() {
     void getDeviceCoordinates()
       .then(({ lat, lng }) => updateWithLocation(lat, lng))
       .catch((message: unknown) => {
-        setError(message instanceof Error ? message.message : "No he podido obtener tu ubicacion.");
+        setError(message instanceof Error ? message.message : "No he podido obtener tu ubicación.");
       })
       .finally(() => setLoading(false));
   }
@@ -36,7 +36,7 @@ export default function UseMyLocationButton() {
         disabled={loading}
         className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-100 disabled:opacity-60"
       >
-        {loading ? "Buscando ubicacion..." : "Usar mi ubicacion"}
+        {loading ? "Buscando ubicación..." : "Usar mi ubicación"}
       </button>
       {error ? <p className="text-xs font-semibold text-red-700">{error}</p> : null}
     </div>

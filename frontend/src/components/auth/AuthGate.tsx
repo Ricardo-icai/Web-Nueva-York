@@ -82,11 +82,11 @@ export default function AuthGate({ children }: Props) {
     try {
       const supabaseLogin = await signInWithEmailPassword(cleanEmail, password);
       if (!supabaseLogin.handledBySupabase) {
-        setMessage("La aplicacion no esta conectada a Supabase.");
+        setMessage("La aplicación no está conectada a Supabase.");
         return;
       }
       if (supabaseLogin.error) {
-        setMessage("Correo o contrasena incorrectos.");
+        setMessage("Correo o contraseña incorrectos.");
         return;
       }
       setAuthenticated(true);
@@ -101,23 +101,23 @@ export default function AuthGate({ children }: Props) {
     setMessage("");
     try {
       if (!cleanEmail.includes("@") || !cleanEmail.includes(".")) {
-        setMessage("Introduce un correo valido.");
+        setMessage("Introduce un correo válido.");
         return;
       }
 
       if (password.length < 6) {
-        setMessage("La contrasena debe tener al menos 6 caracteres.");
+        setMessage("La contraseña debe tener al menos 6 caracteres.");
         return;
       }
 
       const supabaseSignup = await signUpWithEmailPassword(cleanEmail, password);
       if (!supabaseSignup.handledBySupabase) {
-        setMessage("La aplicacion no esta conectada a Supabase.");
+        setMessage("La aplicación no está conectada a Supabase.");
         return;
       }
       if (supabaseSignup.emailAlreadyRegistered) {
         setEmail("");
-        setMessage("Este correo ya esta registrado. Introduce otro correo para crear una cuenta nueva.");
+        setMessage("Este correo ya está registrado. Introduce otro correo para crear una cuenta nueva.");
         return;
       }
       if (supabaseSignup.error) {
@@ -125,7 +125,7 @@ export default function AuthGate({ children }: Props) {
         return;
       }
       if (supabaseSignup.needsEmailConfirmation) {
-        setMessage("Supabase tiene activada la confirmacion por email. Desactiva 'Confirm email' en Authentication > Providers > Email para registrar solo con correo y contrasena.");
+        setMessage("Supabase tiene activada la confirmación por email. Desactiva 'Confirm email' en Authentication > Providers > Email para registrar solo con correo y contraseña.");
         return;
       }
       setAuthenticated(true);
@@ -171,7 +171,7 @@ export default function AuthGate({ children }: Props) {
               Planifica Nueva York con tu cuenta.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-white/82 sm:text-xl">
-              Para usar la web tienes que registrarte o iniciar sesion. Asi guardamos tu perfil, tu viaje y tus favoritos.
+              Para usar la web tienes que registrarte o iniciar sesión. Así guardamos tu perfil, tu viaje y tus favoritos.
             </p>
             <button
               type="button"
@@ -198,7 +198,7 @@ export default function AuthGate({ children }: Props) {
               Entra a tu viaje de Nueva York
             </h1>
             <p className="max-w-xl text-base font-semibold text-slate-700 sm:text-lg">
-              Guarda tu sesion, tus preferencias y tus favoritos por usuario antes de entrar en la web.
+              Guarda tu sesión, tus preferencias y tus favoritos por usuario antes de entrar en la web.
             </p>
             <p className="max-w-xl text-sm font-bold text-red-700">
               {isSupabaseConfigured()
@@ -217,14 +217,14 @@ export default function AuthGate({ children }: Props) {
               {mode === "login" ? "Log in" : "Registro"}
             </p>
             <h2 className="mt-1 font-american-diner text-4xl text-slate-950">
-              Usuario y contrasena
+              Usuario y contraseña
             </h2>
           </div>
 
           <div className="mt-5 space-y-4">
             {!isSupabaseConfigured() ? (
               <div className="rounded-md border-2 border-slate-950 bg-[#fff3d1] p-4 text-sm font-bold text-slate-900">
-                Esta web funciona solo con Supabase. Anade las variables `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` en Render para activar el acceso.
+                Esta web funciona solo con Supabase. Añade las variables `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` en Render para activar el acceso.
               </div>
             ) : null}
             <label className="block space-y-1">
@@ -240,7 +240,7 @@ export default function AuthGate({ children }: Props) {
             </label>
 
             <label className="block space-y-1">
-              <span className="text-xs font-black uppercase tracking-[0.16em] text-slate-700">Contrasena</span>
+              <span className="text-xs font-black uppercase tracking-[0.16em] text-slate-700">Contraseña</span>
               <input
                 type="password"
                 value={password}

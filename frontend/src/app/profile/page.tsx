@@ -48,16 +48,16 @@ export default function ProfilePage() {
     <main className="nyc-page-shell page-bg-profile">
       <section className="nyc-content-shell mx-auto max-w-4xl p-6">
         <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">Perfil</p>
-        <h1 className="mt-2 font-american-diner text-5xl text-slate-950">Tu sesion</h1>
+        <h1 className="mt-2 font-american-diner text-5xl text-slate-950">Tu sesión</h1>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           <div className="rounded-md border-2 border-slate-950 bg-white p-4">
             <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-600">Correo</p>
-            <p className="mt-2 break-words text-lg font-black text-slate-950">{session?.email ?? "Sin sesion"}</p>
+            <p className="mt-2 break-words text-lg font-black text-slate-950">{session?.email ?? "Sin sesión"}</p>
           </div>
           <div className="rounded-md border-2 border-slate-950 bg-white p-4">
             <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-600">Estado</p>
             <p className="mt-2 text-lg font-black text-slate-950">
-              {session?.email ? "Cuenta activa" : "Sin sesion"}
+              {session?.email ? "Cuenta activa" : "Sin sesión"}
             </p>
           </div>
           <div className="rounded-md border-2 border-slate-950 bg-white p-4">

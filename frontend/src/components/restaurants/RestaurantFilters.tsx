@@ -68,11 +68,11 @@ export default function RestaurantFilters(props: Props) {
           <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-700">Elige comida, precio y distancia</p>
           {savedHotel ? (
             <p className="mt-2 text-xs font-black uppercase tracking-wide text-emerald-800">
-              Donde duermo: {savedHotel.address}
+              Dónde duermo: {savedHotel.address}
             </p>
           ) : (
             <p className="mt-2 text-xs font-black uppercase tracking-wide text-red-700">
-              Guarda tu alojamiento en Editar perfil para filtrar por donde duermes.
+              Guarda tu alojamiento en Editar perfil para filtrar por dónde duermes.
             </p>
           )}
         </div>
@@ -108,7 +108,7 @@ export default function RestaurantFilters(props: Props) {
           </select>
         </label>
         <label className="space-y-1">
-          <span className={labelClass}>Desde mi ubicacion</span>
+          <span className={labelClass}>Desde mi ubicación</span>
           <select name="maxDistanceFromUserKm" defaultValue={props.maxDistanceFromUserKm} className={selectClass}>
             <option value="">Sin limite</option>
             <option value="1">1 km</option>
@@ -118,7 +118,7 @@ export default function RestaurantFilters(props: Props) {
           </select>
         </label>
         <label className="space-y-1">
-          <span className={labelClass}>Desde donde duermo</span>
+          <span className={labelClass}>Desde dónde duermo</span>
           <select name="maxDistanceFromHotelKm" defaultValue={props.maxDistanceFromHotelKm} className={selectClass}>
             <option value="">Sin limite</option>
             <option value="1">1 km</option>

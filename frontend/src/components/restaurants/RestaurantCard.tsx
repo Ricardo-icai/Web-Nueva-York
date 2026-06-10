@@ -24,17 +24,17 @@ export default function RestaurantCard({ restaurant }: { restaurant: Restaurant 
         <p className="text-sm text-slate-700">{restaurant.cuisine.join(", ")}</p>
         <p className="text-sm text-slate-700">{restaurant.neighborhood ?? restaurant.address ?? "Address unavailable"}</p>
         <p className="text-sm text-slate-900">
-          {hasRating ? `Rating ${restaurant.googleRating?.toFixed(1)} - ${restaurant.googleReviewCount ?? 0} resenas` : "Google rating unavailable"}
+          {hasRating ? `Valoración ${restaurant.googleRating?.toFixed(1)} - ${restaurant.googleReviewCount ?? 0} reseñas` : "Valoración de Google no disponible"}
         </p>
         <p className="text-sm text-slate-900">
-          {hasPrice ? `Estimated from $${restaurant.averagePricePerPersonUsd}/person` : "Price estimate unavailable"}
+          {hasPrice ? `Estimado desde $${restaurant.averagePricePerPersonUsd}/persona` : "Estimación de precio no disponible"}
         </p>
         {restaurant.distanceFromAccommodationKm !== null && restaurant.distanceFromAccommodationKm !== undefined && (
           <p className="text-sm text-slate-700">{restaurant.distanceFromAccommodationKm} km desde alojamiento</p>
         )}
         <div className="flex flex-wrap gap-2">
           <Link href={restaurant.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-3 py-1 text-sm">Google Maps</Link>
-          <Link href={transitHref} className="rounded-full border border-slate-300 px-3 py-1 text-sm">Como llegar</Link>
+          <Link href={transitHref} className="rounded-full border border-slate-300 px-3 py-1 text-sm">Cómo llegar</Link>
           {restaurant.officialWebsite ? (
             <Link href={restaurant.officialWebsite} target="_blank" className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-sm">Website</Link>
           ) : (

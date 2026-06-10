@@ -19,7 +19,7 @@ const quickDestinations = [
 const transportRules = [
   {
     title: "Metro",
-    text: "La opcion mas rapida para cruzar Manhattan y moverte entre boroughs. Usa Google Maps/MTA antes de entrar por cambios de servicio.",
+    text: "La opción más rápida para cruzar Manhattan y moverte entre boroughs. Usa Google Maps/MTA antes de entrar por cambios de servicio.",
   },
   {
     title: "Bus",
@@ -37,7 +37,7 @@ const transportRules = [
 
 const transitTips = [
   ["OMNY", "Paga con tarjeta contactless o movil. No hace falta MetroCard para la mayoria de viajes."],
-  ["Subway", "El metro es la forma mas rapida de cruzar Manhattan, Brooklyn y Queens."],
+  ["Subway", "El metro es la forma más rápida de cruzar Manhattan, Brooklyn y Queens."],
   ["Ferry", "NYC Ferry funciona muy bien para vistas y rutas por East River."],
   ["Aeropuertos", "JFK usa AirTrain + LIRR/metro; Newark suele ir bien con NJ Transit."],
 ];
@@ -82,7 +82,7 @@ function destinationRoutePlan(destination: string) {
       title: "Ruta recomendada a JFK",
       lines: ["E", "A", "AIRTRAIN"],
       steps: [
-        "Desde tu ubicacion, abre la ruta en Google Maps con modo transporte publico.",
+        "Desde tu ubicación, abre la ruta en Google Maps con modo transporte público.",
         "Si priorizas precio: subway E hacia Jamaica Center o A hacia Howard Beach.",
         "Cambia a AirTrain JFK en Jamaica o Howard Beach y sigue la terminal indicada.",
       ],
@@ -174,11 +174,11 @@ function destinationRoutePlan(destination: string) {
     };
   }
   return {
-    title: "Ruta recomendada en transporte publico",
+    title: "Ruta recomendada en transporte público",
     lines: ["A", "C", "E", "1", "2", "3", "N", "Q", "R", "W"],
     steps: [
-      "Pulsa Usar mi ubicacion para fijar tu origen real.",
-      "Abre la ruta rapida y compara subway, bus y ferry segun hora real.",
+      "Pulsa Usar mi ubicación para fijar tu origen real.",
+      "Abre la ruta rápida y compara subway, bus y ferry según la hora real.",
       "Prioriza estaciones principales y mira el sentido Uptown/Downtown o Brooklyn/Queens antes de entrar.",
     ],
     transfer: "El mapa de Google confirmara la combinacion exacta en tiempo real.",
@@ -193,7 +193,7 @@ function destinationHint(destination: string) {
   if (value.includes("brooklyn") || value.includes("dumbo")) return "Recomendado: subway hacia Brooklyn; ferry si priorizas vistas.";
   if (value.includes("pier") || value.includes("hudson")) return "Recomendado: subway hasta West Side y caminar. Evita coche en eventos.";
   if (value.includes("times square")) return "Recomendado: subway a Times Sq-42 St, pero sal por calles laterales si hay mucha gente.";
-  return "Recomendado: abre la ruta en Google Maps con modo transporte publico y compara metro vs bus segun hora real.";
+  return "Recomendado: abre la ruta en Google Maps con modo transporte público y compara metro vs. bus según la hora real.";
 }
 
 export default function PublicTransitPlanner() {
@@ -240,7 +240,7 @@ export default function PublicTransitPlanner() {
     void getDeviceCoordinates()
       .then(({ lat, lng }) => setOrigin({ lat, lng }))
       .catch((message: unknown) => {
-        setError(message instanceof Error ? message.message : "No he podido obtener tu ubicacion. Revisa permisos del navegador.");
+        setError(message instanceof Error ? message.message : "No he podido obtener tu ubicación. Revisa permisos del navegador.");
       })
       .finally(() => setLoading(false));
   }
@@ -258,7 +258,7 @@ export default function PublicTransitPlanner() {
           <div className="relative min-h-[260px]">
             <Image
               src="https://images.pexels.com/photos/30228466/pexels-photo-30228466.jpeg?auto=compress&cs=tinysrgb&w=1800"
-              alt="Metro de Nueva York en una estacion"
+              alt="Metro de Nueva York en una estación"
               fill
               priority
               className="object-cover"
@@ -268,13 +268,13 @@ export default function PublicTransitPlanner() {
           </div>
 
           <div className="p-5 sm:p-7">
-            <p className="text-xs font-black uppercase tracking-[0.22em] text-[#D4AF37]">Guia rapida</p>
+            <p className="text-xs font-black uppercase tracking-[0.22em] text-[#D4AF37]">Guía rápida</p>
             <h1 className="mt-2 font-display text-4xl font-bold leading-tight sm:text-5xl">
-              Como usar el transporte publico de Nueva York
+              Cómo usar el transporte público de Nueva York
             </h1>
             <p className="mt-4 text-base leading-7 text-white/76">
               Combina metro para rapidez, ferry para vistas y caminar solo cuando el tramo merezca la pena.
-              Para familias, marca siempre una estacion alternativa antes de salir.
+              Para familias, marca siempre una estación alternativa antes de salir.
             </p>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
@@ -291,11 +291,11 @@ export default function PublicTransitPlanner() {
 
       <section className="rounded-lg border-2 border-slate-950 bg-[#fff3d1] p-5 shadow-[6px_6px_0_#111827]">
         <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">
-          {fromSite ? "Como llegar desde la web" : "Ruta mas rapida"}
+          {fromSite ? "Cómo llegar desde la web" : "Ruta más rápida"}
         </p>
         <h1 className="mt-2 font-american-diner text-4xl text-slate-950">Transporte publico NYC</h1>
         <p className="mt-2 text-sm font-semibold leading-6 text-slate-700">
-          Dime donde quieres ir, marca tu ubicacion y abre la ruta en metro, bus o ferry con indicaciones reales.
+          Dime dónde quieres ir, marca tu ubicación y abre la ruta en metro, bus o ferry con indicaciones reales.
         </p>
 
         <div className="mt-5 space-y-4">
@@ -328,7 +328,7 @@ export default function PublicTransitPlanner() {
             disabled={loading}
             className="w-full rounded-md border-2 border-slate-950 bg-[#D4AF37] px-4 py-3 text-sm font-black uppercase tracking-[0.14em] text-slate-950 shadow-[4px_4px_0_#111827] disabled:opacity-60"
           >
-            {loading ? "Buscando ubicacion..." : "Usar mi ubicacion"}
+            {loading ? "Buscando ubicación..." : "Usar mi ubicación"}
           </button>
 
           {origin ? (
@@ -343,7 +343,7 @@ export default function PublicTransitPlanner() {
             target="_blank"
             className="block rounded-md border-2 border-slate-950 bg-red-700 px-4 py-3 text-center text-sm font-black uppercase tracking-[0.14em] text-white shadow-[4px_4px_0_#111827]"
           >
-            Ver ruta mas rapida
+            Ver ruta más rápida
           </a>
         </div>
 
@@ -389,7 +389,7 @@ export default function PublicTransitPlanner() {
           <p className="text-xs font-black uppercase tracking-[0.18em] text-[#D4AF37]">Mapa</p>
           <h2 className="font-display text-3xl font-bold">{destination || "New York City"}</h2>
         </div>
-        <iframe title="Mapa transporte publico NYC" src={mapUrl} className="h-[520px] w-full border-0" loading="lazy" />
+        <iframe title="Mapa transporte público NYC" src={mapUrl} className="h-[520px] w-full border-0" loading="lazy" />
       </section>
 
       <section className="rounded-lg border-2 border-slate-950 bg-white p-5 shadow-[6px_6px_0_#111827] lg:col-span-2">
@@ -399,7 +399,7 @@ export default function PublicTransitPlanner() {
           {[
             ["1. Toca y entra", "Usa tarjeta contactless, Apple Pay, Google Pay, wearable u OMNY Card en el lector."],
             ["2. Misma tarjeta", "Usa siempre el mismo metodo para que OMNY aplique transbordos y limites semanales."],
-            ["3. Si quieres tarjeta fisica", "Compra una OMNY Card en maquinas OMNY o comercios participantes y recargala."],
+            ["3. Si quieres tarjeta física", "Compra una OMNY Card en máquinas OMNY o comercios participantes y recárgala."],
             ["4. MetroCard", "Desde 2026 OMNY es el metodo principal; no planifiques comprar/refill MetroCard nueva."],
           ].map(([title, copy]) => (
             <div key={title} className="rounded-md border border-slate-200 bg-stone-50 p-4">

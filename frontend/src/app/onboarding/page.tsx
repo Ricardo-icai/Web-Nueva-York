@@ -178,7 +178,7 @@ export default function OnboardingPage() {
     const missing: string[] = [];
     if (!tripName.trim()) missing.push("nombre del viaje");
     if (!nationality.trim()) missing.push("nacionalidad principal");
-    if (!Number.isFinite(travelers) || travelers < 1) missing.push("numero de viajeros");
+    if (!Number.isFinite(travelers) || travelers < 1) missing.push("número de viajeros");
     if (!accommodation.trim()) missing.push("alojamiento");
     if (!startDate) missing.push("fecha de llegada");
     if (!endDate) missing.push("fecha de salida");
@@ -267,7 +267,7 @@ export default function OnboardingPage() {
             Edita los datos base de tu viaje a Nueva York
           </h1>
           <p className="mt-4 text-sm font-semibold leading-6 text-slate-700">
-            Cambia alojamiento, fechas, numero de viajeros y ritmo. Guardaremos este perfil para tu usuario.
+            Cambia alojamiento, fechas, número de viajeros y ritmo. Guardaremos este perfil para tu usuario.
           </p>
         </div>
         <div className="relative min-h-[260px] overflow-hidden rounded-md border-2 border-slate-950">
@@ -279,7 +279,7 @@ export default function OnboardingPage() {
         <h2 className="font-american-diner text-3xl text-slate-900">Datos del perfil</h2>
         {missingFields.length > 0 ? (
           <div className="rounded-2xl border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
-            <p className="font-bold">Completa tu perfil para que la experiencia sea mejor y mas precisa.</p>
+            <p className="font-bold">Completa tu perfil para que la experiencia sea mejor y más precisa.</p>
             <p className="mt-1">Falta: {missingFields.join(", ")}.</p>
           </div>
         ) : null}
@@ -310,7 +310,7 @@ export default function OnboardingPage() {
             </select>
           </div>
           <div className="grid gap-2">
-            <label htmlFor="travelers" className="text-sm font-medium text-slate-600">Numero de viajeros</label>
+            <label htmlFor="travelers" className="text-sm font-medium text-slate-600">Número de viajeros</label>
             <input
               required
               id="travelers"
@@ -336,7 +336,7 @@ export default function OnboardingPage() {
               setSelectedLocation(null);
               setSuggestions(popularLocationMatches(value));
             }}
-            placeholder="Hotel, direccion o zona"
+            placeholder="Hotel, dirección o zona"
             autoComplete="off"
             role="combobox"
             aria-autocomplete="list"

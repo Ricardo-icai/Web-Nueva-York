@@ -119,7 +119,7 @@ export default function CulturalMap({ points, routes }: Props) {
     void getDeviceCoordinates()
       .then(({ lat, lng }) => setUserLocation({ lat, lng }))
       .catch((message: unknown) => {
-        setLocationError(message instanceof Error ? message.message : "No he podido obtener tu ubicacion. Revisa permisos del navegador.");
+        setLocationError(message instanceof Error ? message.message : "No he podido obtener tu ubicación. Revisa permisos del navegador.");
       });
   }
 
@@ -215,7 +215,7 @@ export default function CulturalMap({ points, routes }: Props) {
           iconAnchor: [14, 14],
         });
         const userMarker = L.marker([userLocation.lat, userLocation.lng], { icon: userIcon });
-        userMarker.bindTooltip("Tu ubicacion", { direction: "top", offset: [0, -12], opacity: 0.95 });
+        userMarker.bindTooltip("Tu ubicación", { direction: "top", offset: [0, -12], opacity: 0.95 });
         userMarker.addTo(layer);
         bounds.push([userLocation.lat, userLocation.lng]);
       }
@@ -267,13 +267,13 @@ export default function CulturalMap({ points, routes }: Props) {
         </div>
 
         <div className="rounded-md border border-[#0A2342]/15 bg-white p-4 shadow-sm">
-          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">Tu ubicacion</p>
+          <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">Tu ubicación</p>
           <button
             type="button"
             onClick={locateUser}
             className="mt-3 rounded-sm bg-[#0A2342] px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-white"
           >
-            Saber donde estoy
+            Saber dónde estoy
           </button>
           {userLocation ? (
             <p className="mt-2 text-sm font-semibold text-emerald-800">
@@ -286,7 +286,7 @@ export default function CulturalMap({ points, routes }: Props) {
         <div className="rounded-md border border-[#0A2342]/15 bg-white p-4 shadow-sm">
           <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">Conexiones de transporte</p>
           <p className="mt-2 text-sm leading-6 text-slate-700">
-            Cada punto abre la pestana Transporte con el destino precargado. Desde ahi puedes usar tu ubicacion y ver conexiones de metro, bus, ferry o AirTrain.
+            Cada punto abre la pestaña Transporte con el destino precargado. Desde ahí puedes usar tu ubicación y ver conexiones de metro, bus, ferry o AirTrain.
           </p>
         </div>
 
@@ -316,7 +316,7 @@ export default function CulturalMap({ points, routes }: Props) {
           </div>
           {selectedRoute ? (
             <p className="mt-3 text-sm font-semibold text-slate-700">
-              Ruta activa: {selectedRoute.name}. La linea dorada une las paradas; la linea granate conecta tu ubicacion con la primera parada.
+              Ruta activa: {selectedRoute.name}. La línea dorada une las paradas; la línea granate conecta tu ubicación con la primera parada.
             </p>
           ) : null}
         </div>

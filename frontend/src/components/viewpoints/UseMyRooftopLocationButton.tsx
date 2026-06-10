@@ -23,7 +23,7 @@ export default function UseMyRooftopLocationButton() {
     void getDeviceCoordinates()
       .then(({ lat, lng }) => updateWithLocation(lat, lng))
       .catch((message: unknown) => {
-        setError(message instanceof Error ? message.message : "No he podido obtener tu ubicacion.");
+        setError(message instanceof Error ? message.message : "No he podido obtener tu ubicación.");
       })
       .finally(() => setLoading(false));
   }
@@ -36,7 +36,7 @@ export default function UseMyRooftopLocationButton() {
         disabled={loading}
         className="rounded-md border-2 border-slate-950 bg-white px-3 py-2 text-xs font-black uppercase tracking-wide text-slate-950 shadow-[3px_3px_0_#111827] hover:bg-[#fffdf4] disabled:opacity-60"
       >
-        {loading ? "Buscando ubicacion..." : "Usar mi ubicacion"}
+        {loading ? "Buscando ubicación..." : "Usar mi ubicación"}
       </button>
       {error ? <p className="text-xs font-semibold text-red-700">{error}</p> : null}
     </div>

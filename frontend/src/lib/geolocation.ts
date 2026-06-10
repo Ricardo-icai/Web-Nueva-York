@@ -11,13 +11,13 @@ function isGeolocationError(value: unknown): value is GeolocationErrorLike {
 function describeGeolocationError(error: GeolocationErrorLike) {
   switch (error.code) {
     case 1:
-      return "Has bloqueado la ubicacion para esta web. Activa el permiso del navegador y vuelve a intentarlo.";
+      return "Has bloqueado la ubicación para esta web. Activa el permiso del navegador y vuelve a intentarlo.";
     case 2:
-      return "No he podido localizar el movil. Prueba otra vez con mejor cobertura o saliendo del navegador integrado.";
+      return "No he podido localizar el móvil. Prueba otra vez con mejor cobertura o saliendo del navegador integrado.";
     case 3:
-      return "La ubicacion esta tardando demasiado. Voy a intentar una version mas rapida.";
+      return "La ubicación está tardando demasiado. Voy a intentar una versión más rápida.";
     default:
-      return "No he podido obtener tu ubicacion desde este movil.";
+      return "No he podido obtener tu ubicación desde este móvil.";
   }
 }
 
@@ -29,7 +29,7 @@ function attemptPosition(options: PositionOptions) {
 
 export async function getDeviceCoordinates(): Promise<Coordinates> {
   if (typeof navigator === "undefined" || !navigator.geolocation) {
-    throw new Error("Tu navegador no permite geolocalizacion.");
+    throw new Error("Tu navegador no permite geolocalización.");
   }
 
   try {
@@ -44,7 +44,7 @@ export async function getDeviceCoordinates(): Promise<Coordinates> {
     };
   } catch (error) {
     if (!isGeolocationError(error)) {
-      throw new Error("No he podido obtener tu ubicacion desde este movil.");
+      throw new Error("No he podido obtener tu ubicación desde este móvil.");
     }
     if (error.code === 1) {
       throw new Error(describeGeolocationError(error));
@@ -64,7 +64,7 @@ export async function getDeviceCoordinates(): Promise<Coordinates> {
       if (isGeolocationError(fallbackError)) {
         throw new Error(describeGeolocationError(fallbackError));
       }
-      throw new Error("No he podido obtener tu ubicacion desde este movil.");
+      throw new Error("No he podido obtener tu ubicación desde este móvil.");
     }
   }
 }

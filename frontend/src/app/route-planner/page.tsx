@@ -86,7 +86,7 @@ const essentials: EssentialStop[] = [
     image: "https://images.unsplash.com/photo-1494522855154-9297ac14b55f?auto=format&fit=crop&w=1600&q=84",
     duration: "2-3 h",
     bestTime: "Atardecer",
-    reason: "La caminata urbana mas iconica y una de las mejores vistas de Manhattan.",
+    reason: "La caminata urbana más icónica y una de las mejores vistas de Manhattan.",
     lat: 40.7061,
     lng: -73.9969,
     priority: 97,
@@ -177,7 +177,7 @@ const essentials: EssentialStop[] = [
     image: "https://images.unsplash.com/photo-1605722243979-fe0be815d1a9?auto=format&fit=crop&w=1600&q=84",
     duration: "3 h",
     bestTime: "Manana",
-    reason: "Plan perfecto para ninos, adolescentes y dias de lluvia.",
+    reason: "Plan perfecto para niños, adolescentes y días de lluvia.",
     lat: 40.7813,
     lng: -73.9739,
     priority: 84,
@@ -203,7 +203,7 @@ const essentials: EssentialStop[] = [
     image: "https://images.unsplash.com/photo-1532167080057-e8e966c4e2e4?auto=format&fit=crop&w=1600&q=84",
     duration: "3-4 h",
     bestTime: "Tarde",
-    reason: "Buen cierre si hay suficientes dias y quieres salir del Manhattan clasico.",
+    reason: "Buen cierre si hay suficientes días y quieres salir del Manhattan clásico.",
     lat: 40.6712,
     lng: -73.9636,
     priority: 76,
@@ -216,7 +216,7 @@ const essentials: EssentialStop[] = [
     image: "https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2?auto=format&fit=crop&w=1600&q=84",
     duration: "2 h",
     bestTime: "Atardecer",
-    reason: "Mirador inmersivo y una de las vistas mas virales del skyline.",
+    reason: "Mirador inmersivo y una de las vistas más virales del skyline.",
     lat: 40.7527,
     lng: -73.9787,
     priority: 91,
@@ -242,7 +242,7 @@ const essentials: EssentialStop[] = [
     image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=84",
     duration: "1.5 h",
     bestTime: "Comida",
-    reason: "Una parada rapida para probar una porcion clasica y pasear por Village.",
+    reason: "Una parada rápida para probar una porción clásica y pasear por Village.",
     lat: 40.7306,
     lng: -74.0027,
     priority: 83,
@@ -450,7 +450,7 @@ export default function RoutePlannerPage() {
           <p className="text-xs font-black uppercase tracking-[0.2em] text-[#7A1E2C]">Organizame la ruta</p>
           <h1 className="mt-2 font-american-diner text-4xl">Necesito tu perfil completo</h1>
           <p className="mt-3 text-sm font-semibold leading-6 text-slate-700">
-            Para hacer un planning real segun personas, dias, ritmo y alojamiento, completa primero: {missing.join(", ")}.
+            Para hacer un planning real según personas, días, ritmo y alojamiento, completa primero: {missing.join(", ")}.
           </p>
           <Link href="/onboarding" className="nyc-action mt-6 inline-block rounded-sm px-5 py-3 text-sm">
             Completar perfil
@@ -532,7 +532,7 @@ export default function RoutePlannerPage() {
           </div>
           <p className="mt-4 text-sm font-bold text-slate-700">
             {mustSeeTitles.length > 0
-              ? `${mustSeeTitles.length} imprescindibles seleccionados. El planning los colocara primero y completara el resto automaticamente.`
+              ? `${mustSeeTitles.length} imprescindibles seleccionados. El planning los colocará primero y completará el resto automáticamente.`
               : "Sin seleccion manual: crearemos una ruta equilibrada con los imprescindibles mejor valorados."}
           </p>
         </div>
@@ -550,13 +550,13 @@ export default function RoutePlannerPage() {
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,35,66,0.96),rgba(10,35,66,0.62),rgba(193,18,31,0.26)),linear-gradient(180deg,rgba(10,35,66,0.14),rgba(10,35,66,0.96))]" />
         <div className="relative z-10 mx-auto flex min-h-[72vh] max-w-7xl flex-col justify-end px-5 pb-10 pt-24 text-white sm:px-8">
           <p className="w-fit border border-[#D4AF37]/60 bg-[#D4AF37]/12 px-3 py-2 text-xs font-black uppercase tracking-[0.24em] text-[#D4AF37]">
-            Ruta automatica
+            Ruta automática
           </p>
           <h1 className="mt-5 max-w-5xl font-american-diner text-5xl leading-[0.94] sm:text-7xl">
             Organizame la ruta
           </h1>
           <p className="mt-5 max-w-3xl text-base font-semibold leading-7 text-white/84">
-            Planning automatico para {profile?.travelers} viajeros, {totalDays} dias, ritmo {profile?.pace}, saliendo desde {profile?.accommodation?.address}.
+            Planning automático para {profile?.travelers} viajeros, {totalDays} días, ritmo {profile?.pace}, saliendo desde {profile?.accommodation?.address}.
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <a href="#planning" className="nyc-action rounded-sm px-5 py-3 text-sm">
