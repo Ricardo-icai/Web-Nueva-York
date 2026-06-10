@@ -6,8 +6,6 @@ import { useRouter } from "next/navigation";
 import { readSession, userScopedStorageKey } from "@/lib/auth";
 import { loadTravelProfile, saveTravelProfile } from "@/lib/user-data";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
-
 type Pace = "relajado" | "normal" | "intenso";
 
 type Country = { code: string; name: string; flag: string };
@@ -128,7 +126,7 @@ export default function OnboardingPage() {
     let active = true;
     async function loadHeroImage() {
       try {
-        const response = await fetch(`${API_BASE_URL}/media/hero-image`);
+        const response = await fetch("/api/media/hero-image");
         if (!response.ok) return;
         const data = (await response.json()) as { imageUrl?: string };
         if (active && data.imageUrl) setHeroImage(data.imageUrl);
@@ -229,7 +227,7 @@ export default function OnboardingPage() {
     };
 
     try {
-      const response = await fetch(tripId ? `${API_BASE_URL}/trips/${tripId}` : `${API_BASE_URL}/trips`, {
+      const response = await fetch(tripId ? `/api/trips/${tripId}` : "/api/trips", {
         method: tripId ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -237,14 +235,17 @@ export default function OnboardingPage() {
 
       const finalResponse =
         response.status === 404 && tripId
-          ? await fetch(`${API_BASE_URL}/trips`, {
+          ? await fetch("/api/trips", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(payload),
             })
           : response;
 
-      if (!finalResponse.ok) throw new Error(`No se pudo guardar el perfil del viaje (${finalResponse.status})`);
+      if (!finalResponse.ok) {
+        const details = await finalResponse.text();
+        throw new Error(details || `No se pudo guardar el perfil del viaje (${finalResponse.status})`);
+      }
       const trip = (await finalResponse.json()) as { id: string };
       setTripId(trip.id);
       await saveTravelProfile(TRAVEL_PROFILE_KEY, { tripId: trip.id, ...payload });
