@@ -86,10 +86,7 @@ function VisualCard({ card, featured = false }: { card: HomeCard; featured?: boo
       />
       <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/42 to-transparent" />
       <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-        <span className="rounded-md border-2 border-white/60 bg-white/12 px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-white backdrop-blur">
-          {card.label}
-        </span>
-        <h2 className={`${featured ? "text-4xl sm:text-5xl" : "text-2xl"} mt-3 font-american-diner leading-tight text-white`}>
+        <h2 className={`${featured ? "text-4xl sm:text-5xl" : "text-2xl"} font-american-diner leading-tight text-white`}>
           {card.title}
         </h2>
         <p className="mt-2 max-w-xl text-sm leading-6 text-white/78">{card.subtitle}</p>
