@@ -11,6 +11,7 @@ const menuLinks = [
   { href: "/culture", label: "Cultura" },
   { href: "/viewpoints", label: "Roof Tops" },
   { href: "/fourth-of-july", label: "4 de Julio" },
+  { href: "/esim-usa", label: "eSIM para EE. UU." },
 ];
 
 export default function MenuDropdown() {
