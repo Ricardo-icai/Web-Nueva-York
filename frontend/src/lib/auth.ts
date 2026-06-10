@@ -98,12 +98,27 @@ export async function signUpWithEmailPassword(email: string, password: string) {
     email: normalizeEmail(email),
     password,
   });
-  if (error) return { handledBySupabase: true as const, error: error.message };
+  if (error) {
+    const duplicateEmail = /already|registered|exists|unique/i.test(error.message);
+    return {
+      handledBySupabase: true as const,
+      error: duplicateEmail ? undefined : error.message,
+      emailAlreadyRegistered: duplicateEmail,
+    };
+  }
+  const emailAlreadyRegistered = Boolean(data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0);
+  if (emailAlreadyRegistered) {
+    return {
+      handledBySupabase: true as const,
+      emailAlreadyRegistered: true,
+    };
+  }
   if (data.session && data.user?.email) saveSession(data.user.email);
   return {
     handledBySupabase: true as const,
     user: data.user,
     needsEmailConfirmation: !data.session,
+    emailAlreadyRegistered: false,
   };
 }
 

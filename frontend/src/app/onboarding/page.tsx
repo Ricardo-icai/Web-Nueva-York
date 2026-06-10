@@ -28,6 +28,27 @@ type SavedTravelProfile = {
 };
 
 const TRAVEL_PROFILE_KEY = "nyc_travel_profile_v1";
+const POPULAR_NYC_LOCATIONS: LocationSuggestion[] = [
+  { label: "Times Square, Manhattan, New York", lat: 40.758, lng: -73.9855, provider: "popular" },
+  { label: "Central Park, Manhattan, New York", lat: 40.7812, lng: -73.9665, provider: "popular" },
+  { label: "Grand Central Terminal, Manhattan, New York", lat: 40.7527, lng: -73.9772, provider: "popular" },
+  { label: "Penn Station, Manhattan, New York", lat: 40.7506, lng: -73.9935, provider: "popular" },
+  { label: "SoHo, Manhattan, New York", lat: 40.7233, lng: -74.003, provider: "popular" },
+  { label: "Chelsea, Manhattan, New York", lat: 40.7465, lng: -74.0014, provider: "popular" },
+  { label: "Upper West Side, Manhattan, New York", lat: 40.787, lng: -73.9754, provider: "popular" },
+  { label: "Upper East Side, Manhattan, New York", lat: 40.7736, lng: -73.9566, provider: "popular" },
+  { label: "Williamsburg, Brooklyn, New York", lat: 40.7081, lng: -73.9571, provider: "popular" },
+  { label: "DUMBO, Brooklyn, New York", lat: 40.7033, lng: -73.9881, provider: "popular" },
+  { label: "Long Island City, Queens, New York", lat: 40.7447, lng: -73.9485, provider: "popular" },
+];
+
+function popularLocationMatches(query: string) {
+  const normalizedQuery = query.trim().toLocaleLowerCase("es");
+  if (normalizedQuery.length < 2) return [];
+  return POPULAR_NYC_LOCATIONS.filter((item) =>
+    item.label.toLocaleLowerCase("es").includes(normalizedQuery),
+  ).slice(0, 5);
+}
 
 function toFlag(code: string) {
   return code
@@ -121,22 +142,32 @@ export default function OnboardingPage() {
 
   useEffect(() => {
     const query = accommodation.trim();
-    if (query.length < 3) {
+    if (query.length < 2) {
       return;
     }
 
+    const popularMatches = popularLocationMatches(query);
+
+    const controller = new AbortController();
     const timeout = setTimeout(async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/location/search?q=${encodeURIComponent(query)}`);
+        const response = await fetch(`/api/location/search?q=${encodeURIComponent(query)}`, {
+          signal: controller.signal,
+        });
         if (!response.ok) return;
         const data = (await response.json()) as LocationSuggestion[];
-        setSuggestions(data);
+        const unique = new Map<string, LocationSuggestion>();
+        [...popularMatches, ...data].forEach((item) => unique.set(item.label.toLocaleLowerCase("es"), item));
+        setSuggestions([...unique.values()].slice(0, 7));
       } catch {
-        setSuggestions([]);
+        if (!controller.signal.aborted) setSuggestions(popularMatches);
       }
-    }, 300);
+    }, 220);
 
-    return () => clearTimeout(timeout);
+    return () => {
+      clearTimeout(timeout);
+      controller.abort();
+    };
   }, [accommodation]);
 
   function pickSuggestion(item: LocationSuggestion) {
@@ -299,18 +330,26 @@ export default function OnboardingPage() {
             required
             value={accommodation}
             onChange={(event) => {
-              setAccommodation(event.target.value);
+              const value = event.target.value;
+              setAccommodation(value);
               setSelectedLocation(null);
-              setSuggestions([]);
+              setSuggestions(popularLocationMatches(value));
             }}
             placeholder="Hotel, direccion o zona"
+            autoComplete="off"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded={suggestions.length > 0}
+            aria-controls="accommodation-suggestions"
             className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-4 py-3 font-bold"
           />
           {suggestions.length > 0 ? (
-            <div className="rounded-md border-2 border-slate-950 bg-white p-2 shadow-[4px_4px_0_#111827]">
+            <div id="accommodation-suggestions" role="listbox" className="rounded-md border-2 border-slate-950 bg-white p-2 shadow-[4px_4px_0_#111827]">
               {suggestions.map((item) => (
                 <button
                   type="button"
+                  role="option"
+                  aria-selected={false}
                   key={`${item.label}-${item.lat}-${item.lng}`}
                   onClick={() => pickSuggestion(item)}
                   className="block w-full rounded-lg px-3 py-2 text-left text-sm text-slate-700 hover:bg-stone-100"

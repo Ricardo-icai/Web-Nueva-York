@@ -130,6 +130,11 @@ export default function AuthGate({ children }: Props) {
 
       const supabaseSignup = await signUpWithEmailPassword(cleanEmail, password);
       if (supabaseSignup.handledBySupabase) {
+        if (supabaseSignup.emailAlreadyRegistered) {
+          setEmail("");
+          setMessage("Este correo ya esta registrado. Introduce otro correo para crear una cuenta nueva.");
+          return;
+        }
         if (supabaseSignup.error) {
           setMessage(supabaseSignup.error);
           return;
@@ -145,8 +150,8 @@ export default function AuthGate({ children }: Props) {
 
       const users = readUsers();
       if (users[cleanEmail]) {
-        setMessage("Este correo ya esta registrado. Entra con tu contrasena.");
-        setMode("login");
+        setEmail("");
+        setMessage("Este correo ya esta registrado. Introduce otro correo para crear una cuenta nueva.");
         return;
       }
 
