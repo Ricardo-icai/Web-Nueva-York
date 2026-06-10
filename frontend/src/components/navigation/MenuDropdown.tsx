@@ -6,12 +6,12 @@ import { useState } from "react";
 const menuLinks = [
   { href: "/", label: "Home" },
   { href: "/route-planner", label: "Organizame la ruta" },
-  { href: "/onboarding", label: "Editar perfil" },
   { href: "/restaurants", label: "Tengo Hambre" },
   { href: "/culture", label: "Cultura" },
   { href: "/viewpoints", label: "Roof Tops" },
   { href: "/fourth-of-july", label: "4 de Julio" },
   { href: "/esim-usa", label: "eSIM para EE. UU." },
+  { href: "/onboarding", label: "Editar mi perfil", profileAction: true },
 ];
 
 export default function MenuDropdown() {
@@ -66,7 +66,11 @@ export default function MenuDropdown() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="block rounded-md border-2 border-slate-950 bg-white px-4 py-3 text-base font-black text-slate-800 shadow-[3px_3px_0_#111827] transition hover:-translate-y-0.5 hover:bg-[#fffdf4] hover:text-[#C1121F]"
+                className={`block rounded-md border-2 border-slate-950 px-4 py-3 text-base font-black shadow-[3px_3px_0_#111827] transition hover:-translate-y-0.5 ${
+                  item.profileAction
+                    ? "mt-5 bg-orange-500 text-slate-950 hover:bg-orange-400"
+                    : "bg-white text-slate-800 hover:bg-[#fffdf4] hover:text-[#C1121F]"
+                }`}
               >
                 {item.label}
               </Link>

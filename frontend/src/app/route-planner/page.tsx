@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { readSession, userScopedStorageKey } from "@/lib/auth";
 import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 import { loadTravelProfile, saveRoute } from "@/lib/user-data";
 
@@ -49,6 +50,7 @@ type DayPlan = {
 };
 
 const TRAVEL_PROFILE_KEY = "nyc_travel_profile_v1";
+const MUST_SEE_KEY = "nyc_route_must_sees_v1";
 
 const essentials: EssentialStop[] = [
   {
@@ -207,6 +209,71 @@ const essentials: EssentialStop[] = [
     priority: 76,
     weather: "any",
   },
+  {
+    title: "SUMMIT One Vanderbilt",
+    area: "Midtown East",
+    type: "Miradores",
+    image: "https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2?auto=format&fit=crop&w=1600&q=84",
+    duration: "2 h",
+    bestTime: "Atardecer",
+    reason: "Mirador inmersivo y una de las vistas mas virales del skyline.",
+    lat: 40.7527,
+    lng: -73.9787,
+    priority: 91,
+    weather: "indoor",
+  },
+  {
+    title: "Edge & Hudson Yards",
+    area: "Hudson Yards",
+    type: "Miradores",
+    image: "https://images.unsplash.com/photo-1541336032412-2048a678540d?auto=format&fit=crop&w=1600&q=84",
+    duration: "2 h",
+    bestTime: "Atardecer",
+    reason: "Terraza exterior elevada y acceso perfecto desde High Line.",
+    lat: 40.7541,
+    lng: -74.0008,
+    priority: 89,
+    weather: "any",
+  },
+  {
+    title: "Joe's Pizza & Greenwich Village",
+    area: "Greenwich Village",
+    type: "Comida NYC",
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=84",
+    duration: "1.5 h",
+    bestTime: "Comida",
+    reason: "Una parada rapida para probar una porcion clasica y pasear por Village.",
+    lat: 40.7306,
+    lng: -74.0027,
+    priority: 83,
+    weather: "any",
+  },
+  {
+    title: "Macy's 4th of July Fireworks",
+    area: "East River / Hudson River",
+    type: "Eventos",
+    image: "https://images.pexels.com/photos/12674747/pexels-photo-12674747.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    duration: "4-6 h",
+    bestTime: "Tarde y noche",
+    reason: "El gran espectaculo oficial del 4 de Julio; solo debe marcarse si coincide con las fechas del viaje.",
+    lat: 40.7061,
+    lng: -73.9969,
+    priority: 99,
+    weather: "outdoor",
+  },
+  {
+    title: "Broadway Show",
+    area: "Theater District",
+    type: "Cultura",
+    image: "https://images.unsplash.com/photo-1542204165-65bf26472b9b?auto=format&fit=crop&w=1600&q=84",
+    duration: "3 h",
+    bestTime: "Noche",
+    reason: "Una noche de Broadway completa el viaje cultural a Nueva York.",
+    lat: 40.759,
+    lng: -73.9845,
+    priority: 87,
+    weather: "indoor",
+  },
 ];
 
 function parseDate(value?: string) {
@@ -244,14 +311,18 @@ function slotsFor(profile: SavedTravelProfile | null) {
   return travelers >= 5 ? Math.max(2, base - 1) : base;
 }
 
-function buildPlan(profile: SavedTravelProfile | null): DayPlan[] {
+function buildPlan(profile: SavedTravelProfile | null, mustSeeTitles: string[]): DayPlan[] {
   const days = dayCount(profile);
   const start = parseDate(profile?.startDate);
   if (!days || !start) return [];
 
-  const perDay = slotsFor(profile);
+  const mustSee = new Set(mustSeeTitles);
+  const perDay = Math.max(slotsFor(profile), Math.ceil(mustSee.size / days));
   const selected = [...essentials]
-    .sort((a, b) => b.priority - a.priority)
+    .sort((a, b) => {
+      const requiredDifference = Number(mustSee.has(b.title)) - Number(mustSee.has(a.title));
+      return requiredDifference || b.priority - a.priority;
+    })
     .slice(0, Math.min(essentials.length, days * perDay));
 
   const times = perDay >= 4 ? ["09:00", "12:00", "15:30", "19:00"] : perDay === 3 ? ["09:30", "13:00", "17:30"] : ["10:00", "16:00"];
@@ -284,12 +355,20 @@ function routeMapUrl(day: DayPlan) {
 
 export default function RoutePlannerPage() {
   const [profile, setProfile] = useState<SavedTravelProfile | null>(null);
+  const [profileLoaded, setProfileLoaded] = useState(false);
+  const [mustSeeTitles, setMustSeeTitles] = useState<string[]>([]);
+  const [mustSeesLoaded, setMustSeesLoaded] = useState(false);
+  const [activeMustSeeType, setActiveMustSeeType] = useState("Todos");
 
   useEffect(() => {
     let active = true;
     async function loadProfile() {
-      const saved = (await loadTravelProfile(TRAVEL_PROFILE_KEY)) as SavedTravelProfile | null;
-      if (active) setProfile(saved);
+      try {
+        const saved = (await loadTravelProfile(TRAVEL_PROFILE_KEY)) as SavedTravelProfile | null;
+        if (active) setProfile(saved);
+      } finally {
+        if (active) setProfileLoaded(true);
+      }
     }
     void loadProfile();
     return () => {
@@ -297,10 +376,43 @@ export default function RoutePlannerPage() {
     };
   }, []);
 
+  useEffect(() => {
+    let active = true;
+    async function loadMustSees() {
+      await Promise.resolve();
+      const key = userScopedStorageKey(MUST_SEE_KEY, readSession()?.email);
+      try {
+        const saved = JSON.parse(localStorage.getItem(key) ?? "[]") as string[];
+        if (active) {
+          setMustSeeTitles(Array.isArray(saved) ? saved.filter((title) => essentials.some((item) => item.title === title)) : []);
+        }
+      } catch {
+        if (active) setMustSeeTitles([]);
+      } finally {
+        if (active) setMustSeesLoaded(true);
+      }
+    }
+    void loadMustSees();
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!mustSeesLoaded) return;
+    const key = userScopedStorageKey(MUST_SEE_KEY, readSession()?.email);
+    localStorage.setItem(key, JSON.stringify(mustSeeTitles));
+  }, [mustSeeTitles, mustSeesLoaded]);
+
   const missing = useMemo(() => missingProfileFields(profile), [profile]);
-  const plan = useMemo(() => buildPlan(profile), [profile]);
+  const plan = useMemo(() => buildPlan(profile, mustSeeTitles), [mustSeeTitles, profile]);
   const totalDays = dayCount(profile);
   const totalStops = plan.reduce((sum, day) => sum + day.stops.length, 0);
+  const mustSeeTypes = useMemo(() => ["Todos", ...Array.from(new Set(essentials.map((item) => item.type)))], []);
+  const visibleMustSees = useMemo(
+    () => essentials.filter((item) => activeMustSeeType === "Todos" || item.type === activeMustSeeType),
+    [activeMustSeeType],
+  );
 
   useEffect(() => {
     if (!profile || plan.length === 0) return;
@@ -309,12 +421,27 @@ export default function RoutePlannerPage() {
       title: "Organizame la ruta",
       payload: {
         profile,
+        mustSeeTitles,
         days: plan,
         totalDays,
         totalStops,
       },
     });
-  }, [plan, profile, totalDays, totalStops]);
+  }, [mustSeeTitles, plan, profile, totalDays, totalStops]);
+
+  if (!profileLoaded || !mustSeesLoaded) {
+    return (
+      <main className="nyc-page-shell page-bg-route text-[#0A2342]">
+        <section className="nyc-content-shell mx-auto max-w-4xl p-6">
+          <p className="text-xs font-black uppercase tracking-[0.2em] text-[#7A1E2C]">Organizame la ruta</p>
+          <h1 className="mt-2 font-american-diner text-4xl">Preparando tu planning</h1>
+          <p className="mt-3 text-sm font-semibold leading-6 text-slate-700">
+            Estamos cargando los datos guardados de tu viaje.
+          </p>
+        </section>
+      </main>
+    );
+  }
 
   if (missing.length > 0) {
     return (
@@ -336,6 +463,81 @@ export default function RoutePlannerPage() {
   return (
     <main className="nyc-page-shell page-bg-route text-[#0A2342]">
       <div className="nyc-content-shell mx-auto max-w-7xl overflow-hidden">
+      <section className="border-b-2 border-slate-950 bg-[#fff3d1] px-5 py-6 sm:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">Tus imprescindibles</p>
+              <h1 className="mt-1 font-american-diner text-3xl text-slate-950 sm:text-4xl">¿Qué no te quieres perder?</h1>
+            </div>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setMustSeeTitles(essentials.slice(0, 5).map((item) => item.title))}
+                className="rounded-md border-2 border-slate-950 bg-[#D4AF37] px-3 py-2 text-xs font-black uppercase tracking-wide shadow-[3px_3px_0_#111827]"
+              >
+                Top 5
+              </button>
+              <button
+                type="button"
+                onClick={() => setMustSeeTitles([])}
+                className="rounded-md border-2 border-slate-950 bg-white px-3 py-2 text-xs font-black uppercase tracking-wide shadow-[3px_3px_0_#111827]"
+              >
+                Limpiar
+              </button>
+            </div>
+          </div>
+
+          <div className="mt-5 flex gap-2 overflow-x-auto pb-2">
+            {mustSeeTypes.map((type) => (
+              <button
+                key={type}
+                type="button"
+                onClick={() => setActiveMustSeeType(type)}
+                className={`shrink-0 rounded-md border-2 border-slate-950 px-3 py-2 text-xs font-black uppercase tracking-wide ${
+                  activeMustSeeType === type ? "bg-[#0A2342] text-white" : "bg-white text-slate-950"
+                }`}
+              >
+                {type}
+              </button>
+            ))}
+          </div>
+
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {visibleMustSees.map((item) => {
+              const selected = mustSeeTitles.includes(item.title);
+              return (
+                <button
+                  key={item.title}
+                  type="button"
+                  aria-pressed={selected}
+                  onClick={() =>
+                    setMustSeeTitles((current) =>
+                      current.includes(item.title)
+                        ? current.filter((title) => title !== item.title)
+                        : [...current, item.title],
+                    )
+                  }
+                  className={`min-h-24 rounded-md border-2 border-slate-950 p-3 text-left shadow-[3px_3px_0_#111827] transition hover:-translate-y-0.5 ${
+                    selected ? "bg-red-700 text-white" : "bg-white text-slate-950"
+                  }`}
+                >
+                  <span className={`text-[10px] font-black uppercase tracking-[0.16em] ${selected ? "text-[#D4AF37]" : "text-red-700"}`}>
+                    {item.type} · {item.area}
+                  </span>
+                  <span className="mt-1 block font-black leading-5">{item.title}</span>
+                </button>
+              );
+            })}
+          </div>
+          <p className="mt-4 text-sm font-bold text-slate-700">
+            {mustSeeTitles.length > 0
+              ? `${mustSeeTitles.length} imprescindibles seleccionados. El planning los colocara primero y completara el resto automaticamente.`
+              : "Sin seleccion manual: crearemos una ruta equilibrada con los imprescindibles mejor valorados."}
+          </p>
+        </div>
+      </section>
+
       <section className="relative min-h-[64vh] overflow-hidden border-b-2 border-slate-950">
         <Image
           src="https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=2200&q=84"
@@ -408,6 +610,11 @@ export default function RoutePlannerPage() {
                   </div>
                   <div className="mt-4 space-y-2">
                     <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">{stop.time} / {stop.type}</p>
+                    {mustSeeTitles.includes(stop.title) ? (
+                      <p className="w-fit rounded-full bg-red-700 px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white">
+                        Elegido por ti
+                      </p>
+                    ) : null}
                     <h3 className="font-american-diner text-2xl">{stop.title}</h3>
                     <p className="text-sm font-semibold text-slate-600">{stop.area} - {stop.duration} - mejor: {stop.bestTime}</p>
                     <p className="text-sm leading-6 text-slate-700">{stop.reason}</p>

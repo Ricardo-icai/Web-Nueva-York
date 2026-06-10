@@ -53,6 +53,13 @@ const mainCards: HomeCard[] = [
     label: "Eventos",
   },
   {
+    title: "eSIM para EE. UU.",
+    subtitle: "Compara planes, comprueba tu movil y sigue los pasos para iPhone o Android.",
+    href: "/esim-usa",
+    image: "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=1600&q=84",
+    label: "Conectividad",
+  },
+  {
     title: "Editar perfil",
     subtitle: "Cambia fechas, alojamiento, viajeros y ritmo del viaje.",
     href: "/onboarding",

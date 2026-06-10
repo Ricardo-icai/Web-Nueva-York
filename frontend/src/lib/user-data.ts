@@ -34,8 +34,40 @@ function localEmail() {
   return readSession()?.email;
 }
 
+function readLocalTravelProfile(localKey: string) {
+  try {
+    const raw = localStorage.getItem(localKey);
+    return raw ? (JSON.parse(raw) as Partial<TravelProfilePayload>) : null;
+  } catch {
+    return null;
+  }
+}
+
+function mergeTravelProfiles(
+  remote: Partial<TravelProfilePayload>,
+  local: Partial<TravelProfilePayload> | null,
+): TravelProfilePayload {
+  const localAccommodation = local?.accommodation;
+  const remoteAccommodation = remote.accommodation;
+  return {
+    tripId: remote.tripId ?? local?.tripId,
+    name: remote.name?.trim() || local?.name?.trim() || "",
+    nationality: remote.nationality?.trim() || local?.nationality?.trim() || "",
+    startDate: remote.startDate || local?.startDate || "",
+    endDate: remote.endDate || local?.endDate || "",
+    travelers: remote.travelers && remote.travelers > 0 ? remote.travelers : (local?.travelers ?? 0),
+    pace: remote.pace?.trim() || local?.pace?.trim() || "",
+    accommodation: {
+      address: remoteAccommodation?.address?.trim() || localAccommodation?.address?.trim() || "",
+      lat: Number.isFinite(remoteAccommodation?.lat) ? remoteAccommodation!.lat : (localAccommodation?.lat ?? 0),
+      lng: Number.isFinite(remoteAccommodation?.lng) ? remoteAccommodation!.lng : (localAccommodation?.lng ?? 0),
+    },
+  };
+}
+
 export async function loadTravelProfile(baseKey: string) {
   const localKey = userScopedStorageKey(baseKey, localEmail());
+  const localProfile = readLocalTravelProfile(localKey);
   if (isSupabaseConfigured()) {
     const userId = await currentSupabaseUserId();
     if (userId) {
@@ -47,7 +79,7 @@ export async function loadTravelProfile(baseKey: string) {
         .maybeSingle();
 
       if (data) {
-        const profile = {
+        const remoteProfile = {
           tripId: data.trip_id ?? undefined,
           name: data.name,
           nationality: data.nationality,
@@ -56,19 +88,15 @@ export async function loadTravelProfile(baseKey: string) {
           travelers: data.travelers,
           pace: data.pace,
           accommodation: data.accommodation,
-        } as TravelProfilePayload;
+        } as Partial<TravelProfilePayload>;
+        const profile = mergeTravelProfiles(remoteProfile, localProfile);
         localStorage.setItem(localKey, JSON.stringify(profile));
         return profile;
       }
     }
   }
 
-  try {
-    const raw = localStorage.getItem(localKey);
-    return raw ? (JSON.parse(raw) as TravelProfilePayload) : null;
-  } catch {
-    return null;
-  }
+  return localProfile ? mergeTravelProfiles({}, localProfile) : null;
 }
 
 export async function saveTravelProfile(baseKey: string, profile: TravelProfilePayload) {
