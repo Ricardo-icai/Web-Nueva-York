@@ -66,10 +66,10 @@ export default function MenuDropdown() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={`block rounded-md border-2 border-slate-950 px-4 py-3 text-base font-black shadow-[3px_3px_0_#111827] transition hover:-translate-y-0.5 ${
+                className={`block rounded-md px-4 py-3 text-base transition hover:-translate-y-0.5 ${
                   item.profileAction
-                    ? "mt-5 bg-orange-500 text-slate-950 hover:bg-orange-400"
-                    : "bg-white text-slate-800 hover:bg-[#fffdf4] hover:text-[#C1121F]"
+                    ? "nyc-flag-action mt-5"
+                    : "border-2 border-slate-950 bg-white font-black text-slate-800 shadow-[3px_3px_0_#111827] hover:bg-[#fffdf4] hover:text-[#C1121F]"
                 }`}
               >
                 {item.label}

@@ -562,7 +562,7 @@ export default function RoutePlannerPage() {
             <a href="#planning" className="nyc-action rounded-sm px-5 py-3 text-sm">
               Ver planning
             </a>
-            <Link href="/onboarding" className="rounded-sm border-2 border-white bg-white/10 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white">
+            <Link href="/onboarding" className="nyc-flag-action rounded-sm px-5 py-3 text-sm">
               Editar perfil
             </Link>
           </div>
