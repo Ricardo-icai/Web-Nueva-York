@@ -51,6 +51,7 @@ type DayPlan = {
 
 const TRAVEL_PROFILE_KEY = "nyc_travel_profile_v1";
 const MUST_SEE_KEY = "nyc_route_must_sees_v1";
+const MUST_SEE_DAY_KEY = "nyc_route_must_see_days_v1";
 
 const essentials: EssentialStop[] = [
   {
@@ -311,7 +312,7 @@ function slotsFor(profile: SavedTravelProfile | null) {
   return travelers >= 5 ? Math.max(2, base - 1) : base;
 }
 
-function buildPlan(profile: SavedTravelProfile | null, mustSeeTitles: string[]): DayPlan[] {
+function buildPlan(profile: SavedTravelProfile | null, mustSeeTitles: string[], forcedDaysByTitle: Record<string, number>): DayPlan[] {
   const days = dayCount(profile);
   const start = parseDate(profile?.startDate);
   if (!days || !start) return [];
@@ -327,11 +328,31 @@ function buildPlan(profile: SavedTravelProfile | null, mustSeeTitles: string[]):
 
   const times = perDay >= 4 ? ["09:00", "12:00", "15:30", "19:00"] : perDay === 3 ? ["09:30", "13:00", "17:30"] : ["10:00", "16:00"];
   const themes = ["Iconos absolutos", "Arte y Midtown", "Downtown historico", "Brooklyn y skyline", "Barrios con alma", "Cultura local"];
+  const dayBuckets: EssentialStop[][] = Array.from({ length: days }, () => []);
+  const pinnedTitles = new Set<string>();
+
+  selected.forEach((stop) => {
+    const forcedDay = forcedDaysByTitle[stop.title];
+    if (!Number.isInteger(forcedDay) || forcedDay < 1 || forcedDay > days) return;
+    dayBuckets[forcedDay - 1].push(stop);
+    pinnedTitles.add(stop.title);
+  });
+
+  selected
+    .filter((stop) => !pinnedTitles.has(stop.title))
+    .forEach((stop) => {
+      const emptiestDay = dayBuckets.reduce(
+        (bestIndex, bucket, bucketIndex) =>
+          bucket.length < dayBuckets[bestIndex].length ? bucketIndex : bestIndex,
+        0,
+      );
+      dayBuckets[emptiestDay].push(stop);
+    });
 
   return Array.from({ length: days }, (_, index) => {
     const date = new Date(start);
     date.setDate(start.getDate() + index);
-    const stops = selected.slice(index * perDay, index * perDay + perDay).map((stop, stopIndex) => ({
+    const stops = dayBuckets[index].map((stop, stopIndex) => ({
       ...stop,
       time: times[stopIndex] ?? "18:00",
     }));
@@ -357,6 +378,7 @@ export default function RoutePlannerPage() {
   const [profile, setProfile] = useState<SavedTravelProfile | null>(null);
   const [profileLoaded, setProfileLoaded] = useState(false);
   const [mustSeeTitles, setMustSeeTitles] = useState<string[]>([]);
+  const [mustSeeDayAssignments, setMustSeeDayAssignments] = useState<Record<string, number>>({});
   const [mustSeesLoaded, setMustSeesLoaded] = useState(false);
   const [activeMustSeeType, setActiveMustSeeType] = useState("Todos");
 
@@ -381,13 +403,27 @@ export default function RoutePlannerPage() {
     async function loadMustSees() {
       await Promise.resolve();
       const key = userScopedStorageKey(MUST_SEE_KEY, readSession()?.email);
+      const dayKey = userScopedStorageKey(MUST_SEE_DAY_KEY, readSession()?.email);
       try {
         const saved = JSON.parse(localStorage.getItem(key) ?? "[]") as string[];
+        const savedAssignments = JSON.parse(localStorage.getItem(dayKey) ?? "{}") as Record<string, number>;
         if (active) {
           setMustSeeTitles(Array.isArray(saved) ? saved.filter((title) => essentials.some((item) => item.title === title)) : []);
+          setMustSeeDayAssignments(
+            savedAssignments && typeof savedAssignments === "object"
+              ? Object.fromEntries(
+                  Object.entries(savedAssignments).filter(
+                    ([title, day]) => essentials.some((item) => item.title === title) && Number.isInteger(day),
+                  ),
+                )
+              : {},
+          );
         }
       } catch {
-        if (active) setMustSeeTitles([]);
+        if (active) {
+          setMustSeeTitles([]);
+          setMustSeeDayAssignments({});
+        }
       } finally {
         if (active) setMustSeesLoaded(true);
       }
@@ -401,12 +437,17 @@ export default function RoutePlannerPage() {
   useEffect(() => {
     if (!mustSeesLoaded) return;
     const key = userScopedStorageKey(MUST_SEE_KEY, readSession()?.email);
+    const dayKey = userScopedStorageKey(MUST_SEE_DAY_KEY, readSession()?.email);
     localStorage.setItem(key, JSON.stringify(mustSeeTitles));
-  }, [mustSeeTitles, mustSeesLoaded]);
+    localStorage.setItem(
+      dayKey,
+      JSON.stringify(Object.fromEntries(Object.entries(mustSeeDayAssignments).filter(([title]) => mustSeeTitles.includes(title)))),
+    );
+  }, [mustSeeTitles, mustSeeDayAssignments, mustSeesLoaded]);
 
   const missing = useMemo(() => missingProfileFields(profile), [profile]);
-  const plan = useMemo(() => buildPlan(profile, mustSeeTitles), [mustSeeTitles, profile]);
   const totalDays = dayCount(profile);
+  const plan = useMemo(() => buildPlan(profile, mustSeeTitles, mustSeeDayAssignments), [mustSeeTitles, mustSeeDayAssignments, profile]);
   const totalStops = plan.reduce((sum, day) => sum + day.stops.length, 0);
   const mustSeeTypes = useMemo(() => ["Todos", ...Array.from(new Set(essentials.map((item) => item.type)))], []);
   const visibleMustSees = useMemo(
@@ -422,12 +463,13 @@ export default function RoutePlannerPage() {
       payload: {
         profile,
         mustSeeTitles,
+        mustSeeDayAssignments,
         days: plan,
         totalDays,
         totalStops,
       },
     });
-  }, [mustSeeTitles, plan, profile, totalDays, totalStops]);
+  }, [mustSeeTitles, mustSeeDayAssignments, plan, profile, totalDays, totalStops]);
 
   if (!profileLoaded || !mustSeesLoaded) {
     return (
@@ -480,7 +522,10 @@ export default function RoutePlannerPage() {
               </button>
               <button
                 type="button"
-                onClick={() => setMustSeeTitles([])}
+                onClick={() => {
+                  setMustSeeTitles([]);
+                  setMustSeeDayAssignments({});
+                }}
                 className="rounded-md border-2 border-slate-950 bg-white px-3 py-2 text-xs font-black uppercase tracking-wide shadow-[3px_3px_0_#111827]"
               >
                 Limpiar
@@ -535,6 +580,40 @@ export default function RoutePlannerPage() {
               ? `${mustSeeTitles.length} imprescindibles seleccionados. El planning los colocará primero y completará el resto automáticamente.`
               : "Sin seleccion manual: crearemos una ruta equilibrada con los imprescindibles mejor valorados."}
           </p>
+          {mustSeeTitles.length > 0 && totalDays > 0 ? (
+            <div className="mt-4 rounded-md border-2 border-slate-950 bg-white p-4 shadow-[4px_4px_0_#111827]">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Elegir dia</p>
+              <div className="mt-3 grid gap-3 md:grid-cols-2">
+                {mustSeeTitles.map((title) => (
+                  <label key={`day-choice-${title}`} className="grid gap-2">
+                    <span className="text-sm font-black text-slate-900">{title}</span>
+                    <select
+                      value={mustSeeDayAssignments[title] ?? 0}
+                      onChange={(event) => {
+                        const selectedDay = Number(event.target.value);
+                        setMustSeeDayAssignments((current) => {
+                          if (!selectedDay) {
+                            const next = { ...current };
+                            delete next[title];
+                            return next;
+                          }
+                          return { ...current, [title]: selectedDay };
+                        });
+                      }}
+                      className="rounded-sm border-2 border-slate-950 bg-[#fffdf4] px-3 py-2 font-bold text-slate-950"
+                    >
+                      <option value={0}>Automatico</option>
+                      {Array.from({ length: totalDays }, (_, dayIndex) => (
+                        <option key={`${title}-choice-${dayIndex + 1}`} value={dayIndex + 1}>
+                          Dia {dayIndex + 1}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
       </section>
 
@@ -613,6 +692,11 @@ export default function RoutePlannerPage() {
                     {mustSeeTitles.includes(stop.title) ? (
                       <p className="w-fit rounded-full bg-red-700 px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white">
                         Elegido por ti
+                      </p>
+                    ) : null}
+                    {mustSeeDayAssignments[stop.title] ? (
+                      <p className="w-fit rounded-full bg-[#0A2342] px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white">
+                        Fijado en Dia {mustSeeDayAssignments[stop.title]}
                       </p>
                     ) : null}
                     <h3 className="font-american-diner text-2xl">{stop.title}</h3>
