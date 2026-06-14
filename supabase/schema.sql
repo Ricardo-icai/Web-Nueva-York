@@ -48,6 +48,25 @@ create table if not exists public.user_routes (
   unique (user_id, route_key)
 );
 
+create table if not exists public.favorite_nightlife (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  item_id text not null,
+  name text,
+  category text,
+  google_place_id text,
+  google_maps_url text,
+  official_website text,
+  ticket_url text,
+  reservation_url text,
+  image_url text,
+  metadata jsonb not null default '{}'::jsonb,
+  notes text,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  unique (user_id, item_id)
+);
+
 create or replace function public.set_updated_at()
 returns trigger
 language plpgsql
@@ -105,6 +124,11 @@ create trigger set_user_routes_updated_at
 before update on public.user_routes
 for each row execute function public.set_updated_at();
 
+drop trigger if exists set_favorite_nightlife_updated_at on public.favorite_nightlife;
+create trigger set_favorite_nightlife_updated_at
+before update on public.favorite_nightlife
+for each row execute function public.set_updated_at();
+
 insert into public.user_accounts (user_id, email)
 select id, coalesce(email, '')
 from auth.users
@@ -114,6 +138,7 @@ alter table public.user_accounts enable row level security;
 alter table public.travel_profiles enable row level security;
 alter table public.user_favorites enable row level security;
 alter table public.user_routes enable row level security;
+alter table public.favorite_nightlife enable row level security;
 
 drop policy if exists "Users read own account" on public.user_accounts;
 create policy "Users read own account"
@@ -138,6 +163,7 @@ with check (auth.uid() = user_id);
 create index if not exists travel_profiles_user_id_idx on public.travel_profiles(user_id);
 create index if not exists user_favorites_user_id_type_idx on public.user_favorites(user_id, favorite_type);
 create index if not exists user_routes_user_id_key_idx on public.user_routes(user_id, route_key);
+create index if not exists favorite_nightlife_user_id_item_id_idx on public.favorite_nightlife(user_id, item_id);
 
 drop policy if exists "Users manage own favorites" on public.user_favorites;
 create policy "Users manage own favorites"
@@ -149,6 +175,13 @@ with check (auth.uid() = user_id);
 drop policy if exists "Users manage own routes" on public.user_routes;
 create policy "Users manage own routes"
 on public.user_routes
+for all
+using (auth.uid() = user_id)
+with check (auth.uid() = user_id);
+
+drop policy if exists "Users manage own nightlife favorites" on public.favorite_nightlife;
+create policy "Users manage own nightlife favorites"
+on public.favorite_nightlife
 for all
 using (auth.uid() = user_id)
 with check (auth.uid() = user_id);

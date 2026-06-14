@@ -53,6 +53,13 @@ const mainCards: HomeCard[] = [
     label: "Eventos",
   },
   {
+    title: "Nightlife",
+    subtitle: "Discotecas, rooftops, cocktail bars, speakeasies, mapa y filtros para salir por Nueva York.",
+    href: "/nightlife",
+    image: "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1600&q=84",
+    label: "Night",
+  },
+  {
     title: "eSIM para EE. UU.",
     subtitle: "Compara planes, comprueba tu movil y sigue los pasos para iPhone o Android.",
     href: "/esim-usa",
@@ -89,7 +96,6 @@ function VisualCard({ card, featured = false }: { card: HomeCard; featured?: boo
         <h2 className={`${featured ? "text-4xl sm:text-5xl" : "text-2xl"} font-american-diner leading-tight text-white`}>
           {card.title}
         </h2>
-        <p className="mt-2 max-w-xl text-sm leading-6 text-white/78">{card.subtitle}</p>
       </div>
     </Link>
   );

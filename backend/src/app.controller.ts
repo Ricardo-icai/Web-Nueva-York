@@ -10,6 +10,8 @@ import { PatriotEventsAgent } from './patriot-events.agent';
 import { NycTransitAgent } from './nyc-transit.agent';
 import { HomeVisualCuratorAgent } from './home-visual-curator.agent';
 import { CultureCuratorAgent } from './culture-curator.agent';
+import { NightlifeCuratorAgent } from './nightlife-curator.agent';
+import { FreshnessSupervisorAgent } from './freshness-supervisor.agent';
 
 @Controller()
 export class AppController {
@@ -24,6 +26,8 @@ export class AppController {
     private readonly nycTransitAgent: NycTransitAgent,
     private readonly homeVisualCuratorAgent: HomeVisualCuratorAgent,
     private readonly cultureCuratorAgent: CultureCuratorAgent,
+    private readonly nightlifeCuratorAgent: NightlifeCuratorAgent,
+    private readonly freshnessSupervisorAgent: FreshnessSupervisorAgent,
   ) {}
 
   @Get('health')
@@ -176,5 +180,33 @@ export class AppController {
   @Post('agents/culture-curator/recommend')
   recommendCulture(@Body() body: { ageGroup?: string; weather?: string; preference?: string }) {
     return this.cultureCuratorAgent.recommend(body);
+  }
+
+  @Get('agents/nightlife-curator/briefing')
+  getNightlifeCuratorBriefing() {
+    return this.nightlifeCuratorAgent.getBriefing();
+  }
+
+  @Post('agents/nightlife-curator/recommend')
+  recommendNightlife(
+    @Body()
+    body: {
+      mood?: string;
+      budget?: string;
+      music?: string;
+      preference?: string;
+    },
+  ) {
+    return this.nightlifeCuratorAgent.recommend(body);
+  }
+
+  @Get('agents/freshness-supervisor/briefing')
+  getFreshnessSupervisorBriefing() {
+    return this.freshnessSupervisorAgent.getBriefing();
+  }
+
+  @Get('agents/freshness-supervisor/audit')
+  getFreshnessSupervisorAudit() {
+    return this.freshnessSupervisorAgent.audit();
   }
 }

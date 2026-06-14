@@ -7,6 +7,7 @@ const menuLinks = [
   { href: "/", label: "Home" },
   { href: "/route-planner", label: "Organizame la ruta" },
   { href: "/restaurants", label: "Tengo Hambre" },
+  { href: "/nightlife", label: "Nightlife" },
   { href: "/culture", label: "Cultura" },
   { href: "/viewpoints", label: "Roof Tops" },
   { href: "/fourth-of-july", label: "4 de Julio" },

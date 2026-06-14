@@ -77,6 +77,10 @@ textarea::placeholder {
   --nyc-page-bg: url("https://images.pexels.com/photos/12674747/pexels-photo-12674747.jpeg?auto=compress&cs=tinysrgb&w=2200");
 }
 
+.page-bg-nightlife {
+  --nyc-page-bg: url("https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=2200&q=80");
+}
+
 .page-bg-profile {
   --nyc-page-bg: url("https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?auto=format&fit=crop&w=2200&q=84");
 }

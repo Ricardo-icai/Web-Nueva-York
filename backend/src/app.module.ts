@@ -11,6 +11,8 @@ import { PatriotEventsAgent } from './patriot-events.agent';
 import { NycTransitAgent } from './nyc-transit.agent';
 import { HomeVisualCuratorAgent } from './home-visual-curator.agent';
 import { CultureCuratorAgent } from './culture-curator.agent';
+import { NightlifeCuratorAgent } from './nightlife-curator.agent';
+import { FreshnessSupervisorAgent } from './freshness-supervisor.agent';
 
 @Module({
   imports: [],
@@ -27,6 +29,8 @@ import { CultureCuratorAgent } from './culture-curator.agent';
     NycTransitAgent,
     HomeVisualCuratorAgent,
     CultureCuratorAgent,
+    NightlifeCuratorAgent,
+    FreshnessSupervisorAgent,
   ],
 })
 export class AppModule {}
