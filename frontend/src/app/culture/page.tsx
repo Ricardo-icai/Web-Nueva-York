@@ -7,10 +7,11 @@ import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 
 type CultureExperience = {
   name: string;
-  category: "Museo" | "Monumento" | "Arquitectura" | "Barrio" | "Street Art" | "Escena" | "Literatura" | "Musica";
+  category: "Museo" | "Monumento" | "Arquitectura" | "Barrio" | "Street Art" | "Escena" | "Literatura" | "Musica" | "Tour";
   image: string;
   description: string;
   officialWebsite: string;
+  ticketUrl?: string;
   googleMapsUrl: string;
   openingHours: string;
   ticketInfo: string;
@@ -103,6 +104,13 @@ const CULTURE_IMAGE_OVERRIDES: Record<string, string> = {
   "Strand Book Store": commonsFile("Strand Bookstore NYC.jpg"),
   "Hotel Chelsea": commonsFile("Hotel Chelsea NYC.jpg"),
   "Film locations route": commonsFile("Times Square at night.jpg"),
+  "Free Tours by Foot NYC": commonsFile("Brooklyn Bridge Postdlf.jpg"),
+  "Tenement Museum Walking Tours": commonsFile("Tenement Museum, New York City.jpg"),
+  "Grand Central Terminal Tour": commonsFile("Grand Central Terminal Main Concourse Jan 2006.jpg"),
+  "Central Park Conservancy Guided Tours": commonsFile("Bow Bridge Central Park.jpg"),
+  "Big Onion Walking Tours": commonsFile("Orchard Street Lower East Side Manhattan.jpg"),
+  "Jane's Walk NYC": commonsFile("Washington Square Park in Greenwich Village.jpg"),
+  "NYPL Schwarzman Building Tour": commonsFile("New York Public Library Main Branch 2012.jpg"),
   "Harlem Jazz history": commonsFile("Apollo Theater, Harlem (51516410245).jpg"),
   "Apollo Theater": commonsFile("Apollo Theater, Harlem (51516410245).jpg"),
   "Birdland Jazz Club": commonsFile("Birdland Jazz Club NYC.jpg"),
@@ -588,7 +596,129 @@ const music: CultureExperience[] = [
   lng: Number(lng),
 }));
 
-const allExperiences = [...museums, ...monuments, ...architecture, ...neighborhoods, ...streetArt, ...stageArts, ...literatureCinema, ...music];
+const tours: CultureExperience[] = [
+  {
+    name: "Free Tours by Foot NYC",
+    category: "Tour",
+    image: "https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1600&q=84",
+    description: "Operador muy popular para walking tours por SoHo, Lower Manhattan, Brooklyn Bridge, Harlem o Greenwich Village con enfoque flexible y muy bueno para una primera toma de contacto con la ciudad.",
+    officialWebsite: "https://freetoursbyfoot.com/new-york-tours/",
+    ticketUrl: "https://freetoursbyfoot.com/new-york-tours/",
+    googleMapsUrl: maps("Brooklyn Bridge New York"),
+    openingHours: "Salidas diarias o casi diarias segun tour; revisar calendario oficial antes de reservar.",
+    ticketInfo: "Pay-what-you-wish en muchos tours y tambien tours de precio fijo segun tematica y fecha.",
+    familySuitability: "Muy buena para adultos, adolescentes y familias con buen ritmo caminando.",
+    estimatedDuration: "2-3 h",
+    transportRecommendation: "Elegir segun barrio; suelen salir junto a estaciones de metro faciles de ubicar.",
+    badges: ["Gratis", "Historia de Nueva York", "Recomendado por Locales"],
+    lat: 40.7061,
+    lng: -73.9969,
+  },
+  {
+    name: "Tenement Museum Walking Tours",
+    category: "Tour",
+    image: "https://images.unsplash.com/photo-1514996937319-344454492b37?auto=format&fit=crop&w=1600&q=84",
+    description: "Tours oficiales del Lower East Side centrados en migracion, arquitectura y vida cotidiana del barrio, con lecturas historicas mucho mas profundas que un paseo turistico generico.",
+    officialWebsite: "https://www.tenement.org/neighborhood-walking-tours/",
+    ticketUrl: "https://tickets.tenement.org/",
+    googleMapsUrl: maps("Tenement Museum 103 Orchard Street New York"),
+    openingHours: "Walking tours diarios en franjas concretas; conviene reservar con antelacion.",
+    ticketInfo: "Tour de pago con compra oficial en Tenement Museum; el calendario cambia por temporada.",
+    familySuitability: "Ideal para adultos y adolescentes interesados en historia urbana e inmigracion.",
+    estimatedDuration: "1-2 h",
+    transportRecommendation: "F/J/M/Z hasta Delancey St-Essex St o B/D hasta Grand St.",
+    badges: ["Historia de Nueva York", "Patrimonio Historico", "Experiencia Premium"],
+    lat: 40.7188,
+    lng: -73.9898,
+  },
+  {
+    name: "Grand Central Terminal Tour",
+    category: "Tour",
+    image: "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1600&q=84",
+    description: "Visita enfocada en arquitectura Beaux-Arts, secretos de la terminal y la historia ferroviaria de Midtown, perfecta para quien quiera ver mas alla del icono fotografico.",
+    officialWebsite: "https://www.grandcentralterminal.com/tours/",
+    ticketUrl: "https://www.grandcentralterminal.com/tours/",
+    googleMapsUrl: maps("Grand Central Terminal New York"),
+    openingHours: "Consultar horarios de visita guiada en la web oficial del terminal.",
+    ticketInfo: "Tour de pago con reserva online; disponibilidad variable segun fecha y operador oficial activo.",
+    familySuitability: "Muy buena para primera visita, familias y amantes de arquitectura.",
+    estimatedDuration: "1.5-2 h",
+    transportRecommendation: "4/5/6/7/S hasta Grand Central-42 St.",
+    badges: ["Arquitectura Iconica", "Historia de Nueva York", "Experiencia Premium"],
+    lat: 40.7527,
+    lng: -73.9772,
+  },
+  {
+    name: "Central Park Conservancy Guided Tours",
+    category: "Tour",
+    image: "https://images.unsplash.com/photo-1544198365-f5d60b6d8190?auto=format&fit=crop&w=1600&q=84",
+    description: "Los tours oficiales del parque profundizan en paisajismo, historia y rincones menos obvios de Central Park, con muy buena mezcla entre iconos y contexto local.",
+    officialWebsite: "https://www.centralparknyc.org/activities/guides/tours",
+    ticketUrl: "https://www.centralparknyc.org/activities/guides/tours",
+    googleMapsUrl: maps("Dairy Visitor Center Central Park New York"),
+    openingHours: "Hay visitas puntuales y estacionales; revisar agenda oficial del Conservancy.",
+    ticketInfo: "Programacion mixta: algunas actividades gratuitas y otras de pago segun recorrido.",
+    familySuitability: "Excelente para familias, viajeros tranquilos y fotografia diurna.",
+    estimatedDuration: "1.5-2 h",
+    transportRecommendation: "B/C, 1, N/R/W o 2/3 segun el punto de encuentro del tour.",
+    badges: ["Familiar", "Gratis", "Recomendado por Locales"],
+    lat: 40.7754,
+    lng: -73.9657,
+  },
+  {
+    name: "Big Onion Walking Tours",
+    category: "Tour",
+    image: "https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?auto=format&fit=crop&w=1600&q=84",
+    description: "Clasico operador historico de Nueva York con recorridos tematicos por barrios, inmigracion, arquitectura y memoria urbana guiados por perfiles muy especializados.",
+    officialWebsite: "https://www.bigonion.com/",
+    ticketUrl: "https://www.bigonion.com/",
+    googleMapsUrl: maps("City Hall Park New York"),
+    openingHours: "Las rutas publicas y privadas dependen del calendario semanal; consultar antes de ir.",
+    ticketInfo: "Tours de pago; revisar en la web oficial la salida concreta y la disponibilidad.",
+    familySuitability: "Muy recomendable para adultos y adolescentes que quieran contexto historico serio.",
+    estimatedDuration: "2 h",
+    transportRecommendation: "Muchos puntos de encuentro estan en Lower Manhattan y junto a metro.",
+    badges: ["Historia de Nueva York", "Patrimonio Historico", "Recomendado por Locales"],
+    lat: 40.713,
+    lng: -74.0062,
+  },
+  {
+    name: "Jane's Walk NYC",
+    category: "Tour",
+    image: "https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?auto=format&fit=crop&w=1600&q=84",
+    description: "Festival anual de paseos conversados y gratuitos liderados por vecinos, ideal para descubrir microhistorias de barrios, urbanismo, memoria local y temas menos turisticos.",
+    officialWebsite: "https://www.janeswalknyc.org/",
+    ticketUrl: "https://www.janeswalknyc.org/",
+    googleMapsUrl: maps("Greenwich Village New York"),
+    openingHours: "Se celebra cada ano el primer fin de semana de mayo con programa publicado previamente.",
+    ticketInfo: "Gratis; requiere revisar el programa y registrarse solo si la organizacion del paseo lo indica.",
+    familySuitability: "Buena para publico curioso, locales, viajeros repetidores y familias tranquilas.",
+    estimatedDuration: "1-2 h",
+    transportRecommendation: "Depende de cada paseo; conviene filtrar por barrio antes de reservar.",
+    badges: ["Gratis", "Recomendado por Locales", "Historia de Nueva York"],
+    lat: 40.7308,
+    lng: -73.9973,
+  },
+  {
+    name: "NYPL Schwarzman Building Tour",
+    category: "Tour",
+    image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1600&q=84",
+    description: "Visita del edificio iconico de la New York Public Library para conocer salas historicas, arquitectura Beaux-Arts y el valor cultural del gran templo literario de Midtown.",
+    officialWebsite: "https://www.nypl.org/connect/tours",
+    ticketUrl: "https://www.nypl.org/connect/tours",
+    googleMapsUrl: maps("Stephen A. Schwarzman Building New York Public Library"),
+    openingHours: "Las visitas se ofrecen en horarios concretos segun sede y agenda de NYPL.",
+    ticketInfo: "Suelen ser gratuitas o de acceso publico segun disponibilidad; revisar la pagina oficial de tours.",
+    familySuitability: "Muy buena para familias tranquilas, lectores y primera visita por Midtown.",
+    estimatedDuration: "45-60 min",
+    transportRecommendation: "B/D/F/M o 7 hasta Bryant Park; 4/5/6 hasta Grand Central y paseo corto.",
+    badges: ["Gratis", "Arquitectura Iconica", "Familiar"],
+    lat: 40.7532,
+    lng: -73.9822,
+  },
+];
+
+const allExperiences = [...museums, ...monuments, ...architecture, ...neighborhoods, ...streetArt, ...stageArts, ...literatureCinema, ...tours, ...music];
 
 const routes: CultureRoute[] = [
   {
@@ -650,6 +780,7 @@ const familyFilters = [
 
 function ExperienceCard({ item }: { item: CultureExperience }) {
   const transitHref = buildTransitPlannerUrl({ name: item.name, lat: item.lat, lng: item.lng });
+  const ticketHref = item.ticketUrl ?? item.officialWebsite;
   return (
     <article id={experienceAnchor(item.name)} className="nyc-hard-card-white scroll-mt-28 overflow-hidden rounded-md">
       <div className="relative h-52 border-b-2 border-slate-950 bg-stone-100">
@@ -680,6 +811,7 @@ function ExperienceCard({ item }: { item: CultureExperience }) {
         </div>
         <div className="flex flex-wrap gap-2 text-xs font-black uppercase tracking-[0.1em]">
           <a href={item.officialWebsite} target="_blank" className="nyc-action rounded-md px-3 py-2">Web oficial</a>
+          <a href={ticketHref} target="_blank" className="rounded-md border-2 border-slate-950 bg-[#fff3d1] px-3 py-2 text-[#0A2342] shadow-[3px_3px_0_#111827]">Entradas</a>
           <a href={item.googleMapsUrl} target="_blank" className="rounded-md border-2 border-slate-950 bg-white px-3 py-2 text-[#0A2342] shadow-[3px_3px_0_#111827]">Google Maps</a>
           <a href={transitHref} className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-3 py-2 text-[#0A2342] shadow-[3px_3px_0_#111827]">Como llegar</a>
         </div>
@@ -737,6 +869,7 @@ export default function CulturePage() {
     ["Street Art", "#street-art"],
     ["Broadway", "#escena"],
     ["Literatura", "#literatura"],
+    ["Tours", "#tours"],
     ["Musica", "#musica"],
     ["Familias", "#familias"],
     ["Rutas", "#rutas"],
@@ -757,17 +890,12 @@ export default function CulturePage() {
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,35,66,0.96),rgba(10,35,66,0.65),rgba(122,30,44,0.32)),linear-gradient(180deg,rgba(10,35,66,0.12),rgba(10,35,66,0.94))]" />
         <div className="relative z-10 mx-auto flex min-h-[76vh] max-w-7xl flex-col justify-end px-5 pb-10 pt-24 text-white sm:px-8">
-          <p className="w-fit border border-[#D4AF37]/60 bg-[#D4AF37]/12 px-3 py-2 text-xs font-black uppercase tracking-[0.25em] text-[#D4AF37]">
-            Cultura flagship
-          </p>
           <h1 className="mt-5 max-w-5xl font-american-diner text-5xl leading-[0.94] sm:text-7xl lg:text-8xl">
             CULTURA VIVA NYC
           </h1>
-          <p className="mt-5 max-w-4xl text-base leading-7 text-white/84 sm:text-xl">
-            Descubre el alma de Nueva York a traves de sus museos, monumentos, barrios historicos, arte urbano, arquitectura, musica, literatura y experiencias culturales unicas.
-          </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href="#museos" className="nyc-action rounded-md px-5 py-3 text-sm">Museos</a>
+            <a href="#tours" className="rounded-md border-2 border-white bg-white/10 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white backdrop-blur">Free tours y visitas</a>
             <a href="#mapa-cultural" className="rounded-md border-2 border-white bg-white/10 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white backdrop-blur">Mapa cultural</a>
             <a href="#rutas" className="rounded-md border-2 border-[#D4AF37] bg-[#D4AF37]/12 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-[#D4AF37]">Rutas inteligentes</a>
           </div>
@@ -845,13 +973,24 @@ export default function CulturePage() {
         </div>
       </Section>
 
-      <Section id="musica" eyebrow="08 / La ciudad suena" title="Musica de Nueva York" dark>
+      <Section id="tours" eyebrow="08 / Free tours y entradas oficiales" title="Tours Guiados de Nueva York" dark>
+        <div className="mb-5 rounded-md border border-white/15 bg-white/8 p-5">
+          <p className="text-sm leading-7 text-white/78">
+            Seleccion pensada para combinar free tours, visitas oficiales y tours culturales de pago con sus paginas reales de reserva, tematica clara y puntos de salida faciles de integrar en tu ruta.
+          </p>
+        </div>
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {tours.map((item) => <ExperienceCard key={item.name} item={item} />)}
+        </div>
+      </Section>
+
+      <Section id="musica" eyebrow="09 / La ciudad suena" title="Musica de Nueva York" dark>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-5">
           {music.map((item) => <ExperienceCard key={item.name} item={item} />)}
         </div>
       </Section>
 
-      <Section id="familias" eyebrow="09 / Por edades" title="Cultura para Familias">
+      <Section id="familias" eyebrow="10 / Por edades" title="Cultura para Familias">
         <div className="grid gap-4 md:grid-cols-4">
           {familyFilters.map(([age, copy]) => (
             <div key={age} className="nyc-hard-card-white rounded-md p-5">
@@ -862,7 +1001,7 @@ export default function CulturePage() {
         </div>
       </Section>
 
-      <Section id="rutas" eyebrow="10 / Curadoria inteligente" title="Rutas Culturales Inteligentes" dark>
+      <Section id="rutas" eyebrow="11 / Curadoria inteligente" title="Rutas Culturales Inteligentes" dark>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {routes.map((route) => (
             <article key={route.name} className="rounded-md border border-white/15 bg-white/8 p-5">
@@ -894,7 +1033,7 @@ export default function CulturePage() {
         <div className="mx-auto max-w-7xl rounded-md border border-[#D4AF37]/30 bg-[#D4AF37]/10 p-5">
           <p className="text-xs font-black uppercase tracking-[0.18em] text-[#D4AF37]">CultureCuratorAgent</p>
           <p className="mt-2 text-sm leading-7 text-white/78">
-            Agente preparado para descubrir museos, exposiciones temporales, eventos culturales, Broadway, horarios de museos, festivales y rankings de calidad usando Google Places, NYC Open Data, Metropolitan Museum Open Access, Smithsonian Open Access, Eventbrite, Ticketmaster y OpenWeather cuando haya claves disponibles.
+            Agente preparado para descubrir museos, exposiciones temporales, eventos culturales, free tours, tours oficiales, Broadway, horarios de museos, festivales y rankings de calidad usando Google Places, NYC Open Data, Metropolitan Museum Open Access, Smithsonian Open Access, Eventbrite, Ticketmaster y OpenWeather cuando haya claves disponibles.
           </p>
           <div className="mt-4 flex flex-wrap gap-2">
             {BADGES.map((badge, index) => (

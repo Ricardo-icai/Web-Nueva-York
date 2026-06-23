@@ -12,12 +12,14 @@ export class CultureCuratorAgent {
     return {
       agent: 'CultureCuratorAgent',
       mission:
-        'Discover, monitor and rank New York cultural experiences across museums, monuments, architecture, neighborhoods, street art, performing arts, literature, film and music.',
+        'Discover, monitor and rank New York cultural experiences across museums, monuments, architecture, neighborhoods, street art, performing arts, literature, film, music and guided tours.',
       responsibilities: [
         'Discover museums and essential cultural sites.',
         'Discover temporary exhibitions through official APIs when credentials are available.',
+        'Discover free tours, guided walks and official paid tours with booking links.',
         'Monitor Broadway and performing arts calendars.',
         'Monitor museum schedules, closures and ticket policies.',
+        'Monitor official tour operators, institutional tours and seasonal walking programs.',
         'Monitor cultural festivals and family-friendly events.',
         'Rank experiences by quality, cultural value, family suitability, weather resilience and transport ease.',
       ],
@@ -29,6 +31,13 @@ export class CultureCuratorAgent {
         'Eventbrite API',
         'Ticketmaster API',
         'OpenWeather API',
+      ],
+      featuredTours: [
+        'Free Tours by Foot NYC',
+        'Tenement Museum Walking Tours',
+        'Grand Central Terminal Tour',
+        'Central Park Conservancy Guided Tours',
+        "Jane's Walk NYC",
       ],
       badges: [
         'Imprescindible',
@@ -46,6 +55,8 @@ export class CultureCuratorAgent {
         'Official institution status',
         'Historic significance',
         'Collection depth',
+        'Official booking link',
+        'Theme clarity',
         'Temporary exhibition relevance',
         'Family suitability',
         'Transit accessibility',
@@ -76,6 +87,13 @@ export class CultureCuratorAgent {
         route: 'Architecture Route',
         experiences: ['Grand Central Terminal', 'Chrysler Building', 'Empire State Building', 'Flatiron Building', 'The Oculus'],
         reason: 'Connects iconic buildings through a transit-friendly Midtown to Downtown route.',
+      };
+    }
+    if (preference.includes('tour') || preference.includes('walking') || preference.includes('gratis') || preference.includes('free')) {
+      return {
+        route: 'Guided Tour Route',
+        experiences: ['Free Tours by Foot NYC', 'Tenement Museum Walking Tours', 'Grand Central Terminal Tour', 'Central Park Conservancy Guided Tours'],
+        reason: 'Prioritizes official and high-trust walking tours with clear themes, transit access and direct booking pages.',
       };
     }
     if (preference.includes('music') || preference.includes('jazz') || preference.includes('musica')) {
