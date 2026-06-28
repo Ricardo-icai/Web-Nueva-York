@@ -69,6 +69,7 @@ const categoryColors: Record<string, string> = {
   "Street Art": "#C1121F",
   Escena: "#5B2A86",
   Literatura: "#8A5A44",
+  Pantalla: "#B45309",
   Tour: "#15803D",
   Musica: "#111827",
 };

@@ -7,12 +7,13 @@ import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 
 type CultureExperience = {
   name: string;
-  category: "Museo" | "Monumento" | "Arquitectura" | "Barrio" | "Street Art" | "Escena" | "Literatura" | "Musica" | "Tour";
+  category: "Museo" | "Monumento" | "Arquitectura" | "Barrio" | "Street Art" | "Escena" | "Literatura" | "Musica" | "Tour" | "Pantalla";
   image: string;
   description: string;
   officialWebsite: string;
   ticketUrl?: string;
   googleMapsUrl: string;
+  walkingMapsUrl?: string;
   openingHours: string;
   ticketInfo: string;
   familySuitability: string;
@@ -31,6 +32,14 @@ type CultureRoute = {
   bestFor: string;
   transport: string;
 };
+
+type ScreenLocation = CultureExperience & {
+  productions: string[];
+  precisionLabel: "Rodado aqui" | "Solo exterior" | "Inspiracion real" | "Set recreado";
+  neighborhood: string;
+  onSiteTip: string;
+  accuracyNote: string;
+};
 const CULTURE_FAVORITES_KEY = "nyc_culture_favorites_v1";
 
 const BADGES = [
@@ -46,8 +55,19 @@ const BADGES = [
   "Recomendado por Locales",
 ];
 
+const SCREEN_LABEL_STYLES: Record<ScreenLocation["precisionLabel"], string> = {
+  "Rodado aqui": "bg-emerald-600 text-white",
+  "Solo exterior": "bg-[#0A2342] text-white",
+  "Inspiracion real": "bg-[#D4AF37] text-[#0A2342]",
+  "Set recreado": "bg-[#7A1E2C] text-white",
+};
+
 function maps(query: string) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+function walkingMaps(query: string) {
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(query)}&travelmode=walking`;
 }
 
 function commonsFile(fileName: string) {
@@ -104,6 +124,16 @@ const CULTURE_IMAGE_OVERRIDES: Record<string, string> = {
   "Strand Book Store": commonsFile("Strand Bookstore NYC.jpg"),
   "Hotel Chelsea": commonsFile("Hotel Chelsea NYC.jpg"),
   "Film locations route": commonsFile("Times Square at night.jpg"),
+  "McGee's Pub": commonsFile("McGee's Pub NYC.jpg"),
+  "Queensboro Bridge": commonsFile("Queensboro Bridge from Roosevelt Island.jpg"),
+  "Roosevelt Island Tramway": commonsFile("Roosevelt Island Tramway Roosevelt Island car.jpg"),
+  "Hook & Ladder 8": commonsFile("Hook & Ladder 8 firehouse, Tribeca, Manhattan.jpg"),
+  "The Plaza Hotel": commonsFile("The Plaza Hotel New York City.jpg"),
+  "FAO Schwarz": commonsFile("FAO Schwarz Rockefeller Center.jpg"),
+  "Katz's Delicatessen": commonsFile("Katz's Delicatessen sign Houston Street.jpg"),
+  "90 Bedford Street": commonsFile("Friends building Bedford Street.jpg"),
+  "66 Perry Street": commonsFile("Perry Street New York City brownstone.jpg"),
+  "Museum of the City of New York": commonsFile("Museum of the City of New York 001.JPG"),
   "Free Tours by Foot NYC": commonsFile("Brooklyn Bridge Postdlf.jpg"),
   "Tenement Museum Walking Tours": commonsFile("Tenement Museum, New York City.jpg"),
   "Grand Central Terminal Tour": commonsFile("Grand Central Terminal Main Concourse Jan 2006.jpg"),
@@ -489,19 +519,25 @@ const neighborhoods = [
   ["Lower East Side", "Inmigracion, tenements, musica, arte y contracultura.", "Edificios de vivienda obrera y fachadas comerciales.", "Clave para entender el NYC migrante.", "Tenement Museum -> Orchard St -> Essex Market -> Bowery.", 40.7188, -73.9896],
   ["Williamsburg", "Cultura industrial, comunidades migrantes y escena creativa.", "Waterfront, almacenes y murales.", "Brooklyn contemporaneo y musica alternativa.", "Bedford Av -> Domino Park -> murals -> East River.", 40.7081, -73.9571],
   ["DUMBO", "Industrial waterfront, puentes y fotografia urbana.", "Adoquines, almacenes y vistas a Manhattan.", "Paisaje visual clave de Brooklyn.", "Manhattan Bridge View -> Brooklyn Bridge Park -> Jane's Carousel.", 40.7033, -73.9895],
+  ["DUMBO bajo el Brooklyn Bridge", "La zona mas buscada de DUMBO para bajar al waterfront junto al puente de Brooklyn y vivir una de las vistas mas iconicas del skyline.", "Adoquines, parque ribereno, Jane's Carousel y perspectiva directa del puente.", "Es una parada muy fuerte para fotos, paseo tranquilo y atardecer en Brooklyn Bridge Park.", "Main Street Park -> Pebble Beach -> Jane's Carousel -> Empire Fulton Ferry.", 40.7026, -73.9958],
 ].map(([name, history, architectureText, significance, walkingRoute, lat, lng]) => ({
   name: String(name),
   category: "Barrio" as const,
   image: "https://images.unsplash.com/photo-1494522855154-9297ac14b55f?auto=format&fit=crop&w=1600&q=84",
   description: `${history} Arquitectura: ${architectureText} Significado cultural: ${significance} Ruta: ${walkingRoute}`,
-  officialWebsite: "https://www.nyctourism.com/",
-  googleMapsUrl: maps(`${name} New York`),
+  officialWebsite: name === "DUMBO bajo el Brooklyn Bridge" ? "https://www.brooklynbridgepark.org/" : "https://www.nyctourism.com/",
+  googleMapsUrl: name === "DUMBO bajo el Brooklyn Bridge" ? maps("Main Street Park DUMBO Brooklyn New York") : maps(`${name} New York`),
+  walkingMapsUrl: name === "DUMBO bajo el Brooklyn Bridge" ? walkingMaps("Main Street Park DUMBO Brooklyn New York") : undefined,
   openingHours: "Barrio visitable a diario; priorizar horas de luz para rutas a pie.",
   ticketInfo: "Gratis; tours guiados opcionales.",
   familySuitability: "Apto para familias si se ajusta duracion y descansos.",
   estimatedDuration: "1.5-3 h",
-  transportRecommendation: "Llegar en metro y caminar por ruta lineal.",
-  badges: ["Historia de Nueva York", "Recomendado por Locales"],
+  transportRecommendation: name === "DUMBO bajo el Brooklyn Bridge"
+    ? "A/C hasta High St-Brooklyn Bridge o F hasta York St; desde ahi baja caminando a Main Street Park y Pebble Beach."
+    : "Llegar en metro y caminar por ruta lineal.",
+  badges: name === "DUMBO bajo el Brooklyn Bridge"
+    ? ["Imprescindible", "Gratis", "Recomendado por Locales"]
+    : ["Historia de Nueva York", "Recomendado por Locales"],
   lat: Number(lat),
   lng: Number(lng),
 }));
@@ -571,6 +607,309 @@ const literatureCinema: CultureExperience[] = [
   lat: Number(lat),
   lng: Number(lng),
 }));
+
+const screenLocations: ScreenLocation[] = [
+  {
+    name: "McGee's Pub",
+    category: "Pantalla",
+    image: commonsFile("McGee's Pub NYC.jpg"),
+    description: "La inspiracion mas citada para MacLaren's: pub clasico de Midtown que aterriza el mito de How I Met Your Mother en un lugar real.",
+    officialWebsite: "https://www.mcgeespubny.com/",
+    googleMapsUrl: maps("McGee's Pub New York"),
+    openingHours: "Consultar horario oficial del pub; es una parada mejor de tarde o noche.",
+    ticketInfo: "Sin entrada; consumo segun pedido.",
+    familySuitability: "Mejor para adultos y fans de series; visita breve con adolescentes mayores.",
+    estimatedDuration: "30-45 min",
+    transportRecommendation: "A/C/E, 1/2/3 o N/Q/R/W hasta Midtown West y paseo corto.",
+    badges: ["Recomendado por Locales", "Historia de Nueva York"],
+    lat: 40.7628,
+    lng: -73.9862,
+    productions: ["How I Met Your Mother"],
+    precisionLabel: "Inspiracion real",
+    neighborhood: "Midtown West",
+    onSiteTip: "Pide una parada corta para contextualizar la serie y seguir luego hacia Times Square o Bryant Park.",
+    accuracyNote: "MacLaren's era un set de estudio y un bar ficticio; McGee's funciona como referencia real del universo de la serie.",
+  },
+  {
+    name: "Empire State Building",
+    category: "Pantalla",
+    image: commonsFile("Empire State Building all.jpg"),
+    description: "El gran icono romantico y cinematografico de Manhattan, ligado a King Kong, Sleepless in Seattle y decenas de clasicos.",
+    officialWebsite: "https://www.esbnyc.com/",
+    googleMapsUrl: maps("Empire State Building New York"),
+    openingHours: "Consultar observatorios y horario oficial en la web.",
+    ticketInfo: "Miradores de pago con reserva recomendada.",
+    familySuitability: "Muy buena para familias, primera visita y viajeros que buscan un icono total.",
+    estimatedDuration: "1.5-2.5 h",
+    transportRecommendation: "B/D/F/M, N/Q/R/W, 1/2/3 o PATH segun alojamiento.",
+    badges: ["Imprescindible", "Arquitectura Iconica", "Experiencia Premium"],
+    lat: 40.7484,
+    lng: -73.9857,
+    productions: ["King Kong", "Sleepless in Seattle", "An Affair to Remember"],
+    precisionLabel: "Set recreado",
+    neighborhood: "Midtown South",
+    onSiteTip: "Sube si buscas skyline y remata con Koreatown o Bryant Park para una tarde redonda.",
+    accuracyNote: "El edificio es real y esencial en pantalla, pero algunas escenas clave de observatorio fueron recreadas en set.",
+  },
+  {
+    name: "Flatiron Building",
+    category: "Pantalla",
+    image: commonsFile("Flatiron building.jpg"),
+    description: "La silueta triangular que muchos fans recuerdan como el Daily Bugle de Spider-Man y como uno de los skylines mas fotografiados de NYC.",
+    officialWebsite: "https://flatironnomad.nyc/",
+    googleMapsUrl: maps("Flatiron Building New York"),
+    openingHours: "Exterior visible todo el dia; edificio sin experiencia turistica interior asociada.",
+    ticketInfo: "Gratis como parada urbana de calle.",
+    familySuitability: "Muy buena para familias, adolescentes y fotografos.",
+    estimatedDuration: "20-35 min",
+    transportRecommendation: "R/W, 6, F/M o PATH a 23 St y paseo corto.",
+    badges: ["Arquitectura Iconica", "Gratis", "Historia de Nueva York"],
+    lat: 40.7411,
+    lng: -73.9897,
+    productions: ["Spider-Man"],
+    precisionLabel: "Solo exterior",
+    neighborhood: "Flatiron District",
+    onSiteTip: "Encaja genial con Madison Square Park, Eataly y una ruta de arquitectura de Midtown South.",
+    accuracyNote: "Funciona como stand-in del Daily Bugle; el valor fan aqui es visual y exterior.",
+  },
+  {
+    name: "Queensboro Bridge",
+    category: "Pantalla",
+    image: commonsFile("Queensboro Bridge from Roosevelt Island.jpg"),
+    description: "Infraestructura puro Nueva York: superheroica, cinetica y ligada al imaginario de Spider-Man y de la ciudad en movimiento.",
+    officialWebsite: "https://www.nyc.gov/html/dot/html/infrastructure/queensboro-bridge.shtml",
+    googleMapsUrl: maps("Queensboro Bridge New York"),
+    openingHours: "Vistas y accesos exteriores segun tramo y hora.",
+    ticketInfo: "Gratis como paseo exterior.",
+    familySuitability: "Muy buena para adolescentes, fotografos y viajeros activos.",
+    estimatedDuration: "30-60 min",
+    transportRecommendation: "F, N/R/W, 4/5/6 o tranvia segun el acceso elegido.",
+    badges: ["Gratis", "Arquitectura Iconica", "Recomendado por Locales"],
+    lat: 40.7568,
+    lng: -73.9543,
+    productions: ["Spider-Man", "Manhattan", "The Great Gatsby"],
+    precisionLabel: "Rodado aqui",
+    neighborhood: "Midtown East / Long Island City",
+    onSiteTip: "Combinalo con el tranvia de Roosevelt Island para una ruta con skyline y sensacion de movimiento real.",
+    accuracyNote: "La accion final de Spider-Man mezcla rodaje real y construccion cinematografica, pero el puente es una parada autentica y muy reconocible.",
+  },
+  {
+    name: "Roosevelt Island Tramway",
+    category: "Pantalla",
+    image: commonsFile("Roosevelt Island Tramway Roosevelt Island car.jpg"),
+    description: "Uno de los trayectos mas cinematograficos de Nueva York: vistas del East River, cables, altura y una energia visual muy de thriller urbano.",
+    officialWebsite: "https://rioc.ny.gov/302/Tram",
+    googleMapsUrl: maps("Roosevelt Island Tramway New York"),
+    openingHours: "Consultar horarios operativos oficiales del tranvia.",
+    ticketInfo: "Se paga con OMNY o MetroCard como transporte publico.",
+    familySuitability: "Muy buena para familias, fans de Spider-Man y primera visita.",
+    estimatedDuration: "45-75 min",
+    transportRecommendation: "F hasta Roosevelt Island o 4/5/6/N/R/W hasta Lexington Av/59 St para subir en Manhattan.",
+    badges: ["Experiencia Premium", "Familiar", "Recomendado por Locales"],
+    lat: 40.7617,
+    lng: -73.9647,
+    productions: ["Spider-Man", "Leon: The Professional"],
+    precisionLabel: "Rodado aqui",
+    neighborhood: "Upper East Side / Roosevelt Island",
+    onSiteTip: "Haz el trayecto al atardecer y baja a pasear por Roosevelt Island para alargar la experiencia.",
+    accuracyNote: "Es una localizacion real y muy potente visualmente; la pelicula intensifica la escala, pero el trayecto conserva el impacto.",
+  },
+  {
+    name: "Hook & Ladder 8",
+    category: "Pantalla",
+    image: commonsFile("Hook & Ladder 8 firehouse, Tribeca, Manhattan.jpg"),
+    description: "La fachada mas fan-service de Tribeca: cuartel activo de bomberos convertido en cuartel general pop por Ghostbusters.",
+    officialWebsite: "https://www.fdnytrucks.com/files/html/manhattan/l8.htm",
+    googleMapsUrl: maps("Hook and Ladder 8 New York"),
+    openingHours: "Exterior visible a pie; respetar siempre la operativa del parque.",
+    ticketInfo: "Gratis como parada exterior.",
+    familySuitability: "Muy buena para familias y fans de cine ochentero.",
+    estimatedDuration: "15-25 min",
+    transportRecommendation: "1 hasta Franklin St o A/C/E hasta Canal St.",
+    badges: ["Gratis", "Historia de Nueva York", "Recomendado por Locales"],
+    lat: 40.7197,
+    lng: -74.006,
+    productions: ["Ghostbusters"],
+    precisionLabel: "Solo exterior",
+    neighborhood: "Tribeca",
+    onSiteTip: "Ideal como stop corto dentro de una ruta de downtown con paseo posterior por Tribeca y SoHo.",
+    accuracyNote: "La fachada si es la de la pelicula; los interiores de la base se recrearon fuera de Nueva York.",
+  },
+  {
+    name: "New York Public Library",
+    category: "Pantalla",
+    image: commonsFile("New York Public Library Main Branch 2012.jpg"),
+    description: "Biblioteca monumental de Bryant Park donde la alta cultura y la cultura pop se cruzan con una fuerza rarisima.",
+    officialWebsite: "https://www.nypl.org/locations/schwarzman",
+    googleMapsUrl: maps("Stephen A. Schwarzman Building New York Public Library"),
+    openingHours: "Consultar horarios de visita, tours y salas abiertas en la web oficial.",
+    ticketInfo: "Entrada general gratuita; tours y eventos segun agenda.",
+    familySuitability: "Muy buena para familias tranquilas, lectores y primera visita a Midtown.",
+    estimatedDuration: "45-90 min",
+    transportRecommendation: "B/D/F/M o 7 hasta Bryant Park; 4/5/6 hasta Grand Central.",
+    badges: ["Gratis", "Arquitectura Iconica", "Historia de Nueva York"],
+    lat: 40.7532,
+    lng: -73.9822,
+    productions: ["Ghostbusters", "Sex and the City", "Breakfast at Tiffany's"],
+    precisionLabel: "Rodado aqui",
+    neighborhood: "Bryant Park / Midtown",
+    onSiteTip: "Combina de maravilla con Bryant Park, Grand Central y una tarde de arquitectura por Midtown.",
+    accuracyNote: "La sala principal si forma parte del mito cinematografico, aunque algunas zonas subterraneas famosas se recrearon en Los Angeles.",
+  },
+  {
+    name: "The Plaza Hotel",
+    category: "Pantalla",
+    image: commonsFile("The Plaza Hotel New York City.jpg"),
+    description: "Lujo puro frente a Central Park: uno de los escenarios mas reconocibles de Home Alone 2 y del Manhattan elegante de cine y TV.",
+    officialWebsite: "https://www.theplazany.com/",
+    googleMapsUrl: maps("The Plaza Hotel New York"),
+    openingHours: "Consultar accesos permitidos, lobby y servicios del hotel.",
+    ticketInfo: "Sin entrada para fachada; consumos o experiencias segun el hotel.",
+    familySuitability: "Muy buena para familias, Navidad y rutas premium.",
+    estimatedDuration: "20-40 min",
+    transportRecommendation: "N/R/W, F, 4/5/6 o A/B/C/D/1 cerca de Columbus Circle y Fifth Avenue.",
+    badges: ["Experiencia Premium", "Arquitectura Iconica", "Familiar"],
+    lat: 40.7644,
+    lng: -73.9747,
+    productions: ["Home Alone 2", "Sex and the City", "The Great Gatsby"],
+    precisionLabel: "Rodado aqui",
+    neighborhood: "Central Park South",
+    onSiteTip: "Gran parada para unir Fifth Avenue, Central Park y una ruta navidena o glamurosa por Midtown.",
+    accuracyNote: "El hotel es una localizacion real de Home Alone 2; no conviene confundirlo con la jugueteria ficticia de la pelicula.",
+  },
+  {
+    name: "FAO Schwarz",
+    category: "Pantalla",
+    image: commonsFile("FAO Schwarz Rockefeller Center.jpg"),
+    description: "Tienda-jugueteria iconica que activa al instante el recuerdo del piano gigante de Big y la fantasia neoyorquina mas familiar.",
+    officialWebsite: "https://faoschwarz.com/",
+    googleMapsUrl: maps("FAO Schwarz New York"),
+    openingHours: "Consultar horario oficial de tienda y experiencias.",
+    ticketInfo: "Entrada gratuita; compras y actividades segun visita.",
+    familySuitability: "Excelente para ninos, nostalgia adulta y publico intergeneracional.",
+    estimatedDuration: "30-60 min",
+    transportRecommendation: "B/D/F/M hasta Rockefeller Center o E/M hasta 5 Av-53 St.",
+    badges: ["Familiar", "Gratis", "Historia de Nueva York"],
+    lat: 40.7597,
+    lng: -73.9787,
+    productions: ["Big", "The Smurfs", "Home Alone 2 inspiration"],
+    precisionLabel: "Inspiracion real",
+    neighborhood: "Rockefeller Center",
+    onSiteTip: "Es una parada muy agradecida si viajas con ninos o quieres una ruta Midtown divertida y ligera.",
+    accuracyNote: "El piano de Big forma parte del mito del lugar; la jugueteria de Home Alone 2 fue una fantasia inspirada, no una tienda real filmada aqui.",
+  },
+  {
+    name: "Katz's Delicatessen",
+    category: "Pantalla",
+    image: commonsFile("Katz's Delicatessen sign Houston Street.jpg"),
+    description: "Uno de esos pocos sitios donde comes, reconoces la escena y entiendes porque Nueva York se cuenta tan bien en una mesa.",
+    officialWebsite: "https://katzsdelicatessen.com/",
+    googleMapsUrl: maps("Katz's Delicatessen New York"),
+    openingHours: "Consultar horario oficial; suele haber cola en horas fuertes.",
+    ticketInfo: "Sin entrada; comida y bebida a la carta.",
+    familySuitability: "Muy buena para familias, parejas y amantes del Lower East Side.",
+    estimatedDuration: "45-75 min",
+    transportRecommendation: "F/J/M/Z hasta Delancey St-Essex St o 6 hasta Astor Place.",
+    badges: ["Historia de Nueva York", "Recomendado por Locales", "Familiar"],
+    lat: 40.7223,
+    lng: -73.9874,
+    productions: ["When Harry Met Sally...", "Donnie Brasco", "Across the Universe"],
+    precisionLabel: "Rodado aqui",
+    neighborhood: "Lower East Side",
+    onSiteTip: "Funciona genial como parada de comida real dentro de una ruta de cine por downtown y el Village.",
+    accuracyNote: "La relacion con When Harry Met Sally es directa y muy facil de explicar al visitante.",
+  },
+  {
+    name: "90 Bedford Street",
+    category: "Pantalla",
+    image: commonsFile("Friends building Bedford Street.jpg"),
+    description: "La fachada mas famosa de Friends y uno de los grandes puntos de peregrinacion pop del West Village.",
+    officialWebsite: "https://www.nyctourism.com/",
+    googleMapsUrl: maps("90 Bedford Street New York"),
+    openingHours: "Exterior visible a cualquier hora con mejor experiencia de dia.",
+    ticketInfo: "Gratis como parada exterior.",
+    familySuitability: "Muy buena para adolescentes, adultos y publico muy fan.",
+    estimatedDuration: "10-20 min",
+    transportRecommendation: "A/C/E/B/D/F/M hasta West 4 St o 1 hasta Christopher St-Sheridan Sq.",
+    badges: ["Gratis", "Recomendado por Locales", "Historia de Nueva York"],
+    lat: 40.7324,
+    lng: -74.0054,
+    productions: ["Friends"],
+    precisionLabel: "Solo exterior",
+    neighborhood: "West Village",
+    onSiteTip: "Integralo con Perry Street, Washington Square y un paseo tranquilo por el Village.",
+    accuracyNote: "Solo se usaba como exterior referencial; los interiores del apartamento y Central Perk se rodaron en Burbank.",
+  },
+  {
+    name: "66 Perry Street",
+    category: "Pantalla",
+    image: commonsFile("Perry Street New York City brownstone.jpg"),
+    description: "El stoop mas fotografiado por fans de Sex and the City y una parada perfecta para leer la fantasia del West Village.",
+    officialWebsite: "https://www.nyctourism.com/",
+    googleMapsUrl: maps("66 Perry Street New York"),
+    openingHours: "Exterior residencial; visita breve y siempre con respeto al vecindario.",
+    ticketInfo: "Gratis como parada exterior.",
+    familySuitability: "Mejor para adultos y adolescentes.",
+    estimatedDuration: "10-20 min",
+    transportRecommendation: "1 hasta Christopher St-Sheridan Sq o A/C/E/B/D/F/M hasta West 4 St.",
+    badges: ["Gratis", "Historia de Nueva York", "Recomendado por Locales"],
+    lat: 40.7351,
+    lng: -74.0057,
+    productions: ["Sex and the City"],
+    precisionLabel: "Solo exterior",
+    neighborhood: "West Village",
+    onSiteTip: "Haz una parada rapida y sigue caminando; el valor esta en el contexto urbano del Village, no en quedarse en la puerta.",
+    accuracyNote: "El exterior de la casa si es real, pero la direccion del personaje cambia y es una residencia privada.",
+  },
+  {
+    name: "Museum of the City of New York",
+    category: "Pantalla",
+    image: commonsFile("Museum of the City of New York 001.JPG"),
+    description: "Fachada Upper East Side total para fans de Gossip Girl, con el plus de ser un museo que de verdad ayuda a entender la ciudad.",
+    officialWebsite: "https://www.mcny.org/",
+    googleMapsUrl: maps("Museum of the City of New York"),
+    openingHours: "Consultar horario oficial del museo y exposiciones activas.",
+    ticketInfo: "Entrada de pago o sugerida segun fecha y programa.",
+    familySuitability: "Muy buena para adolescentes, adultos y publico con interes por NYC.",
+    estimatedDuration: "1-2 h",
+    transportRecommendation: "6 hasta 103 St y paseo corto por Museum Mile norte.",
+    badges: ["Historia de Nueva York", "Arquitectura Iconica", "Recomendado por Locales"],
+    lat: 40.7925,
+    lng: -73.9519,
+    productions: ["Gossip Girl"],
+    precisionLabel: "Solo exterior",
+    neighborhood: "Upper Fifth Avenue / East Harlem",
+    onSiteTip: "Tiene valor doble: parada fan y museo real con muy buen contexto para seguir por Museum Mile.",
+    accuracyNote: "En Gossip Girl funciona como exterior del colegio ficticio, no como espacio narrativo interior principal.",
+  },
+];
+
+const screenRoutes: CultureRoute[] = [
+  {
+    name: "Village Screen Route",
+    focus: "Sitcoms, romance y fachadas miticas",
+    stops: ["McGee's Pub", "90 Bedford Street", "66 Perry Street", "Katz's Delicatessen"],
+    weather: "Muy buena con tiempo suave; funciona perfecta a pie entre Village y Lower East Side.",
+    bestFor: "fans de series, parejas y viajeros repetidores",
+    transport: "A/C/E/B/D/F/M, 1 y F/J/M/Z segun el tramo.",
+  },
+  {
+    name: "Spider-Man Skyline Route",
+    focus: "Flatiron, puentes, tranvia y Manhattan vertical",
+    stops: ["Flatiron Building", "Empire State Building", "Queensboro Bridge", "Roosevelt Island Tramway"],
+    weather: "Ideal con cielo limpio o al atardecer para skyline y fotos.",
+    bestFor: "familias, adolescentes y publico muy visual",
+    transport: "R/W, 4/5/6, N/R/W y F con conexiones sencillas.",
+  },
+  {
+    name: "Classic Movie Route",
+    focus: "Ghostbusters, lujo, biblioteca y nostalgia pura NYC",
+    stops: ["Hook & Ladder 8", "New York Public Library", "The Plaza Hotel", "FAO Schwarz"],
+    weather: "Perfecta para dias frios o rutas navidenas con alternancia de interior y exterior.",
+    bestFor: "familias, publico amplio y primera visita",
+    transport: "1/A/C/E para downtown y B/D/F/M/N/R/W/4/5/6 para Midtown.",
+  },
+];
 
 const music: CultureExperience[] = [
   ["Harlem Jazz history", "Ruta por el legado jazzistico de Harlem, clubs historicos y comunidad afroamericana.", "https://www.nyctourism.com/new-york/manhattan/harlem/", 40.8116, -73.9465],
@@ -812,6 +1151,57 @@ function ExperienceCard({ item }: { item: CultureExperience }) {
         <div className="flex flex-wrap gap-2 text-xs font-black uppercase tracking-[0.1em]">
           <a href={item.officialWebsite} target="_blank" className="nyc-action rounded-md px-3 py-2">Web oficial</a>
           <a href={ticketHref} target="_blank" className="rounded-md border-2 border-slate-950 bg-[#fff3d1] px-3 py-2 text-[#0A2342] shadow-[3px_3px_0_#111827]">Entradas</a>
+          <a href={item.walkingMapsUrl ?? item.googleMapsUrl} target="_blank" className="rounded-md border-2 border-slate-950 bg-white px-3 py-2 text-[#0A2342] shadow-[3px_3px_0_#111827]">
+            {item.walkingMapsUrl ? "Maps andando" : "Google Maps"}
+          </a>
+          <a href={transitHref} className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-3 py-2 text-[#0A2342] shadow-[3px_3px_0_#111827]">Como llegar</a>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function ScreenLocationCard({ item }: { item: ScreenLocation }) {
+  const transitHref = buildTransitPlannerUrl({ name: item.name, lat: item.lat, lng: item.lng });
+
+  return (
+    <article id={experienceAnchor(item.name)} className="overflow-hidden rounded-md border-2 border-slate-950 bg-white shadow-[6px_6px_0_#111827]">
+      <div className="relative h-56 border-b-2 border-slate-950 bg-stone-100">
+        <CultureExperienceImage name={item.name} primary={cultureImageFor(item)} fallback={item.image} />
+        <div className="absolute left-4 top-4">
+          <span className={`rounded-full px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] ${SCREEN_LABEL_STYLES[item.precisionLabel]}`}>
+            {item.precisionLabel}
+          </span>
+        </div>
+      </div>
+      <div className="space-y-4 p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div>
+            <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#7A1E2C]">{item.neighborhood}</p>
+            <h3 className="mt-1 font-american-diner text-3xl text-slate-950">{item.name}</h3>
+          </div>
+          <FavoriteToggleButton baseKey={CULTURE_FAVORITES_KEY} favoriteType="culture" itemId={item.name} />
+        </div>
+        <p className="text-sm font-semibold leading-6 text-slate-700">{item.description}</p>
+        <div className="rounded-md border border-[#0A2342]/12 bg-[#f6efe2] p-3">
+          <p className="text-[11px] font-black uppercase tracking-[0.16em] text-[#0A2342]">En pantalla</p>
+          <p className="mt-2 text-sm font-semibold leading-6 text-slate-800">{item.productions.join(" / ")}</p>
+        </div>
+        <div className="grid gap-2 text-xs font-semibold text-slate-700">
+          <p><span className="text-[#7A1E2C]">Experiencia:</span> {item.onSiteTip}</p>
+          <p><span className="text-[#7A1E2C]">Precision:</span> {item.accuracyNote}</p>
+          <p><span className="text-[#7A1E2C]">Duracion:</span> {item.estimatedDuration}</p>
+          <p><span className="text-[#7A1E2C]">Transporte:</span> {item.transportRecommendation}</p>
+        </div>
+        <div className="flex flex-wrap gap-2">
+          {item.badges.map((badge, index) => (
+            <span key={`${item.name}-${badge}-${index}`} className="rounded-md border-2 border-slate-950 bg-[#0A2342] px-2 py-1 text-[10px] font-black uppercase tracking-wide text-white">
+              {badge}
+            </span>
+          ))}
+        </div>
+        <div className="flex flex-wrap gap-2 text-xs font-black uppercase tracking-[0.1em]">
+          <a href={item.officialWebsite} target="_blank" className="nyc-action rounded-md px-3 py-2">Web</a>
           <a href={item.googleMapsUrl} target="_blank" className="rounded-md border-2 border-slate-950 bg-white px-3 py-2 text-[#0A2342] shadow-[3px_3px_0_#111827]">Google Maps</a>
           <a href={transitHref} className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-3 py-2 text-[#0A2342] shadow-[3px_3px_0_#111827]">Como llegar</a>
         </div>
@@ -844,6 +1234,34 @@ function Section({
   );
 }
 
+function SectionFeatureImage({
+  src,
+  alt,
+  eyebrow,
+  title,
+  copy,
+}: {
+  src: string;
+  alt: string;
+  eyebrow: string;
+  title: string;
+  copy: string;
+}) {
+  return (
+    <div className="mb-6 overflow-hidden rounded-md border border-white/15 bg-white/8">
+      <div className="relative min-h-[340px] border-b border-white/12">
+        <Image src={src} alt={alt} fill className="object-cover" sizes="100vw" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,35,66,0.9),rgba(10,35,66,0.55),rgba(10,35,66,0.15)),linear-gradient(180deg,rgba(10,35,66,0.08),rgba(10,35,66,0.86))]" />
+        <div className="relative z-10 flex min-h-[340px] max-w-3xl flex-col justify-end p-6 text-white sm:p-8">
+          <p className="text-xs font-black uppercase tracking-[0.2em] text-[#D4AF37]">{eyebrow}</p>
+          <h3 className="mt-2 font-american-diner text-4xl leading-tight sm:text-5xl">{title}</h3>
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-white/82">{copy}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function CulturePage() {
   const mapPoints: CulturalMapPoint[] = allExperiences.map((item) => ({
     id: item.name.toLowerCase().replace(/[^a-z0-9]+/g, "-"),
@@ -869,6 +1287,7 @@ export default function CulturePage() {
     ["Street Art", "#street-art"],
     ["Broadway", "#escena"],
     ["Literatura", "#literatura"],
+    ["NY en pantalla", "#nyc-en-pantalla"],
     ["Tours", "#tours"],
     ["Musica", "#musica"],
     ["Familias", "#familias"],
@@ -895,9 +1314,10 @@ export default function CulturePage() {
           </h1>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href="#museos" className="nyc-action rounded-md px-5 py-3 text-sm">Museos</a>
+            <a href="#nyc-en-pantalla" className="rounded-md border-2 border-[#D4AF37] bg-[#D4AF37]/12 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-[#D4AF37]">NY en pantalla</a>
             <a href="#tours" className="rounded-md border-2 border-white bg-white/10 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white backdrop-blur">Free tours y visitas</a>
             <a href="#mapa-cultural" className="rounded-md border-2 border-white bg-white/10 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white backdrop-blur">Mapa cultural</a>
-            <a href="#rutas" className="rounded-md border-2 border-[#D4AF37] bg-[#D4AF37]/12 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-[#D4AF37]">Rutas inteligentes</a>
+            <a href="#rutas" className="rounded-md border-2 border-white bg-white/10 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white backdrop-blur">Rutas inteligentes</a>
           </div>
         </div>
       </section>
@@ -973,7 +1393,53 @@ export default function CulturePage() {
         </div>
       </Section>
 
-      <Section id="tours" eyebrow="08 / Free tours y entradas oficiales" title="Tours Guiados de Nueva York" dark>
+      <Section id="nyc-en-pantalla" eyebrow="08 / Nueva York en pantalla" title="Sitios de Cine y Series que Convirtieron NYC en Mito" dark>
+        <SectionFeatureImage
+          src={commonsFile("Times Square at night.jpg")}
+          alt="Times Square de noche como icono de cine y series en Nueva York"
+          eyebrow="Pantalla / Calles miticas"
+          title="La Nueva York que llevas anos viendo en pantalla"
+          copy="Fachadas, puentes, bibliotecas, hoteles y esquinas que han hecho de Nueva York el gran decorado emocional del cine y las series."
+        />
+        <div className="mb-6 grid gap-4 lg:grid-cols-[1fr]">
+          <div className="grid gap-3 sm:grid-cols-2">
+            {Object.entries(SCREEN_LABEL_STYLES).map(([label, style]) => (
+              <div key={label} className="rounded-md border border-white/15 bg-white/8 p-4">
+                <span className={`inline-flex rounded-full px-3 py-2 text-[10px] font-black uppercase tracking-[0.16em] ${style}`}>
+                  {label}
+                </span>
+                <p className="mt-3 text-sm leading-6 text-white/76">
+                  {label === "Rodado aqui" && "Parada autentica con relacion directa de rodaje en la ciudad."}
+                  {label === "Solo exterior" && "Fachada o establishing shot reconocido, con interiores hechos en otro sitio."}
+                  {label === "Inspiracion real" && "Lugar que ayudo a crear el mito, aunque el set de la ficcion no estuviera aqui."}
+                  {label === "Set recreado" && "El icono existe y es central, pero la escena mas recordada se remato en estudio."}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="mb-6 grid gap-4 xl:grid-cols-3">
+          {screenRoutes.map((route) => (
+            <article key={route.name} className="rounded-md border border-white/15 bg-[#fff3d1] p-5 text-[#0A2342] shadow-[4px_4px_0_rgba(255,255,255,0.18)]">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">{route.focus}</p>
+              <h3 className="mt-2 font-american-diner text-3xl">{route.name}</h3>
+              <p className="mt-3 text-sm font-semibold leading-6">{route.stops.join(" -> ")}</p>
+              <p className="mt-4 text-sm leading-6 text-slate-700">{route.weather}</p>
+              <a
+                href={`#${experienceAnchor(route.stops[0] ?? route.name)}`}
+                className="mt-4 inline-block rounded-md border-2 border-slate-950 bg-white px-4 py-3 text-xs font-black uppercase tracking-[0.12em] shadow-[3px_3px_0_#111827]"
+              >
+                Empezar ruta
+              </a>
+            </article>
+          ))}
+        </div>
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {screenLocations.map((item) => <ScreenLocationCard key={item.name} item={item} />)}
+        </div>
+      </Section>
+
+      <Section id="tours" eyebrow="09 / Free tours y entradas oficiales" title="Tours Guiados de Nueva York" dark>
         <div className="mb-5 rounded-md border border-white/15 bg-white/8 p-5">
           <p className="text-sm leading-7 text-white/78">
             Seleccion pensada para combinar free tours, visitas oficiales y tours culturales de pago con sus paginas reales de reserva, tematica clara y puntos de salida faciles de integrar en tu ruta.
@@ -984,13 +1450,13 @@ export default function CulturePage() {
         </div>
       </Section>
 
-      <Section id="musica" eyebrow="09 / La ciudad suena" title="Musica de Nueva York" dark>
+      <Section id="musica" eyebrow="10 / La ciudad suena" title="Musica de Nueva York" dark>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-5">
           {music.map((item) => <ExperienceCard key={item.name} item={item} />)}
         </div>
       </Section>
 
-      <Section id="familias" eyebrow="10 / Por edades" title="Cultura para Familias">
+      <Section id="familias" eyebrow="11 / Por edades" title="Cultura para Familias">
         <div className="grid gap-4 md:grid-cols-4">
           {familyFilters.map(([age, copy]) => (
             <div key={age} className="nyc-hard-card-white rounded-md p-5">
@@ -1001,7 +1467,7 @@ export default function CulturePage() {
         </div>
       </Section>
 
-      <Section id="rutas" eyebrow="11 / Curadoria inteligente" title="Rutas Culturales Inteligentes" dark>
+      <Section id="rutas" eyebrow="12 / Curadoria inteligente" title="Rutas Culturales Inteligentes" dark>
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {routes.map((route) => (
             <article key={route.name} className="rounded-md border border-white/15 bg-white/8 p-5">
