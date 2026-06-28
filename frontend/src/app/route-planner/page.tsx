@@ -3,9 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import NearbyPlansMap, { type NearbyPlansMapPoint } from "@/components/planner/NearbyPlansMap";
 import { readSession, userScopedStorageKey } from "@/lib/auth";
+import { getDeviceCoordinates } from "@/lib/geolocation";
+import { getNightlifeVenues } from "@/lib/nightlife/catalog";
 import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 import { loadTravelProfile, saveRoute } from "@/lib/user-data";
+import curatedRestaurantsDb from "@/data/restaurants/nyc-restaurants-curated.json";
 
 type Pace = "relajado" | "normal" | "intenso";
 
@@ -47,6 +51,23 @@ type DayPlan = {
   theme: string;
   notes: string;
   stops: PlannedStop[];
+};
+
+type NearbyPlanKind = "Cultura" | "Restaurante" | "Noche";
+
+type NearbyPlanSuggestion = {
+  id: string;
+  title: string;
+  area: string;
+  kind: NearbyPlanKind;
+  description: string;
+  badge: string;
+  lat: number;
+  lng: number;
+  image: string;
+  distanceKm: number;
+  mapsUrl: string;
+  transitUrl: string;
 };
 
 const TRAVEL_PROFILE_KEY = "nyc_travel_profile_v1";
@@ -374,6 +395,115 @@ function routeMapUrl(day: DayPlan) {
   return `https://www.google.com/maps/dir/${query}`;
 }
 
+function distanceKmBetween(a: { lat: number; lng: number }, b: { lat: number; lng: number }) {
+  const toRadians = (value: number) => (value * Math.PI) / 180;
+  const earthRadiusKm = 6371;
+  const deltaLat = toRadians(b.lat - a.lat);
+  const deltaLng = toRadians(b.lng - a.lng);
+  const lat1 = toRadians(a.lat);
+  const lat2 = toRadians(b.lat);
+
+  const haversine =
+    Math.sin(deltaLat / 2) ** 2 +
+    Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLng / 2) ** 2;
+
+  return earthRadiusKm * 2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine));
+}
+
+function fallbackImageFor(kind: NearbyPlanKind) {
+  if (kind === "Restaurante") {
+    return "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=84";
+  }
+  if (kind === "Noche") {
+    return "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1600&q=84";
+  }
+  return "https://commons.wikimedia.org/wiki/Special:FilePath/Times_square_at_night.jpg";
+}
+
+function buildNearbySuggestions(
+  center: { lat: number; lng: number },
+  radiusKm: number,
+): NearbyPlanSuggestion[] {
+  const cultureSuggestions = essentials
+    .map((item) => ({
+      id: `culture-${item.title}`,
+      title: item.title,
+      area: item.area,
+      kind: "Cultura" as const,
+      description: item.reason,
+      badge: item.type,
+      lat: item.lat,
+      lng: item.lng,
+      image: item.image,
+      distanceKm: distanceKmBetween(center, { lat: item.lat, lng: item.lng }),
+      mapsUrl: `https://www.google.com/maps/search/?api=1&query=${item.lat},${item.lng}`,
+      transitUrl: buildTransitPlannerUrl({ name: item.title, lat: item.lat, lng: item.lng }),
+    }))
+    .filter((item) => item.distanceKm <= radiusKm)
+    .sort((a, b) => a.distanceKm - b.distanceKm || b.title.localeCompare(a.title))
+    .slice(0, 6);
+
+  const restaurantSuggestions = (curatedRestaurantsDb as Array<{
+    id: string;
+    name: string;
+    description?: string | null;
+    neighborhood?: string | null;
+    borough?: string | null;
+    cuisine?: string[];
+    lat?: number | null;
+    lng?: number | null;
+    googleMapsUrl: string;
+    imageUrl?: string;
+    qualityScore?: number | null;
+  }>)
+    .filter((item) => typeof item.lat === "number" && typeof item.lng === "number")
+    .map((item) => ({
+      id: `restaurant-${item.id}`,
+      title: item.name,
+      area: [item.neighborhood, item.borough].filter(Boolean).join(" · ") || "Restaurante NYC",
+      kind: "Restaurante" as const,
+      description: item.description?.trim() || "Parada de comida ya curada dentro de la web.",
+      badge: item.cuisine?.[0] || "Comida NYC",
+      lat: item.lat as number,
+      lng: item.lng as number,
+      image: item.imageUrl?.trim() || fallbackImageFor("Restaurante"),
+      distanceKm: distanceKmBetween(center, { lat: item.lat as number, lng: item.lng as number }),
+      mapsUrl: item.googleMapsUrl,
+      transitUrl: buildTransitPlannerUrl({ name: item.name, lat: item.lat as number, lng: item.lng as number }),
+      score: item.qualityScore ?? 0,
+    }))
+    .filter((item) => item.distanceKm <= radiusKm)
+    .sort((a, b) => a.distanceKm - b.distanceKm || b.score - a.score)
+    .slice(0, 6)
+    .map(({ score: _score, ...item }) => item);
+
+  const nightlifeSuggestions = getNightlifeVenues()
+    .filter((venue) => typeof venue.location.lat === "number" && typeof venue.location.lng === "number")
+    .map((venue) => ({
+      id: `nightlife-${venue.id}`,
+      title: venue.name,
+      area: [venue.neighborhood, venue.borough].filter(Boolean).join(" · ") || "Nightlife NYC",
+      kind: "Noche" as const,
+      description: venue.description,
+      badge: venue.category.replaceAll("_", " "),
+      lat: venue.location.lat as number,
+      lng: venue.location.lng as number,
+      image: venue.imageUrl || fallbackImageFor("Noche"),
+      distanceKm: distanceKmBetween(center, { lat: venue.location.lat as number, lng: venue.location.lng as number }),
+      mapsUrl: venue.googleMapsUrl,
+      transitUrl: buildTransitPlannerUrl({ name: venue.name, lat: venue.location.lat as number, lng: venue.location.lng as number }),
+      score: venue.nightlifeScore ?? 0,
+    }))
+    .filter((item) => item.distanceKm <= radiusKm)
+    .sort((a, b) => a.distanceKm - b.distanceKm || b.score - a.score)
+    .slice(0, 6)
+    .map(({ score: _score, ...item }) => item);
+
+  return [...cultureSuggestions, ...restaurantSuggestions, ...nightlifeSuggestions].sort(
+    (a, b) => a.distanceKm - b.distanceKm,
+  );
+}
+
 export default function RoutePlannerPage() {
   const [profile, setProfile] = useState<SavedTravelProfile | null>(null);
   const [profileLoaded, setProfileLoaded] = useState(false);
@@ -381,6 +511,11 @@ export default function RoutePlannerPage() {
   const [mustSeeDayAssignments, setMustSeeDayAssignments] = useState<Record<string, number>>({});
   const [mustSeesLoaded, setMustSeesLoaded] = useState(false);
   const [activeMustSeeType, setActiveMustSeeType] = useState("Todos");
+  const [nearbyRadiusKm, setNearbyRadiusKm] = useState(2);
+  const [nearbyLocation, setNearbyLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [nearbyLoading, setNearbyLoading] = useState(false);
+  const [nearbyError, setNearbyError] = useState("");
+  const [nearbyKind, setNearbyKind] = useState<"Todos" | NearbyPlanKind>("Todos");
 
   useEffect(() => {
     let active = true;
@@ -454,6 +589,28 @@ export default function RoutePlannerPage() {
     () => essentials.filter((item) => activeMustSeeType === "Todos" || item.type === activeMustSeeType),
     [activeMustSeeType],
   );
+  const nearbySuggestions = useMemo(
+    () => (nearbyLocation ? buildNearbySuggestions(nearbyLocation, nearbyRadiusKm) : []),
+    [nearbyLocation, nearbyRadiusKm],
+  );
+  const visibleNearbySuggestions = useMemo(
+    () => nearbySuggestions.filter((item) => nearbyKind === "Todos" || item.kind === nearbyKind),
+    [nearbyKind, nearbySuggestions],
+  );
+  const nearbyMapPoints: NearbyPlansMapPoint[] = useMemo(
+    () =>
+      visibleNearbySuggestions.map((item) => ({
+        id: item.id,
+        title: item.title,
+        category: item.kind,
+        lat: item.lat,
+        lng: item.lng,
+        badge: `${item.badge} · ${item.distanceKm.toFixed(1)} km`,
+        mapsUrl: item.mapsUrl,
+        transitUrl: item.transitUrl,
+      })),
+    [visibleNearbySuggestions],
+  );
 
   useEffect(() => {
     if (!profile || plan.length === 0) return;
@@ -470,6 +627,29 @@ export default function RoutePlannerPage() {
       },
     });
   }, [mustSeeTitles, mustSeeDayAssignments, plan, profile, totalDays, totalStops]);
+
+  async function suggestNearbyPlans() {
+    setNearbyLoading(true);
+    setNearbyError("");
+    try {
+      const coords = await getDeviceCoordinates();
+      setNearbyLocation(coords);
+    } catch (error) {
+      if (profile?.accommodation?.lat && profile?.accommodation?.lng) {
+        setNearbyLocation({
+          lat: profile.accommodation.lat,
+          lng: profile.accommodation.lng,
+        });
+        setNearbyError("No pude leer tu ubicacion en tiempo real, asi que estoy usando tu alojamiento como punto de partida.");
+      } else {
+        setNearbyError(
+          error instanceof Error ? error.message : "No he podido obtener tu ubicacion para sugerir planes cercanos.",
+        );
+      }
+    } finally {
+      setNearbyLoading(false);
+    }
+  }
 
   if (!profileLoaded || !mustSeesLoaded) {
     return (
@@ -660,6 +840,101 @@ export default function RoutePlannerPage() {
             <p className="mt-1 font-american-diner text-4xl">{value}</p>
           </div>
         ))}
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 pb-8 sm:px-8">
+        <div className="overflow-hidden rounded-md border-2 border-slate-950 bg-white shadow-[6px_6px_0_#111827]">
+          <div className="border-b-2 border-slate-950 bg-[#0A2342] p-5 text-white">
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-[#D4AF37]">Planes cerca de mi</p>
+            <h2 className="mt-1 font-american-diner text-4xl">Sugiereme planes segun donde estoy</h2>
+            <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-white/80">
+              Usa solo sitios que ya existen en la web: cultura, restaurantes y nightlife. Elige el radio y te proponemos planes cercanos sobre el mapa.
+            </p>
+          </div>
+
+          <div className="grid gap-6 p-5 xl:grid-cols-[0.95fr_1.05fr]">
+            <div className="space-y-5">
+              <div className="grid gap-4 rounded-md border border-slate-200 bg-[#fffdf4] p-4">
+                <label className="grid gap-2">
+                  <span className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">Radio</span>
+                  <select
+                    value={nearbyRadiusKm}
+                    onChange={(event) => setNearbyRadiusKm(Number(event.target.value))}
+                    className="rounded-sm border-2 border-slate-950 bg-white px-3 py-3 font-bold text-slate-950"
+                  >
+                    {[0.5, 1, 2, 3, 5, 8].map((radius) => (
+                      <option key={radius} value={radius}>
+                        {radius} km
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <div className="flex flex-wrap gap-2">
+                  {(["Todos", "Cultura", "Restaurante", "Noche"] as const).map((kind) => (
+                    <button
+                      key={kind}
+                      type="button"
+                      onClick={() => setNearbyKind(kind)}
+                      className={`rounded-md border-2 border-slate-950 px-3 py-2 text-xs font-black uppercase tracking-wide shadow-[3px_3px_0_#111827] ${
+                        nearbyKind === kind ? "bg-[#0A2342] text-white" : "bg-white text-slate-950"
+                      }`}
+                    >
+                      {kind}
+                    </button>
+                  ))}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => void suggestNearbyPlans()}
+                  disabled={nearbyLoading}
+                  className="nyc-action rounded-sm px-5 py-3 text-sm disabled:cursor-wait disabled:opacity-70"
+                >
+                  {nearbyLoading ? "Buscando planes cercanos..." : "Sugerir planes cerca de mi"}
+                </button>
+
+                {nearbyLocation ? (
+                  <p className="text-sm font-semibold text-slate-700">
+                    Punto actual: {nearbyLocation.lat.toFixed(4)}, {nearbyLocation.lng.toFixed(4)}. Mostrando {visibleNearbySuggestions.length} planes en {nearbyRadiusKm} km.
+                  </p>
+                ) : (
+                  <p className="text-sm font-semibold text-slate-700">
+                    Pulsa el boton para usar tu ubicacion y recibir sugerencias reales a tu alrededor.
+                  </p>
+                )}
+                {nearbyError ? <p className="text-sm font-bold text-[#7A1E2C]">{nearbyError}</p> : null}
+              </div>
+
+              <div className="grid gap-3 md:grid-cols-2">
+                {visibleNearbySuggestions.slice(0, 8).map((item) => (
+                  <article key={item.id} className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
+                    <p className="text-[11px] font-black uppercase tracking-[0.16em] text-[#7A1E2C]">
+                      {item.kind} · {item.badge}
+                    </p>
+                    <h3 className="mt-1 font-american-diner text-2xl text-slate-950">{item.title}</h3>
+                    <p className="mt-1 text-sm font-semibold text-slate-600">
+                      {item.area} · {item.distanceKm.toFixed(1)} km
+                    </p>
+                    <p className="mt-2 text-sm leading-6 text-slate-700">{item.description}</p>
+                    <div className="mt-3 flex flex-wrap gap-2 text-xs font-black uppercase tracking-[0.1em]">
+                      <a href={item.transitUrl} className="rounded-sm border border-[#D4AF37] bg-[#D4AF37]/12 px-3 py-2 text-[#0A2342]">
+                        Como llegar
+                      </a>
+                      <a href={item.mapsUrl} target="_blank" className="rounded-sm border border-slate-300 px-3 py-2 text-[#0A2342]">
+                        Google Maps
+                      </a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <div className="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm">
+              <NearbyPlansMap userLocation={nearbyLocation} points={nearbyMapPoints} />
+            </div>
+          </div>
+        </div>
       </section>
 
       <section id="planning" className="mx-auto max-w-7xl space-y-6 px-5 pb-14 sm:px-8">
