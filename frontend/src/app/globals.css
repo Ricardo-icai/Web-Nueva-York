@@ -4,6 +4,11 @@
 :root {
   --background: #fafaf9;
   --foreground: #111827;
+  --nyc-navy: #0a2342;
+  --nyc-red: #c1121f;
+  --nyc-gold: #d4af37;
+  --nyc-cream: #fff8e7;
+  --nyc-shell: rgba(255, 250, 240, 0.88);
 }
 
 @theme inline {
@@ -16,6 +21,12 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter), Inter, sans-serif;
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 .font-display {
@@ -41,12 +52,13 @@ textarea::placeholder {
 .nyc-page-shell {
   min-height: 100vh;
   background-image:
-    linear-gradient(180deg, rgba(15, 23, 42, 0.1), rgba(15, 23, 42, 0.24)),
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.26), transparent 34%),
+    linear-gradient(180deg, rgba(15, 23, 42, 0.08), rgba(15, 23, 42, 0.22)),
     var(--nyc-page-bg, url("https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=2200&q=82"));
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
-  padding: 2.5rem 1.5rem;
+  padding: 2rem 1rem 2.75rem;
 }
 
 .page-bg-home {
@@ -91,39 +103,64 @@ textarea::placeholder {
 
 .nyc-content-shell {
   min-height: calc(100vh - 5rem);
-  background: rgba(250, 250, 249, 0.96);
-  border: 2px solid #111827;
-  box-shadow: 8px 8px 0 #111827;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 248, 231, 0.86)),
+    var(--nyc-shell);
+  border: 1.5px solid rgba(17, 24, 39, 0.9);
+  border-radius: 28px;
+  box-shadow:
+    0 30px 80px rgba(15, 23, 42, 0.18),
+    0 10px 28px rgba(15, 23, 42, 0.1);
+  backdrop-filter: blur(16px);
 }
 
 .nyc-hard-card {
-  border: 2px solid #111827;
-  background: #fffdf4;
-  box-shadow: 5px 5px 0 #111827;
+  border: 1.5px solid rgba(17, 24, 39, 0.92);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 253, 244, 0.96)),
+    #fffdf4;
+  border-radius: 24px;
+  box-shadow:
+    0 18px 40px rgba(15, 23, 42, 0.12),
+    0 4px 14px rgba(15, 23, 42, 0.08);
 }
 
 .nyc-hard-card-white {
-  border: 2px solid #111827;
+  border: 1.5px solid rgba(17, 24, 39, 0.92);
   background: #ffffff;
-  box-shadow: 5px 5px 0 #111827;
+  border-radius: 24px;
+  box-shadow:
+    0 18px 40px rgba(15, 23, 42, 0.12),
+    0 4px 14px rgba(15, 23, 42, 0.08);
 }
 
 .nyc-action {
-  border: 2px solid #111827;
-  background: #b91c1c;
+  border: 1.5px solid #111827;
+  background: linear-gradient(180deg, #cf1f2b, #b91c1c);
   color: #ffffff;
-  box-shadow: 4px 4px 0 #111827;
+  border-radius: 9999px;
+  box-shadow:
+    0 14px 30px rgba(193, 18, 31, 0.22),
+    0 4px 12px rgba(17, 24, 39, 0.14);
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    filter 220ms ease;
 }
 
 .nyc-action:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 34px rgba(193, 18, 31, 0.26),
+    0 8px 20px rgba(17, 24, 39, 0.16);
+  filter: saturate(1.04);
 }
 
 .nyc-flag-action {
-  border: 2px solid #111827;
+  border: 1.5px solid #111827;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(241, 245, 249, 0.96)),
     repeating-linear-gradient(
@@ -134,14 +171,69 @@ textarea::placeholder {
       rgba(255, 255, 255, 0.92) 30px 40px
     );
   color: #0a2342;
-  box-shadow: 4px 4px 0 #111827;
+  border-radius: 9999px;
+  box-shadow:
+    0 14px 28px rgba(15, 23, 42, 0.12),
+    0 4px 12px rgba(15, 23, 42, 0.08);
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    filter 220ms ease;
 }
 
 .nyc-flag-action:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+  box-shadow:
+    0 18px 34px rgba(15, 23, 42, 0.14),
+    0 8px 18px rgba(15, 23, 42, 0.1);
+  filter: saturate(1.02);
+}
+
+.nyc-glass-topbar {
+  border: 1.5px solid rgba(17, 24, 39, 0.82);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 244, 214, 0.88)),
+    rgba(255, 248, 231, 0.85);
+  border-radius: 9999px;
+  box-shadow:
+    0 14px 36px rgba(15, 23, 42, 0.12),
+    0 4px 12px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(14px);
+}
+
+.nyc-smooth-card {
+  transition:
+    transform 260ms ease,
+    box-shadow 260ms ease,
+    border-color 260ms ease;
+}
+
+.nyc-smooth-card:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 24px 44px rgba(15, 23, 42, 0.16),
+    0 8px 18px rgba(15, 23, 42, 0.1);
+}
+
+.nyc-image-panel {
+  overflow: hidden;
+  border-radius: 28px;
+}
+
+.nyc-image-panel img {
+  transition: transform 800ms ease;
+}
+
+.nyc-image-panel:hover img {
+  transform: scale(1.035);
+}
+
+.nyc-muted-copy {
+  color: #475569;
+  line-height: 1.7;
 }
 
 .elcano-ship {
@@ -198,5 +290,57 @@ textarea::placeholder {
   }
   100% {
     transform: translateX(155%);
+  }
+}
+
+.mobile-snap-row {
+  display: flex;
+  gap: 0.9rem;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 1.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-snap-row::-webkit-scrollbar {
+  display: none;
+}
+
+.mobile-snap-row {
+  scrollbar-width: none;
+}
+
+.mobile-snap-card {
+  min-width: 82%;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 768px) {
+  .mobile-snap-row {
+    display: grid;
+    overflow: visible;
+    padding-bottom: 0;
+    scroll-snap-type: none;
+  }
+
+  .mobile-snap-card {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .nyc-page-shell {
+    background-attachment: scroll;
+    padding: 1rem 0.6rem 2rem;
+  }
+
+  .nyc-content-shell {
+    border-radius: 22px;
+  }
+
+  .nyc-hard-card,
+  .nyc-hard-card-white {
+    border-radius: 20px;
   }
 }

@@ -161,13 +161,13 @@ export default function AuthGate({ children }: Props) {
               "linear-gradient(120deg, rgba(10,35,66,0.94), rgba(193,18,31,0.28)), url('https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=2200&q=82')",
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A2342] via-[#0A2342]/40 to-transparent" />
+        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,35,66,0.86),rgba(10,35,66,0.48),rgba(10,35,66,0.16)),linear-gradient(180deg,rgba(10,35,66,0.16),rgba(10,35,66,0.88))]" />
         <section className="relative z-10 mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl items-end">
           <div className="max-w-4xl pb-8">
             <p className="w-fit rounded-full border border-[#D4AF37]/60 bg-[#D4AF37]/12 px-3 py-2 text-xs font-black uppercase tracking-[0.22em] text-[#D4AF37]">
               NYC Family Planner
             </p>
-            <h1 className="mt-5 font-display text-5xl font-bold leading-[0.95] sm:text-7xl">
+            <h1 className="mt-5 font-american-diner text-5xl leading-[0.95] sm:text-7xl">
               Planifica Nueva York con tu cuenta.
             </h1>
             <p className="mt-5 max-w-2xl text-base leading-7 text-white/82 sm:text-xl">
@@ -176,9 +176,9 @@ export default function AuthGate({ children }: Props) {
             <button
               type="button"
               onClick={() => setStartedPlanning(true)}
-              className="mt-8 rounded-sm bg-[#C1121F] px-6 py-4 text-sm font-black uppercase tracking-[0.16em] text-white shadow-[0_18px_45px_rgba(193,18,31,0.35)]"
+              className="nyc-action mt-8 px-6 py-4 text-sm"
             >
-              Start Planning
+              Entrar
             </button>
           </div>
         </section>
@@ -187,10 +187,10 @@ export default function AuthGate({ children }: Props) {
   }
 
   return (
-    <main className="min-h-screen bg-[#fff3d1] px-4 py-8 text-slate-950 sm:px-6">
+    <main className="nyc-page-shell page-bg-profile min-h-screen px-4 py-8 text-slate-950 sm:px-6">
       <section className="mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-6xl items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="space-y-5">
-          <p className="w-fit rounded-full border-2 border-slate-950 bg-red-700 px-3 py-1 text-xs font-black uppercase tracking-[0.2em] text-white shadow-[3px_3px_0_#111827]">
+          <p className="w-fit rounded-full border border-slate-950 bg-red-700 px-3 py-2 text-xs font-black uppercase tracking-[0.2em] text-white shadow-[0_10px_24px_rgba(15,23,42,0.14)]">
             Private NYC Planner
           </p>
           <div className="space-y-3">
@@ -203,16 +203,16 @@ export default function AuthGate({ children }: Props) {
             <p className="max-w-xl text-sm font-bold text-red-700">
               {isSupabaseConfigured()
                 ? "Conectado a Supabase Auth: cada usuario queda registrado con su propia cuenta."
-                : "Falta la configuracion de Supabase para poder entrar en la web."}
+                : "Falta la configuración de Supabase para poder entrar en la web."}
             </p>
           </div>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="rounded-lg border-2 border-slate-950 bg-white p-5 shadow-[7px_7px_0_#111827] sm:p-6"
+          className="nyc-hard-card-white p-5 sm:p-6"
         >
-          <div className="border-b-2 border-dashed border-slate-950 pb-4">
+          <div className="border-b border-slate-950/20 pb-4">
             <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">
               {mode === "login" ? "Log in" : "Registro"}
             </p>
@@ -223,7 +223,7 @@ export default function AuthGate({ children }: Props) {
 
           <div className="mt-5 space-y-4">
             {!isSupabaseConfigured() ? (
-              <div className="rounded-md border-2 border-slate-950 bg-[#fff3d1] p-4 text-sm font-bold text-slate-900">
+              <div className="rounded-2xl border border-slate-950/15 bg-[#fff3d1] p-4 text-sm font-bold text-slate-900">
                 Esta web funciona solo con Supabase. Añade las variables `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` en Render para activar el acceso.
               </div>
             ) : null}
@@ -235,7 +235,7 @@ export default function AuthGate({ children }: Props) {
                 onChange={(event) => setEmail(event.target.value)}
                 required
                 autoComplete="email"
-                className="h-12 w-full rounded-md border-2 border-slate-950 bg-[#fffdf4] px-3 text-base font-bold outline-none focus:ring-2 focus:ring-red-700"
+                className="h-12 w-full rounded-2xl border-2 border-slate-950 bg-[#fffdf4] px-3 text-base font-bold outline-none focus:ring-2 focus:ring-red-700"
               />
             </label>
 
@@ -248,7 +248,7 @@ export default function AuthGate({ children }: Props) {
                 required
                 minLength={6}
                 autoComplete={mode === "login" ? "current-password" : "new-password"}
-                className="h-12 w-full rounded-md border-2 border-slate-950 bg-[#fffdf4] px-3 text-base font-bold outline-none focus:ring-2 focus:ring-red-700"
+                className="h-12 w-full rounded-2xl border-2 border-slate-950 bg-[#fffdf4] px-3 text-base font-bold outline-none focus:ring-2 focus:ring-red-700"
               />
             </label>
           </div>
@@ -258,7 +258,7 @@ export default function AuthGate({ children }: Props) {
           <button
             type="submit"
             disabled={busy || !isSupabaseConfigured()}
-            className="mt-5 h-12 w-full rounded-md border-2 border-slate-950 bg-red-700 px-4 text-sm font-black uppercase tracking-[0.16em] text-white shadow-[4px_4px_0_#111827] transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70"
+            className="nyc-action mt-5 h-12 w-full px-4 text-sm disabled:cursor-wait disabled:opacity-70"
           >
             {busy ? "Procesando..." : mode === "login" ? "Entrar" : "Crear usuario"}
           </button>

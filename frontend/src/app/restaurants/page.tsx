@@ -2,6 +2,7 @@ import RestaurantDetailsDrawer from "@/components/restaurants/RestaurantDetailsD
 import FavoriteToggleButton from "@/components/favorites/FavoriteToggleButton";
 import RestaurantFilters from "@/components/restaurants/RestaurantFilters";
 import PizzaHallOfFameSection from "@/components/restaurants/PizzaHallOfFameSection";
+import RestaurantSearch from "@/components/restaurants/RestaurantSearch";
 import RestaurantsHero from "@/components/restaurants/RestaurantsHero";
 import RestaurantsInteractive from "@/components/restaurants/RestaurantsInteractive";
 import RestaurantLogoImage from "@/components/restaurants/RestaurantLogoImage";
@@ -251,6 +252,12 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
   const mapRestaurantsForClient = mapFilteredLocales.map(slimRestaurant);
   const burgerHallOfFameForClient = burgerHallOfFame.map(slimRestaurant);
   const featuredForClient = restaurantsForClient[0];
+  const restaurantSearchItems = mapFilteredLocales.map((restaurant) => ({
+    id: restaurant.id,
+    name: restaurant.name,
+    neighborhood: restaurant.neighborhood ?? restaurant.address ?? null,
+    googleMapsUrl: restaurant.googleMapsUrl,
+  }));
 
   return (
     <main className="nyc-page-shell page-bg-food">
@@ -268,6 +275,10 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
             hotelLat={one(params.hotelLat)}
             hotelLng={one(params.hotelLng)}
           />
+        </section>
+
+        <section className="mx-auto mt-6 max-w-6xl">
+          <RestaurantSearch items={restaurantSearchItems} />
         </section>
 
         <RestaurantsInteractive

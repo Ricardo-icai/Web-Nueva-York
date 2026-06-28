@@ -4,12 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import NearbyPlansMap, { type NearbyPlansMapPoint } from "@/components/planner/NearbyPlansMap";
+import curatedRestaurantsDb from "@/data/restaurants/nyc-restaurants-curated.json";
 import { readSession, userScopedStorageKey } from "@/lib/auth";
 import { getDeviceCoordinates } from "@/lib/geolocation";
 import { getNightlifeVenues } from "@/lib/nightlife/catalog";
 import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 import { loadTravelProfile, saveRoute } from "@/lib/user-data";
-import curatedRestaurantsDb from "@/data/restaurants/nyc-restaurants-curated.json";
 
 type Pace = "relajado" | "normal" | "intenso";
 
@@ -81,8 +81,8 @@ const essentials: EssentialStop[] = [
     type: "Historia",
     image: "https://commons.wikimedia.org/wiki/Special:FilePath/New_York_City_%28New_York%2C_USA%29%2C_Statue_of_Liberty_--_2012_--_6814.jpg",
     duration: "4-5 h",
-    bestTime: "Manana",
-    reason: "Simbolo absoluto de Nueva York e historia migrante.",
+    bestTime: "Mañana",
+    reason: "Símbolo absoluto de Nueva York e historia migrante.",
     lat: 40.6892,
     lng: -74.0445,
     priority: 100,
@@ -94,7 +94,7 @@ const essentials: EssentialStop[] = [
     type: "Memoria",
     image: "https://images.unsplash.com/photo-1543716091-a840c05249ec?auto=format&fit=crop&w=1600&q=84",
     duration: "2-3 h",
-    bestTime: "Mediodia",
+    bestTime: "Mediodía",
     reason: "Imprescindible para entender la memoria reciente de la ciudad.",
     lat: 40.7115,
     lng: -74.0134,
@@ -120,7 +120,7 @@ const essentials: EssentialStop[] = [
     type: "Arte y parque",
     image: "https://images.unsplash.com/photo-1581521028875-5b318ab52b1c?auto=format&fit=crop&w=1600&q=84",
     duration: "3-5 h",
-    bestTime: "Manana",
+    bestTime: "Mañana",
     reason: "Combina parque, museo imprescindible y una ruta familiar muy flexible.",
     lat: 40.7794,
     lng: -73.9632,
@@ -134,7 +134,7 @@ const essentials: EssentialStop[] = [
     image: "https://commons.wikimedia.org/wiki/Special:FilePath/Times_square_at_night.jpg",
     duration: "1.5-3 h",
     bestTime: "Noche",
-    reason: "Energia visual pura de Nueva York y punto natural para Broadway.",
+    reason: "Energía visual pura de Nueva York y punto natural para Broadway.",
     lat: 40.758,
     lng: -73.9855,
     priority: 95,
@@ -146,8 +146,8 @@ const essentials: EssentialStop[] = [
     type: "Arquitectura",
     image: "https://images.unsplash.com/photo-1518391846015-55a9cc003b25?auto=format&fit=crop&w=1600&q=84",
     duration: "2 h",
-    bestTime: "Mediodia",
-    reason: "Arquitectura neoyorquina muy facil de encajar y sin grandes desplazamientos.",
+    bestTime: "Mediodía",
+    reason: "Arquitectura neoyorquina muy fácil de encajar y sin grandes desplazamientos.",
     lat: 40.7527,
     lng: -73.9772,
     priority: 92,
@@ -186,7 +186,7 @@ const essentials: EssentialStop[] = [
     image: "https://images.unsplash.com/photo-1522083165195-3424ed129620?auto=format&fit=crop&w=1600&q=84",
     duration: "3 h",
     bestTime: "Tarde",
-    reason: "Tres identidades historicas de Manhattan en una ruta compacta.",
+    reason: "Tres identidades históricas de Manhattan en una ruta compacta.",
     lat: 40.7191,
     lng: -73.9973,
     priority: 86,
@@ -198,7 +198,7 @@ const essentials: EssentialStop[] = [
     type: "Familias",
     image: "https://images.unsplash.com/photo-1605722243979-fe0be815d1a9?auto=format&fit=crop&w=1600&q=84",
     duration: "3 h",
-    bestTime: "Manana",
+    bestTime: "Mañana",
     reason: "Plan perfecto para niños, adolescentes y días de lluvia.",
     lat: 40.7813,
     lng: -73.9739,
@@ -208,10 +208,10 @@ const essentials: EssentialStop[] = [
   {
     title: "Harlem & Apollo Theater",
     area: "Harlem",
-    type: "Musica e historia",
+    type: "Música e historia",
     image: "https://images.unsplash.com/photo-1511192336575-5a79af67a629?auto=format&fit=crop&w=1600&q=84",
     duration: "2-3 h",
-    bestTime: "Manana",
+    bestTime: "Mañana",
     reason: "Historia afroamericana, jazz y una identidad cultural esencial.",
     lat: 40.81,
     lng: -73.9501,
@@ -277,7 +277,7 @@ const essentials: EssentialStop[] = [
     image: "https://images.pexels.com/photos/12674747/pexels-photo-12674747.jpeg?auto=compress&cs=tinysrgb&w=1600",
     duration: "4-6 h",
     bestTime: "Tarde y noche",
-    reason: "El gran espectaculo oficial del 4 de Julio; solo debe marcarse si coincide con las fechas del viaje.",
+    reason: "El gran espectáculo oficial del 4 de Julio, solo si coincide con tus fechas.",
     lat: 40.7061,
     lng: -73.9969,
     priority: 99,
@@ -305,7 +305,11 @@ function parseDate(value?: string) {
 }
 
 function formatDate(date: Date) {
-  return new Intl.DateTimeFormat("es-ES", { weekday: "long", day: "numeric", month: "long" }).format(date);
+  return new Intl.DateTimeFormat("es-ES", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  }).format(date);
 }
 
 function dayCount(profile: SavedTravelProfile | null) {
@@ -333,7 +337,11 @@ function slotsFor(profile: SavedTravelProfile | null) {
   return travelers >= 5 ? Math.max(2, base - 1) : base;
 }
 
-function buildPlan(profile: SavedTravelProfile | null, mustSeeTitles: string[], forcedDaysByTitle: Record<string, number>): DayPlan[] {
+function buildPlan(
+  profile: SavedTravelProfile | null,
+  mustSeeTitles: string[],
+  forcedDaysByTitle: Record<string, number>,
+): DayPlan[] {
   const days = dayCount(profile);
   const start = parseDate(profile?.startDate);
   if (!days || !start) return [];
@@ -347,8 +355,9 @@ function buildPlan(profile: SavedTravelProfile | null, mustSeeTitles: string[], 
     })
     .slice(0, Math.min(essentials.length, days * perDay));
 
-  const times = perDay >= 4 ? ["09:00", "12:00", "15:30", "19:00"] : perDay === 3 ? ["09:30", "13:00", "17:30"] : ["10:00", "16:00"];
-  const themes = ["Iconos absolutos", "Arte y Midtown", "Downtown historico", "Brooklyn y skyline", "Barrios con alma", "Cultura local"];
+  const times =
+    perDay >= 4 ? ["09:00", "12:00", "15:30", "19:00"] : perDay === 3 ? ["09:30", "13:00", "17:30"] : ["10:00", "16:00"];
+  const themes = ["Iconos absolutos", "Arte y Midtown", "Downtown histórico", "Brooklyn y skyline", "Barrios con alma", "Cultura local"];
   const dayBuckets: EssentialStop[][] = Array.from({ length: days }, () => []);
   const pinnedTitles = new Set<string>();
 
@@ -363,8 +372,7 @@ function buildPlan(profile: SavedTravelProfile | null, mustSeeTitles: string[], 
     .filter((stop) => !pinnedTitles.has(stop.title))
     .forEach((stop) => {
       const emptiestDay = dayBuckets.reduce(
-        (bestIndex, bucket, bucketIndex) =>
-          bucket.length < dayBuckets[bestIndex].length ? bucketIndex : bestIndex,
+        (bestIndex, bucket, bucketIndex) => (bucket.length < dayBuckets[bestIndex].length ? bucketIndex : bestIndex),
         0,
       );
       dayBuckets[emptiestDay].push(stop);
@@ -377,14 +385,12 @@ function buildPlan(profile: SavedTravelProfile | null, mustSeeTitles: string[], 
       ...stop,
       time: times[stopIndex] ?? "18:00",
     }));
+
     return {
       date: formatDate(date),
-      title: `Dia ${index + 1}`,
+      title: `Día ${index + 1}`,
       theme: themes[index % themes.length],
-      notes:
-        index === 0
-          ? `Empieza desde ${profile?.accommodation?.address ?? "tu alojamiento"} y prioriza puntos iconicos.`
-          : "Ruta pensada para evitar saltos innecesarios y combinar interior/exterior.",
+      notes: index === 0 ? `Salida desde ${profile?.accommodation?.address ?? "tu alojamiento"}.` : "Ruta compacta y fácil de seguir.",
       stops,
     };
   }).filter((day) => day.stops.length > 0);
@@ -403,10 +409,7 @@ function distanceKmBetween(a: { lat: number; lng: number }, b: { lat: number; ln
   const lat1 = toRadians(a.lat);
   const lat2 = toRadians(b.lat);
 
-  const haversine =
-    Math.sin(deltaLat / 2) ** 2 +
-    Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLng / 2) ** 2;
-
+  const haversine = Math.sin(deltaLat / 2) ** 2 + Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLng / 2) ** 2;
   return earthRadiusKm * 2 * Math.atan2(Math.sqrt(haversine), Math.sqrt(1 - haversine));
 }
 
@@ -420,10 +423,7 @@ function fallbackImageFor(kind: NearbyPlanKind) {
   return "https://commons.wikimedia.org/wiki/Special:FilePath/Times_square_at_night.jpg";
 }
 
-function buildNearbySuggestions(
-  center: { lat: number; lng: number },
-  radiusKm: number,
-): NearbyPlanSuggestion[] {
+function buildNearbySuggestions(center: { lat: number; lng: number }, radiusKm: number): NearbyPlanSuggestion[] {
   const cultureSuggestions = essentials
     .map((item) => ({
       id: `culture-${item.title}`,
@@ -499,9 +499,7 @@ function buildNearbySuggestions(
     .slice(0, 6)
     .map(({ score: _score, ...item }) => item);
 
-  return [...cultureSuggestions, ...restaurantSuggestions, ...nightlifeSuggestions].sort(
-    (a, b) => a.distanceKm - b.distanceKm,
-  );
+  return [...cultureSuggestions, ...restaurantSuggestions, ...nightlifeSuggestions].sort((a, b) => a.distanceKm - b.distanceKm);
 }
 
 export default function RoutePlannerPage() {
@@ -539,9 +537,11 @@ export default function RoutePlannerPage() {
       await Promise.resolve();
       const key = userScopedStorageKey(MUST_SEE_KEY, readSession()?.email);
       const dayKey = userScopedStorageKey(MUST_SEE_DAY_KEY, readSession()?.email);
+
       try {
         const saved = JSON.parse(localStorage.getItem(key) ?? "[]") as string[];
         const savedAssignments = JSON.parse(localStorage.getItem(dayKey) ?? "{}") as Record<string, number>;
+
         if (active) {
           setMustSeeTitles(Array.isArray(saved) ? saved.filter((title) => essentials.some((item) => item.title === title)) : []);
           setMustSeeDayAssignments(
@@ -563,6 +563,7 @@ export default function RoutePlannerPage() {
         if (active) setMustSeesLoaded(true);
       }
     }
+
     void loadMustSees();
     return () => {
       active = false;
@@ -616,7 +617,7 @@ export default function RoutePlannerPage() {
     if (!profile || plan.length === 0) return;
     void saveRoute({
       routeKey: "auto-essential-route",
-      title: "Organizame la ruta",
+      title: "Organízame la ruta",
       payload: {
         profile,
         mustSeeTitles,
@@ -631,6 +632,7 @@ export default function RoutePlannerPage() {
   async function suggestNearbyPlans() {
     setNearbyLoading(true);
     setNearbyError("");
+
     try {
       const coords = await getDeviceCoordinates();
       setNearbyLocation(coords);
@@ -640,11 +642,9 @@ export default function RoutePlannerPage() {
           lat: profile.accommodation.lat,
           lng: profile.accommodation.lng,
         });
-        setNearbyError("No pude leer tu ubicacion en tiempo real, asi que estoy usando tu alojamiento como punto de partida.");
+        setNearbyError("No pude leer tu ubicación en tiempo real, así que uso tu alojamiento como punto de partida.");
       } else {
-        setNearbyError(
-          error instanceof Error ? error.message : "No he podido obtener tu ubicacion para sugerir planes cercanos.",
-        );
+        setNearbyError(error instanceof Error ? error.message : "No he podido obtener tu ubicación para sugerir planes cercanos.");
       }
     } finally {
       setNearbyLoading(false);
@@ -655,11 +655,9 @@ export default function RoutePlannerPage() {
     return (
       <main className="nyc-page-shell page-bg-route text-[#0A2342]">
         <section className="nyc-content-shell mx-auto max-w-4xl p-6">
-          <p className="text-xs font-black uppercase tracking-[0.2em] text-[#7A1E2C]">Organizame la ruta</p>
+          <p className="text-xs font-black uppercase tracking-[0.2em] text-[#7A1E2C]">Organízame la ruta</p>
           <h1 className="mt-2 font-american-diner text-4xl">Preparando tu planning</h1>
-          <p className="mt-3 text-sm font-semibold leading-6 text-slate-700">
-            Estamos cargando los datos guardados de tu viaje.
-          </p>
+          <p className="mt-3 text-sm font-semibold leading-6 text-slate-700">Estamos cargando los datos guardados de tu viaje.</p>
         </section>
       </main>
     );
@@ -669,7 +667,7 @@ export default function RoutePlannerPage() {
     return (
       <main className="nyc-page-shell page-bg-route text-[#0A2342]">
         <section className="nyc-content-shell mx-auto max-w-4xl p-6">
-          <p className="text-xs font-black uppercase tracking-[0.2em] text-[#7A1E2C]">Organizame la ruta</p>
+          <p className="text-xs font-black uppercase tracking-[0.2em] text-[#7A1E2C]">Organízame la ruta</p>
           <h1 className="mt-2 font-american-diner text-4xl">Necesito tu perfil completo</h1>
           <p className="mt-3 text-sm font-semibold leading-6 text-slate-700">
             Para hacer un planning real según personas, días, ritmo y alojamiento, completa primero: {missing.join(", ")}.
@@ -685,313 +683,343 @@ export default function RoutePlannerPage() {
   return (
     <main className="nyc-page-shell page-bg-route text-[#0A2342]">
       <div className="nyc-content-shell mx-auto max-w-7xl overflow-hidden">
-      <section className="border-b-2 border-slate-950 bg-[#fff3d1] px-5 py-6 sm:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div>
-              <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">Tus imprescindibles</p>
-              <h1 className="mt-1 font-american-diner text-3xl text-slate-950 sm:text-4xl">¿Qué no te quieres perder?</h1>
-            </div>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => setMustSeeTitles(essentials.slice(0, 5).map((item) => item.title))}
-                className="rounded-md border-2 border-slate-950 bg-[#D4AF37] px-3 py-2 text-xs font-black uppercase tracking-wide shadow-[3px_3px_0_#111827]"
-              >
-                Top 5
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setMustSeeTitles([]);
-                  setMustSeeDayAssignments({});
-                }}
-                className="rounded-md border-2 border-slate-950 bg-white px-3 py-2 text-xs font-black uppercase tracking-wide shadow-[3px_3px_0_#111827]"
-              >
-                Limpiar
-              </button>
-            </div>
-          </div>
-
-          <div className="mt-5 flex gap-2 overflow-x-auto pb-2">
-            {mustSeeTypes.map((type) => (
-              <button
-                key={type}
-                type="button"
-                onClick={() => setActiveMustSeeType(type)}
-                className={`shrink-0 rounded-md border-2 border-slate-950 px-3 py-2 text-xs font-black uppercase tracking-wide ${
-                  activeMustSeeType === type ? "bg-[#0A2342] text-white" : "bg-white text-slate-950"
-                }`}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
-
-          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {visibleMustSees.map((item) => {
-              const selected = mustSeeTitles.includes(item.title);
-              return (
+        <section className="border-b-2 border-slate-950 bg-[#fff3d1] px-5 py-6 sm:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">Tus imprescindibles</p>
+                <h1 className="mt-1 font-american-diner text-3xl text-slate-950 sm:text-4xl">¿Qué no te quieres perder?</h1>
+              </div>
+              <div className="flex gap-2">
                 <button
-                  key={item.title}
                   type="button"
-                  aria-pressed={selected}
-                  onClick={() =>
-                    setMustSeeTitles((current) =>
-                      current.includes(item.title)
-                        ? current.filter((title) => title !== item.title)
-                        : [...current, item.title],
-                    )
-                  }
-                  className={`min-h-24 rounded-md border-2 border-slate-950 p-3 text-left shadow-[3px_3px_0_#111827] transition hover:-translate-y-0.5 ${
-                    selected ? "bg-red-700 text-white" : "bg-white text-slate-950"
-                  }`}
+                  onClick={() => setMustSeeTitles(essentials.slice(0, 5).map((item) => item.title))}
+                  className="rounded-md border-2 border-slate-950 bg-[#D4AF37] px-3 py-2 text-xs font-black uppercase tracking-wide shadow-[3px_3px_0_#111827]"
                 >
-                  <span className={`text-[10px] font-black uppercase tracking-[0.16em] ${selected ? "text-[#D4AF37]" : "text-red-700"}`}>
-                    {item.type} · {item.area}
-                  </span>
-                  <span className="mt-1 block font-black leading-5">{item.title}</span>
+                  Top 5
                 </button>
-              );
-            })}
-          </div>
-          <p className="mt-4 text-sm font-bold text-slate-700">
-            {mustSeeTitles.length > 0
-              ? `${mustSeeTitles.length} imprescindibles seleccionados. El planning los colocará primero y completará el resto automáticamente.`
-              : "Sin seleccion manual: crearemos una ruta equilibrada con los imprescindibles mejor valorados."}
-          </p>
-          {mustSeeTitles.length > 0 && totalDays > 0 ? (
-            <div className="mt-4 rounded-md border-2 border-slate-950 bg-white p-4 shadow-[4px_4px_0_#111827]">
-              <p className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Elegir dia</p>
-              <div className="mt-3 grid gap-3 md:grid-cols-2">
-                {mustSeeTitles.map((title) => (
-                  <label key={`day-choice-${title}`} className="grid gap-2">
-                    <span className="text-sm font-black text-slate-900">{title}</span>
-                    <select
-                      value={mustSeeDayAssignments[title] ?? 0}
-                      onChange={(event) => {
-                        const selectedDay = Number(event.target.value);
-                        setMustSeeDayAssignments((current) => {
-                          if (!selectedDay) {
-                            const next = { ...current };
-                            delete next[title];
-                            return next;
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMustSeeTitles([]);
+                    setMustSeeDayAssignments({});
+                  }}
+                  className="rounded-md border-2 border-slate-950 bg-white px-3 py-2 text-xs font-black uppercase tracking-wide shadow-[3px_3px_0_#111827]"
+                >
+                  Limpiar
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-wrap items-center gap-3">
+              <label className="flex items-center gap-2 rounded-2xl border border-slate-950/15 bg-white px-3 py-2 text-xs font-black uppercase tracking-[0.16em] text-slate-700">
+                <span>Temática</span>
+                <select
+                  value={activeMustSeeType}
+                  onChange={(event) => setActiveMustSeeType(event.target.value)}
+                  className="rounded-xl border border-slate-300 bg-[#fffdf4] px-2 py-1 text-[11px] font-black text-slate-950"
+                >
+                  {mustSeeTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </label>
+
+              <details className="min-w-[260px] flex-1 rounded-2xl border border-slate-950 bg-white shadow-[0_10px_24px_rgba(15,23,42,0.08)]">
+                <summary className="cursor-pointer list-none px-4 py-3">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-[11px] font-black uppercase tracking-[0.16em] text-red-700">Multiselección</p>
+                      <p className="text-sm font-bold text-slate-900">
+                        {mustSeeTitles.length > 0 ? `${mustSeeTitles.length} lugares elegidos` : "Elegir imprescindibles"}
+                      </p>
+                    </div>
+                    <span className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">Abrir</span>
+                  </div>
+                </summary>
+
+                <div className="border-t border-slate-200 p-3">
+                  <div className="grid gap-2 md:grid-cols-2 xl:grid-cols-3">
+                    {visibleMustSees.map((item) => {
+                      const selected = mustSeeTitles.includes(item.title);
+                      return (
+                        <button
+                          key={item.title}
+                          type="button"
+                          aria-pressed={selected}
+                          onClick={() =>
+                            setMustSeeTitles((current) =>
+                              current.includes(item.title)
+                                ? current.filter((title) => title !== item.title)
+                                : [...current, item.title],
+                            )
                           }
-                          return { ...current, [title]: selectedDay };
-                        });
-                      }}
-                      className="rounded-sm border-2 border-slate-950 bg-[#fffdf4] px-3 py-2 font-bold text-slate-950"
+                          className={`rounded-2xl border px-3 py-3 text-left transition ${
+                            selected
+                              ? "border-red-700 bg-red-700 text-white"
+                              : "border-slate-200 bg-[#fffdf4] text-slate-950 hover:border-slate-950/30"
+                          }`}
+                        >
+                          <span className={`text-[10px] font-black uppercase tracking-[0.16em] ${selected ? "text-[#F7D56B]" : "text-red-700"}`}>
+                            {item.type} · {item.area}
+                          </span>
+                          <span className="mt-1 block text-sm font-black leading-5">{item.title}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            {mustSeeTitles.length > 0 ? (
+              <div className="mt-3 flex flex-wrap gap-2">
+                {mustSeeTitles.map((title) => (
+                  <span key={title} className="rounded-full bg-[#0A2342] px-3 py-1 text-[11px] font-black text-white">
+                    {title}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+
+            <p className="mt-4 text-sm font-bold text-slate-700">{mustSeeTitles.length > 0 ? `${mustSeeTitles.length} seleccionados` : "Sin selección manual"}</p>
+
+            {mustSeeTitles.length > 0 && totalDays > 0 ? (
+              <div className="mt-4 rounded-md border-2 border-slate-950 bg-white p-4 shadow-[4px_4px_0_#111827]">
+                <p className="text-xs font-black uppercase tracking-[0.18em] text-red-700">Elegir día</p>
+                <div className="mt-3 grid gap-3 md:grid-cols-2">
+                  {mustSeeTitles.map((title) => (
+                    <label key={`day-choice-${title}`} className="grid gap-2">
+                      <span className="text-sm font-black text-slate-900">{title}</span>
+                      <select
+                        value={mustSeeDayAssignments[title] ?? 0}
+                        onChange={(event) => {
+                          const selectedDay = Number(event.target.value);
+                          setMustSeeDayAssignments((current) => {
+                            if (!selectedDay) {
+                              const next = { ...current };
+                              delete next[title];
+                              return next;
+                            }
+                            return { ...current, [title]: selectedDay };
+                          });
+                        }}
+                        className="rounded-sm border-2 border-slate-950 bg-[#fffdf4] px-3 py-2 font-bold text-slate-950"
+                      >
+                        <option value={0}>Automático</option>
+                        {Array.from({ length: totalDays }, (_, dayIndex) => (
+                          <option key={`${title}-choice-${dayIndex + 1}`} value={dayIndex + 1}>
+                            Día {dayIndex + 1}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+          </div>
+        </section>
+
+        <section className="relative min-h-[64vh] overflow-hidden border-b-2 border-slate-950">
+          <Image
+            src="https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=2200&q=84"
+            alt="Skyline de Nueva York para organizar ruta"
+            fill
+            priority
+            className="object-cover"
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,35,66,0.96),rgba(10,35,66,0.62),rgba(193,18,31,0.26)),linear-gradient(180deg,rgba(10,35,66,0.14),rgba(10,35,66,0.96))]" />
+          <div className="relative z-10 mx-auto flex min-h-[72vh] max-w-7xl flex-col justify-end px-5 pb-10 pt-24 text-white sm:px-8">
+            <p className="w-fit border border-[#D4AF37]/60 bg-[#D4AF37]/12 px-3 py-2 text-xs font-black uppercase tracking-[0.24em] text-[#D4AF37]">
+              Ruta automática
+            </p>
+            <h1 className="mt-5 max-w-5xl font-american-diner text-5xl leading-[0.94] sm:text-7xl">Organízame la ruta</h1>
+            <p className="mt-4 max-w-2xl text-sm font-semibold leading-6 text-white/82 sm:text-base">
+              Una ruta clara, ordenada y fácil de seguir por Nueva York.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <a href="#planning" className="nyc-action rounded-sm px-5 py-3 text-sm">
+                Ver planning
+              </a>
+              <Link href="/onboarding" className="nyc-flag-action rounded-sm px-5 py-3 text-sm">
+                Editar perfil
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="mx-auto grid max-w-7xl gap-4 px-5 py-8 sm:px-8 md:grid-cols-4">
+          {[
+            ["Días", String(totalDays)],
+            ["Paradas", String(totalStops)],
+            ["Personas", String(profile?.travelers ?? 1)],
+            ["Ritmo", profile?.pace ?? "normal"],
+          ].map(([label, value]) => (
+            <div key={label} className="nyc-hard-card-white rounded-md p-4">
+              <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">{label}</p>
+              <p className="mt-1 font-american-diner text-4xl">{value}</p>
+            </div>
+          ))}
+        </section>
+
+        <section className="mx-auto max-w-7xl px-5 pb-8 sm:px-8">
+          <div className="overflow-hidden rounded-md border-2 border-slate-950 bg-white shadow-[6px_6px_0_#111827]">
+            <div className="border-b-2 border-slate-950 bg-[#0A2342] p-5 text-white">
+              <p className="text-xs font-black uppercase tracking-[0.2em] text-[#D4AF37]">Planes cerca de mí</p>
+              <h2 className="mt-1 font-american-diner text-4xl">Sugiéreme planes cerca</h2>
+              <p className="mt-2 text-sm font-semibold text-white/80">Cultura, comida y noche a tu alrededor.</p>
+            </div>
+
+            <div className="grid gap-6 p-5 xl:grid-cols-[0.95fr_1.05fr]">
+              <div className="space-y-5">
+                <div className="grid gap-4 rounded-md border border-slate-200 bg-[#fffdf4] p-4">
+                  <label className="grid gap-2">
+                    <span className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">Radio</span>
+                    <select
+                      value={nearbyRadiusKm}
+                      onChange={(event) => setNearbyRadiusKm(Number(event.target.value))}
+                      className="rounded-sm border-2 border-slate-950 bg-white px-3 py-3 font-bold text-slate-950"
                     >
-                      <option value={0}>Automatico</option>
-                      {Array.from({ length: totalDays }, (_, dayIndex) => (
-                        <option key={`${title}-choice-${dayIndex + 1}`} value={dayIndex + 1}>
-                          Dia {dayIndex + 1}
+                      {[0.5, 1, 2, 3, 5, 8].map((radius) => (
+                        <option key={radius} value={radius}>
+                          {radius} km
                         </option>
                       ))}
                     </select>
                   </label>
-                ))}
-              </div>
-            </div>
-          ) : null}
-        </div>
-      </section>
 
-      <section className="relative min-h-[64vh] overflow-hidden border-b-2 border-slate-950">
-        <Image
-          src="https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=2200&q=84"
-          alt="Skyline de Nueva York para organizar ruta"
-          fill
-          priority
-          className="object-cover"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(10,35,66,0.96),rgba(10,35,66,0.62),rgba(193,18,31,0.26)),linear-gradient(180deg,rgba(10,35,66,0.14),rgba(10,35,66,0.96))]" />
-        <div className="relative z-10 mx-auto flex min-h-[72vh] max-w-7xl flex-col justify-end px-5 pb-10 pt-24 text-white sm:px-8">
-          <p className="w-fit border border-[#D4AF37]/60 bg-[#D4AF37]/12 px-3 py-2 text-xs font-black uppercase tracking-[0.24em] text-[#D4AF37]">
-            Ruta automática
-          </p>
-          <h1 className="mt-5 max-w-5xl font-american-diner text-5xl leading-[0.94] sm:text-7xl">
-            Organizame la ruta
-          </h1>
-          <p className="mt-5 max-w-3xl text-base font-semibold leading-7 text-white/84">
-            Planning automático para {profile?.travelers} viajeros, {totalDays} días, ritmo {profile?.pace}, saliendo desde {profile?.accommodation?.address}.
-          </p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <a href="#planning" className="nyc-action rounded-sm px-5 py-3 text-sm">
-              Ver planning
-            </a>
-            <Link href="/onboarding" className="nyc-flag-action rounded-sm px-5 py-3 text-sm">
-              Editar perfil
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="mx-auto grid max-w-7xl gap-4 px-5 py-8 sm:px-8 md:grid-cols-4">
-        {[
-          ["Dias", String(totalDays)],
-          ["Paradas", String(totalStops)],
-          ["Personas", String(profile?.travelers ?? 1)],
-          ["Ritmo", profile?.pace ?? "normal"],
-        ].map(([label, value]) => (
-          <div key={label} className="nyc-hard-card-white rounded-md p-4">
-            <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">{label}</p>
-            <p className="mt-1 font-american-diner text-4xl">{value}</p>
-          </div>
-        ))}
-      </section>
-
-      <section className="mx-auto max-w-7xl px-5 pb-8 sm:px-8">
-        <div className="overflow-hidden rounded-md border-2 border-slate-950 bg-white shadow-[6px_6px_0_#111827]">
-          <div className="border-b-2 border-slate-950 bg-[#0A2342] p-5 text-white">
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-[#D4AF37]">Planes cerca de mi</p>
-            <h2 className="mt-1 font-american-diner text-4xl">Sugiereme planes segun donde estoy</h2>
-            <p className="mt-2 max-w-3xl text-sm font-semibold leading-6 text-white/80">
-              Usa solo sitios que ya existen en la web: cultura, restaurantes y nightlife. Elige el radio y te proponemos planes cercanos sobre el mapa.
-            </p>
-          </div>
-
-          <div className="grid gap-6 p-5 xl:grid-cols-[0.95fr_1.05fr]">
-            <div className="space-y-5">
-              <div className="grid gap-4 rounded-md border border-slate-200 bg-[#fffdf4] p-4">
-                <label className="grid gap-2">
-                  <span className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">Radio</span>
-                  <select
-                    value={nearbyRadiusKm}
-                    onChange={(event) => setNearbyRadiusKm(Number(event.target.value))}
-                    className="rounded-sm border-2 border-slate-950 bg-white px-3 py-3 font-bold text-slate-950"
-                  >
-                    {[0.5, 1, 2, 3, 5, 8].map((radius) => (
-                      <option key={radius} value={radius}>
-                        {radius} km
-                      </option>
+                  <div className="mobile-snap-row">
+                    {(["Todos", "Cultura", "Restaurante", "Noche"] as const).map((kind) => (
+                      <button
+                        key={kind}
+                        type="button"
+                        onClick={() => setNearbyKind(kind)}
+                        className={`shrink-0 rounded-md border-2 border-slate-950 px-3 py-2 text-xs font-black uppercase tracking-wide shadow-[3px_3px_0_#111827] ${
+                          nearbyKind === kind ? "bg-[#0A2342] text-white" : "bg-white text-slate-950"
+                        }`}
+                      >
+                        {kind}
+                      </button>
                     ))}
-                  </select>
-                </label>
+                  </div>
 
-                <div className="flex flex-wrap gap-2">
-                  {(["Todos", "Cultura", "Restaurante", "Noche"] as const).map((kind) => (
-                    <button
-                      key={kind}
-                      type="button"
-                      onClick={() => setNearbyKind(kind)}
-                      className={`rounded-md border-2 border-slate-950 px-3 py-2 text-xs font-black uppercase tracking-wide shadow-[3px_3px_0_#111827] ${
-                        nearbyKind === kind ? "bg-[#0A2342] text-white" : "bg-white text-slate-950"
-                      }`}
-                    >
-                      {kind}
-                    </button>
+                  <button
+                    type="button"
+                    onClick={() => void suggestNearbyPlans()}
+                    disabled={nearbyLoading}
+                    className="nyc-action rounded-sm px-5 py-3 text-sm disabled:cursor-wait disabled:opacity-70"
+                  >
+                    {nearbyLoading ? "Buscando planes cercanos..." : "Sugerir planes cerca de mí"}
+                  </button>
+
+                  {nearbyLocation ? (
+                    <p className="text-sm font-semibold text-slate-700">{visibleNearbySuggestions.length} planes en {nearbyRadiusKm} km.</p>
+                  ) : (
+                    <p className="text-sm font-semibold text-slate-700">Usa tu ubicación y te los ordeno por cercanía.</p>
+                  )}
+
+                  {nearbyError ? <p className="text-sm font-bold text-[#7A1E2C]">{nearbyError}</p> : null}
+                </div>
+
+                <div className="mobile-snap-row md:grid-cols-2">
+                  {visibleNearbySuggestions.slice(0, 8).map((item) => (
+                    <article key={item.id} className="mobile-snap-card overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm">
+                      <div className="relative h-36 w-full bg-stone-100">
+                        <Image src={item.image} alt={item.title} fill className="object-cover" sizes="(max-width: 768px) 82vw, 33vw" />
+                      </div>
+                      <div className="p-4">
+                        <p className="text-[11px] font-black uppercase tracking-[0.16em] text-[#7A1E2C]">
+                          {item.kind} · {item.badge}
+                        </p>
+                        <h3 className="mt-1 font-american-diner text-2xl text-slate-950">{item.title}</h3>
+                        <p className="mt-1 text-sm font-semibold text-slate-600">
+                          {item.area} · {item.distanceKm.toFixed(1)} km
+                        </p>
+                        <p className="mt-2 text-sm leading-6 text-slate-700">{item.description}</p>
+                        <div className="mt-3 flex flex-wrap gap-2 text-xs font-black uppercase tracking-[0.1em]">
+                          <a href={item.transitUrl} className="rounded-sm border border-[#D4AF37] bg-[#D4AF37]/12 px-3 py-2 text-[#0A2342]">
+                            Cómo llegar
+                          </a>
+                          <a href={item.mapsUrl} target="_blank" className="rounded-sm border border-slate-300 px-3 py-2 text-[#0A2342]">
+                            Google Maps
+                          </a>
+                        </div>
+                      </div>
+                    </article>
                   ))}
                 </div>
-
-                <button
-                  type="button"
-                  onClick={() => void suggestNearbyPlans()}
-                  disabled={nearbyLoading}
-                  className="nyc-action rounded-sm px-5 py-3 text-sm disabled:cursor-wait disabled:opacity-70"
-                >
-                  {nearbyLoading ? "Buscando planes cercanos..." : "Sugerir planes cerca de mi"}
-                </button>
-
-                {nearbyLocation ? (
-                  <p className="text-sm font-semibold text-slate-700">
-                    Punto actual: {nearbyLocation.lat.toFixed(4)}, {nearbyLocation.lng.toFixed(4)}. Mostrando {visibleNearbySuggestions.length} planes en {nearbyRadiusKm} km.
-                  </p>
-                ) : (
-                  <p className="text-sm font-semibold text-slate-700">
-                    Pulsa el boton para usar tu ubicacion y recibir sugerencias reales a tu alrededor.
-                  </p>
-                )}
-                {nearbyError ? <p className="text-sm font-bold text-[#7A1E2C]">{nearbyError}</p> : null}
               </div>
 
-              <div className="grid gap-3 md:grid-cols-2">
-                {visibleNearbySuggestions.slice(0, 8).map((item) => (
-                  <article key={item.id} className="rounded-md border border-slate-200 bg-white p-4 shadow-sm">
-                    <p className="text-[11px] font-black uppercase tracking-[0.16em] text-[#7A1E2C]">
-                      {item.kind} · {item.badge}
-                    </p>
-                    <h3 className="mt-1 font-american-diner text-2xl text-slate-950">{item.title}</h3>
-                    <p className="mt-1 text-sm font-semibold text-slate-600">
-                      {item.area} · {item.distanceKm.toFixed(1)} km
-                    </p>
-                    <p className="mt-2 text-sm leading-6 text-slate-700">{item.description}</p>
-                    <div className="mt-3 flex flex-wrap gap-2 text-xs font-black uppercase tracking-[0.1em]">
-                      <a href={item.transitUrl} className="rounded-sm border border-[#D4AF37] bg-[#D4AF37]/12 px-3 py-2 text-[#0A2342]">
-                        Como llegar
-                      </a>
-                      <a href={item.mapsUrl} target="_blank" className="rounded-sm border border-slate-300 px-3 py-2 text-[#0A2342]">
-                        Google Maps
-                      </a>
-                    </div>
-                  </article>
-                ))}
+              <div className="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm">
+                <NearbyPlansMap userLocation={nearbyLocation} points={nearbyMapPoints} />
               </div>
-            </div>
-
-            <div className="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm">
-              <NearbyPlansMap userLocation={nearbyLocation} points={nearbyMapPoints} />
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="planning" className="mx-auto max-w-7xl space-y-6 px-5 pb-14 sm:px-8">
-        {plan.map((day) => (
-          <article key={day.title} className="overflow-hidden rounded-md border-2 border-slate-950 bg-white shadow-[6px_6px_0_#111827]">
-            <div className="border-b-2 border-slate-950 bg-[#0A2342] p-5 text-white">
-              <div className="flex flex-wrap items-end justify-between gap-3">
-                <div>
-                  <p className="text-xs font-black uppercase tracking-[0.2em] text-[#D4AF37]">{day.date}</p>
-                  <h2 className="mt-1 font-american-diner text-4xl">{day.title}: {day.theme}</h2>
-                  <p className="mt-2 text-sm font-semibold text-white/78">{day.notes}</p>
-                </div>
-                <a href={routeMapUrl(day)} target="_blank" className="rounded-sm border-2 border-[#D4AF37] px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-[#D4AF37]">
-                  Ver ruta completa
-                </a>
-              </div>
-            </div>
-
-            <div className="grid gap-0 md:grid-cols-2 xl:grid-cols-3">
-              {day.stops.map((stop, index) => (
-                <div key={`${day.title}-${stop.title}`} className="border-b border-[#0A2342]/10 p-4 md:border-r">
-                  <div className="relative h-44 overflow-hidden rounded-md bg-stone-100">
-                    <Image src={stop.image} alt={stop.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
-                    <span className="absolute left-3 top-3 rounded-full bg-[#0A2342] px-3 py-1 text-xs font-black text-white">
-                      {index + 1}
-                    </span>
+        <section id="planning" className="mx-auto max-w-7xl space-y-6 px-5 pb-14 sm:px-8">
+          {plan.map((day) => (
+            <article key={day.title} className="overflow-hidden rounded-md border-2 border-slate-950 bg-white shadow-[6px_6px_0_#111827]">
+              <div className="border-b-2 border-slate-950 bg-[#0A2342] p-5 text-white">
+                <div className="flex flex-wrap items-end justify-between gap-3">
+                  <div>
+                    <p className="text-xs font-black uppercase tracking-[0.2em] text-[#D4AF37]">{day.date}</p>
+                    <h2 className="mt-1 font-american-diner text-4xl">{day.title}: {day.theme}</h2>
+                    <p className="mt-2 text-xs font-black uppercase tracking-[0.16em] text-white/72">{day.notes}</p>
                   </div>
-                  <div className="mt-4 space-y-2">
-                    <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">{stop.time} / {stop.type}</p>
-                    {mustSeeTitles.includes(stop.title) ? (
-                      <p className="w-fit rounded-full bg-red-700 px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white">
-                        Elegido por ti
-                      </p>
-                    ) : null}
-                    {mustSeeDayAssignments[stop.title] ? (
-                      <p className="w-fit rounded-full bg-[#0A2342] px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white">
-                        Fijado en Dia {mustSeeDayAssignments[stop.title]}
-                      </p>
-                    ) : null}
-                    <h3 className="font-american-diner text-2xl">{stop.title}</h3>
-                    <p className="text-sm font-semibold text-slate-600">{stop.area} - {stop.duration} - mejor: {stop.bestTime}</p>
-                    <p className="text-sm leading-6 text-slate-700">{stop.reason}</p>
-                    <div className="flex flex-wrap gap-2 pt-2 text-xs font-black uppercase tracking-[0.1em]">
-                      <a href={buildTransitPlannerUrl({ name: stop.title, lat: stop.lat, lng: stop.lng })} className="rounded-sm border border-[#D4AF37] bg-[#D4AF37]/12 px-3 py-2 text-[#0A2342]">
-                        Como llegar
-                      </a>
-                      <a href={`https://www.google.com/maps/search/?api=1&query=${stop.lat},${stop.lng}`} target="_blank" className="rounded-sm border border-[#0A2342]/25 px-3 py-2 text-[#0A2342]">
-                        Google Maps
-                      </a>
+                  <a href={routeMapUrl(day)} target="_blank" className="rounded-sm border-2 border-[#D4AF37] px-4 py-3 text-xs font-black uppercase tracking-[0.12em] text-[#D4AF37]">
+                    Ver ruta completa
+                  </a>
+                </div>
+              </div>
+
+              <div className="mobile-snap-row gap-0 md:grid-cols-2 xl:grid-cols-3">
+                {day.stops.map((stop, index) => (
+                  <div key={`${day.title}-${stop.title}`} className="mobile-snap-card border-b border-[#0A2342]/10 p-4 md:border-r">
+                    <div className="relative h-44 overflow-hidden rounded-md bg-stone-100">
+                      <Image src={stop.image} alt={stop.title} fill className="object-cover" sizes="(max-width: 768px) 82vw, 33vw" />
+                      <span className="absolute left-3 top-3 rounded-full bg-[#0A2342] px-3 py-1 text-xs font-black text-white">{index + 1}</span>
+                    </div>
+                    <div className="mt-4 space-y-2">
+                      <p className="text-xs font-black uppercase tracking-[0.18em] text-[#7A1E2C]">{stop.time} / {stop.type}</p>
+                      {mustSeeTitles.includes(stop.title) ? (
+                        <p className="w-fit rounded-full bg-red-700 px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white">
+                          Elegido por ti
+                        </p>
+                      ) : null}
+                      {mustSeeDayAssignments[stop.title] ? (
+                        <p className="w-fit rounded-full bg-[#0A2342] px-3 py-1 text-[10px] font-black uppercase tracking-[0.14em] text-white">
+                          Fijado en Día {mustSeeDayAssignments[stop.title]}
+                        </p>
+                      ) : null}
+                      <h3 className="font-american-diner text-2xl">{stop.title}</h3>
+                      <p className="text-sm font-semibold text-slate-600">{stop.area} · {stop.duration} · {stop.bestTime}</p>
+                      <div className="flex flex-wrap gap-2 pt-2 text-xs font-black uppercase tracking-[0.1em]">
+                        <a
+                          href={buildTransitPlannerUrl({ name: stop.title, lat: stop.lat, lng: stop.lng })}
+                          className="rounded-sm border border-[#D4AF37] bg-[#D4AF37]/12 px-3 py-2 text-[#0A2342]"
+                        >
+                          Cómo llegar
+                        </a>
+                        <a
+                          href={`https://www.google.com/maps/search/?api=1&query=${stop.lat},${stop.lng}`}
+                          target="_blank"
+                          className="rounded-sm border border-[#0A2342]/25 px-3 py-2 text-[#0A2342]"
+                        >
+                          Google Maps
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </article>
-        ))}
-      </section>
+                ))}
+              </div>
+            </article>
+          ))}
+        </section>
       </div>
     </main>
   );

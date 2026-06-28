@@ -129,8 +129,9 @@ export default function NearbyPlansMap({ userLocation, points }: Props) {
           fillOpacity: 1,
           weight: 3,
         });
+
         marker.bindPopup(
-          `<div style="min-width:220px"><strong>${escapeHtml(point.title)}</strong><br/>${escapeHtml(point.category)} · ${escapeHtml(point.badge)}<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a href="${escapeHtml(point.mapsUrl)}" target="_blank" rel="noopener noreferrer" style="padding:5px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#0A2342;text-decoration:none;font-size:12px">Google Maps</a><a href="${escapeHtml(point.transitUrl)}" style="padding:5px 8px;border-radius:9999px;border:1px solid #D4AF37;color:#0A2342;text-decoration:none;font-size:12px">Como llegar</a></div></div>`,
+          `<div style="min-width:220px"><strong>${escapeHtml(point.title)}</strong><br/>${escapeHtml(point.category)} · ${escapeHtml(point.badge)}<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a href="${escapeHtml(point.mapsUrl)}" target="_blank" rel="noopener noreferrer" style="padding:5px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#0A2342;text-decoration:none;font-size:12px">Google Maps</a><a href="${escapeHtml(point.transitUrl)}" style="padding:5px 8px;border-radius:9999px;border:1px solid #D4AF37;color:#0A2342;text-decoration:none;font-size:12px">Cómo llegar</a></div></div>`,
         );
         marker.addTo(layer);
         bounds.push([point.lat, point.lng]);

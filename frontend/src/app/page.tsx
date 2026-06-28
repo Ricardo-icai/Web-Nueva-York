@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import HeroCarousel from "@/components/home/HeroCarousel";
 
 type HomeCard = {
   title: string;
@@ -11,15 +12,15 @@ type HomeCard = {
 
 const mainCards: HomeCard[] = [
   {
-    title: "Transporte publico",
-    subtitle: "Metro, OMNY, AirTrain, ferries, buses y trucos para moverte.",
+    title: "Transporte público",
+    subtitle: "Metro, OMNY, AirTrain, ferries y buses para moverte sin fricción.",
     href: "/map",
     image: "https://images.pexels.com/photos/30228466/pexels-photo-30228466.jpeg?auto=compress&cs=tinysrgb&w=1600",
     label: "Primero",
   },
   {
-    title: "Organizame la ruta",
-    subtitle: "Planning automatico por dias, personas, ritmo y alojamiento.",
+    title: "Organízame la ruta",
+    subtitle: "Planning automático por días, personas, ritmo y alojamiento.",
     href: "/route-planner",
     image: "https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1600&q=84",
     label: "Ruta",
@@ -33,7 +34,7 @@ const mainCards: HomeCard[] = [
   },
   {
     title: "Cultura",
-    subtitle: "Museos, planes historicos, barrios y experiencias bajo techo.",
+    subtitle: "Museos, barrios, cine y planes culturales bien elegidos.",
     href: "/culture",
     image: "https://images.pexels.com/photos/6133108/pexels-photo-6133108.jpeg?auto=compress&cs=tinysrgb&w=1600",
     label: "Cultura",
@@ -61,7 +62,7 @@ const mainCards: HomeCard[] = [
   },
   {
     title: "eSIM para EE. UU.",
-    subtitle: "Compara planes, comprueba tu movil y sigue los pasos para iPhone o Android.",
+    subtitle: "Compara planes y activa tu móvil en pocos pasos.",
     href: "/esim-usa",
     image: "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=1600&q=84",
     label: "Conectividad",
@@ -79,8 +80,8 @@ function VisualCard({ card, featured = false }: { card: HomeCard; featured?: boo
   return (
     <Link
       href={card.href}
-      className={`group relative block overflow-hidden rounded-md border-2 border-slate-950 bg-slate-900 shadow-[6px_6px_0_#111827] transition hover:-translate-y-0.5 ${
-        featured ? "min-h-[360px] md:col-span-2 md:row-span-2" : "min-h-[230px]"
+      className={`nyc-smooth-card nyc-image-panel group relative block border border-slate-950/85 bg-slate-900 shadow-[0_18px_44px_rgba(15,23,42,0.18)] ${
+        featured ? "min-h-[380px] md:col-span-2 md:row-span-2" : "min-h-[250px]"
       }`}
     >
       <Image
@@ -91,8 +92,12 @@ function VisualCard({ card, featured = false }: { card: HomeCard; featured?: boo
         className="object-cover transition duration-700 group-hover:scale-105"
         sizes={featured ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, 25vw"}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/42 to-transparent" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,15,31,0.12),rgba(8,15,31,0.2),rgba(8,15,31,0.88))]" />
+      <div className="absolute left-4 top-4 rounded-full border border-white/35 bg-white/12 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-white backdrop-blur-sm">
+        {card.label}
+      </div>
       <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+        <p className="mb-2 max-w-md text-sm font-semibold text-white/78">{card.subtitle}</p>
         <h2 className={`${featured ? "text-4xl sm:text-5xl" : "text-2xl"} font-american-diner leading-tight text-white`}>
           {card.title}
         </h2>
@@ -104,14 +109,42 @@ function VisualCard({ card, featured = false }: { card: HomeCard; featured?: boo
 export default function Home() {
   return (
     <main className="nyc-page-shell page-bg-home">
-      <section className="nyc-content-shell mx-auto max-w-7xl px-5 py-6 sm:px-8 lg:py-8">
-        <div className="mb-5 flex flex-wrap items-end justify-between gap-3 pt-2">
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">NYC Family Planner</p>
-            <h1 className="mt-1 font-american-diner text-4xl leading-tight text-slate-950 sm:text-5xl">
-              Pick Your New York Moment
-            </h1>
+      <section className="nyc-content-shell mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
+        <section className="nyc-image-panel relative min-h-[68svh] border border-slate-950/85 shadow-[0_24px_64px_rgba(15,23,42,0.22)]">
+          <HeroCarousel />
+          <div className="relative z-10 flex min-h-[68svh] flex-col justify-end px-5 pb-8 pt-24 text-white sm:px-8 sm:pb-10">
+            <div className="max-w-3xl">
+              <p className="w-fit rounded-full border border-[#D4AF37]/50 bg-[#D4AF37]/14 px-3 py-2 text-[11px] font-black uppercase tracking-[0.22em] text-[#F7D56B]">
+                Guía premium de viaje
+              </p>
+              <h1 className="mt-5 font-american-diner text-5xl leading-[0.92] sm:text-7xl">
+                Nueva York, bien pensada y fácil de vivir.
+              </h1>
+              <p className="mt-4 max-w-2xl text-base font-semibold leading-7 text-white/82 sm:text-lg">
+                Rutas, cultura, comida, skyline y planes reales con una estética más limpia y un ritmo suave de navegación.
+              </p>
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/route-planner" className="nyc-action px-5 py-3 text-sm">
+                Empezar ruta
+              </Link>
+              <Link href="/culture" className="nyc-flag-action px-5 py-3 text-sm">
+                Ver cultura
+              </Link>
+            </div>
           </div>
+        </section>
+
+        <div className="mb-6 mt-6 flex flex-wrap items-end justify-between gap-3 px-1 pt-2">
+          <div>
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">Explora la web</p>
+            <h2 className="mt-1 font-american-diner text-3xl leading-tight text-slate-950 sm:text-4xl">
+              Cada sección con su imagen y su ambiente
+            </h2>
+          </div>
+          <p className="max-w-xl text-sm font-semibold text-slate-600 sm:text-base">
+            Elige el bloque que necesitas y entra directo sin perder tiempo.
+          </p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-4">
@@ -121,7 +154,6 @@ export default function Home() {
           ))}
         </div>
       </section>
-
     </main>
   );
 }

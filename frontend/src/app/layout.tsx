@@ -35,12 +35,12 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[#fff3d1] text-slate-900">
         <NavigationFeedback />
         <AuthGate>
-          <header className="sticky top-0 z-[5000] border-b-2 border-slate-950 bg-[#fff3d1]/95 shadow-[0_4px_0_#111827] backdrop-blur">
-            <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
+          <header className="sticky top-0 z-[5000] px-3 py-3 sm:px-4">
+            <nav className="nyc-glass-topbar mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
               <div className="flex items-center gap-3">
                 <BackButton />
-                <Link href="/" className="font-american-diner text-sm tracking-[0.08em] text-slate-950">
-                  NYC FAMILY PLANNER
+                <Link href="/" className="font-american-diner text-sm tracking-[0.08em] text-slate-950 sm:text-base">
+                  NYC Family Planner
                 </Link>
               </div>
 
