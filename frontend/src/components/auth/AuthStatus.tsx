@@ -2,10 +2,12 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/components/i18n/LanguageProvider";
 import { AUTH_UPDATED_EVENT, readSession, signOutCurrentUser } from "@/lib/auth";
 
 export default function AuthStatus() {
   const [email, setEmail] = useState<string | null>(null);
+  const { dictionary } = useLanguage();
 
   useEffect(() => {
     const refresh = () => setEmail(readSession()?.email ?? null);
@@ -34,7 +36,7 @@ export default function AuthStatus() {
         onClick={() => void signOutCurrentUser()}
         className="rounded-md border-2 border-slate-950 bg-red-700 px-3 py-2 text-xs font-black uppercase tracking-wide text-white shadow-[3px_3px_0_#111827] transition hover:-translate-y-0.5 hover:bg-red-800"
       >
-        Salir
+        {dictionary.auth.signOut}
       </button>
     </div>
   );

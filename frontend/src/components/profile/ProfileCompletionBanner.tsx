@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/components/i18n/LanguageProvider";
 import { AUTH_UPDATED_EVENT, readSession } from "@/lib/auth";
 import { loadTravelProfile } from "@/lib/user-data";
 
@@ -43,6 +44,7 @@ function missingProfileFields(profile: SavedTravelProfile | null) {
 export default function ProfileCompletionBanner() {
   const pathname = usePathname();
   const [missing, setMissing] = useState<string[]>([]);
+  const { dictionary } = useLanguage();
 
   useEffect(() => {
     async function refresh() {
@@ -71,13 +73,13 @@ export default function ProfileCompletionBanner() {
     <div className="border-b-2 border-slate-950 bg-[#fff3d1] px-5 py-3">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3">
         <p className="text-sm font-black text-slate-950">
-          Completa tu perfil del viaje para que las recomendaciones, filtros y rutas se ajusten mejor. Falta: {missing.join(", ")}.
+          {dictionary.profileBanner.missingPrefix} {missing.join(", ")}.
         </p>
         <Link
           href="/onboarding"
           className="nyc-action rounded-md px-4 py-2 text-xs"
         >
-          Completar perfil
+          {dictionary.profileBanner.completeProfile}
         </Link>
       </div>
     </div>

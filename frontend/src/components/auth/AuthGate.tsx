@@ -2,6 +2,7 @@
 
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/components/i18n/LanguageProvider";
 import {
   AUTH_UPDATED_EVENT,
   clearLegacyLocalUsers,
@@ -22,6 +23,7 @@ type Mode = "login" | "register";
 
 export default function AuthGate({ children }: Props) {
   const router = useRouter();
+  const { dictionary, language } = useLanguage();
   const [ready, setReady] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const [startedPlanning, setStartedPlanning] = useState(false);
@@ -82,11 +84,11 @@ export default function AuthGate({ children }: Props) {
     try {
       const supabaseLogin = await signInWithEmailPassword(cleanEmail, password);
       if (!supabaseLogin.handledBySupabase) {
-        setMessage("La aplicación no está conectada a Supabase.");
+        setMessage(language === "en" ? "This app is not connected to Supabase." : "La aplicación no está conectada a Supabase.");
         return;
       }
       if (supabaseLogin.error) {
-        setMessage("Correo o contraseña incorrectos.");
+        setMessage(language === "en" ? "Incorrect email or password." : "Correo o contraseña incorrectos.");
         return;
       }
       setAuthenticated(true);
@@ -101,23 +103,27 @@ export default function AuthGate({ children }: Props) {
     setMessage("");
     try {
       if (!cleanEmail.includes("@") || !cleanEmail.includes(".")) {
-        setMessage("Introduce un correo válido.");
+        setMessage(language === "en" ? "Enter a valid email address." : "Introduce un correo válido.");
         return;
       }
 
       if (password.length < 6) {
-        setMessage("La contraseña debe tener al menos 6 caracteres.");
+        setMessage(language === "en" ? "Password must be at least 6 characters long." : "La contraseña debe tener al menos 6 caracteres.");
         return;
       }
 
       const supabaseSignup = await signUpWithEmailPassword(cleanEmail, password);
       if (!supabaseSignup.handledBySupabase) {
-        setMessage("La aplicación no está conectada a Supabase.");
+        setMessage(language === "en" ? "This app is not connected to Supabase." : "La aplicación no está conectada a Supabase.");
         return;
       }
       if (supabaseSignup.emailAlreadyRegistered) {
         setEmail("");
-        setMessage("Este correo ya está registrado. Introduce otro correo para crear una cuenta nueva.");
+        setMessage(
+          language === "en"
+            ? "That email is already registered. Use a different email to create a new account."
+            : "Este correo ya está registrado. Introduce otro correo para crear una cuenta nueva.",
+        );
         return;
       }
       if (supabaseSignup.error) {
@@ -125,7 +131,11 @@ export default function AuthGate({ children }: Props) {
         return;
       }
       if (supabaseSignup.needsEmailConfirmation) {
-        setMessage("Supabase tiene activada la confirmación por email. Desactiva 'Confirm email' en Authentication > Providers > Email para registrar solo con correo y contraseña.");
+        setMessage(
+          language === "en"
+            ? "Supabase email confirmation is enabled. Disable 'Confirm email' in Authentication > Providers > Email to allow email-and-password sign-up only."
+            : "Supabase tiene activada la confirmación por email. Desactiva 'Confirm email' en Authentication > Providers > Email para registrar solo con correo y contraseña.",
+        );
         return;
       }
       setAuthenticated(true);
@@ -165,20 +175,12 @@ export default function AuthGate({ children }: Props) {
         <section className="relative z-10 mx-auto flex min-h-[calc(100vh-4rem)] max-w-6xl items-end">
           <div className="max-w-4xl pb-8">
             <p className="w-fit rounded-full border border-[#D4AF37]/60 bg-[#D4AF37]/12 px-3 py-2 text-xs font-black uppercase tracking-[0.22em] text-[#D4AF37]">
-              NYC Family Planner
+              {dictionary.common.appName}
             </p>
-            <h1 className="mt-5 font-american-diner text-5xl leading-[0.95] sm:text-7xl">
-              Planifica Nueva York con tu cuenta.
-            </h1>
-            <p className="mt-5 max-w-2xl text-base leading-7 text-white/82 sm:text-xl">
-              Para usar la web tienes que registrarte o iniciar sesión. Así guardamos tu perfil, tu viaje y tus favoritos.
-            </p>
-            <button
-              type="button"
-              onClick={() => setStartedPlanning(true)}
-              className="nyc-action mt-8 px-6 py-4 text-sm"
-            >
-              Entrar
+            <h1 className="mt-5 font-american-diner text-5xl leading-[0.95] sm:text-7xl">{dictionary.auth.planWithAccount}</h1>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-white/82 sm:text-xl">{dictionary.auth.accountIntro}</p>
+            <button type="button" onClick={() => setStartedPlanning(true)} className="nyc-action mt-8 px-6 py-4 text-sm">
+              {dictionary.auth.enter}
             </button>
           </div>
         </section>
@@ -191,44 +193,31 @@ export default function AuthGate({ children }: Props) {
       <section className="mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-6xl items-center gap-8 lg:grid-cols-[1.05fr_0.95fr]">
         <div className="space-y-5">
           <p className="w-fit rounded-full border border-slate-950 bg-red-700 px-3 py-2 text-xs font-black uppercase tracking-[0.2em] text-white shadow-[0_10px_24px_rgba(15,23,42,0.14)]">
-            Private NYC Planner
+            {dictionary.auth.privatePlanner}
           </p>
           <div className="space-y-3">
-            <h1 className="font-american-diner text-5xl leading-none text-slate-950 sm:text-7xl">
-              Entra a tu viaje de Nueva York
-            </h1>
-            <p className="max-w-xl text-base font-semibold text-slate-700 sm:text-lg">
-              Guarda tu sesión, tus preferencias y tus favoritos por usuario antes de entrar en la web.
-            </p>
+            <h1 className="font-american-diner text-5xl leading-none text-slate-950 sm:text-7xl">{dictionary.auth.accessTrip}</h1>
+            <p className="max-w-xl text-base font-semibold text-slate-700 sm:text-lg">{dictionary.auth.accessTripCopy}</p>
             <p className="max-w-xl text-sm font-bold text-red-700">
-              {isSupabaseConfigured()
-                ? "Conectado a Supabase Auth: cada usuario queda registrado con su propia cuenta."
-                : "Falta la configuración de Supabase para poder entrar en la web."}
+              {isSupabaseConfigured() ? dictionary.auth.supabaseConnected : dictionary.auth.supabaseMissing}
             </p>
           </div>
         </div>
 
-        <form
-          onSubmit={handleSubmit}
-          className="nyc-hard-card-white p-5 sm:p-6"
-        >
+        <form onSubmit={handleSubmit} className="nyc-hard-card-white p-5 sm:p-6">
           <div className="border-b border-slate-950/20 pb-4">
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">
-              {mode === "login" ? "Log in" : "Registro"}
-            </p>
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">{mode === "login" ? dictionary.auth.login : dictionary.auth.register}</p>
             <h2 className="mt-1 font-american-diner text-4xl text-slate-950">
-              Usuario y contraseña
+              {dictionary.auth.email} {language === "en" ? "&" : "y"} {dictionary.auth.password}
             </h2>
           </div>
 
           <div className="mt-5 space-y-4">
             {!isSupabaseConfigured() ? (
-              <div className="rounded-2xl border border-slate-950/15 bg-[#fff3d1] p-4 text-sm font-bold text-slate-900">
-                Esta web funciona solo con Supabase. Añade las variables `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` en Render para activar el acceso.
-              </div>
+              <div className="rounded-2xl border border-slate-950/15 bg-[#fff3d1] p-4 text-sm font-bold text-slate-900">{dictionary.auth.supabaseOnly}</div>
             ) : null}
             <label className="block space-y-1">
-              <span className="text-xs font-black uppercase tracking-[0.16em] text-slate-700">Correo</span>
+              <span className="text-xs font-black uppercase tracking-[0.16em] text-slate-700">{dictionary.auth.email}</span>
               <input
                 type="email"
                 value={email}
@@ -240,7 +229,7 @@ export default function AuthGate({ children }: Props) {
             </label>
 
             <label className="block space-y-1">
-              <span className="text-xs font-black uppercase tracking-[0.16em] text-slate-700">Contraseña</span>
+              <span className="text-xs font-black uppercase tracking-[0.16em] text-slate-700">{dictionary.auth.password}</span>
               <input
                 type="password"
                 value={password}
@@ -255,22 +244,18 @@ export default function AuthGate({ children }: Props) {
 
           {message ? <p className="mt-4 text-sm font-bold text-red-700">{message}</p> : null}
 
-          <button
-            type="submit"
-            disabled={busy || !isSupabaseConfigured()}
-            className="nyc-action mt-5 h-12 w-full px-4 text-sm disabled:cursor-wait disabled:opacity-70"
-          >
-            {busy ? "Procesando..." : mode === "login" ? "Entrar" : "Crear usuario"}
+          <button type="submit" disabled={busy || !isSupabaseConfigured()} className="nyc-action mt-5 h-12 w-full px-4 text-sm disabled:cursor-wait disabled:opacity-70">
+            {busy ? dictionary.auth.processing : mode === "login" ? dictionary.auth.login : dictionary.auth.createUser}
           </button>
 
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm font-bold">
             {mode === "login" ? (
               <button type="button" onClick={() => setMode("register")} className="text-red-700 underline underline-offset-4">
-                Crear cuenta
+                {dictionary.auth.createAccount}
               </button>
             ) : (
               <button type="button" onClick={() => setMode("login")} className="text-red-700 underline underline-offset-4">
-                Ya tengo cuenta
+                {dictionary.auth.alreadyHaveAccount}
               </button>
             )}
           </div>

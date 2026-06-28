@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/components/i18n/LanguageProvider";
 import UseMyLocationButton from "@/components/restaurants/UseMyLocationButton";
 import { loadTravelProfile } from "@/lib/user-data";
 
@@ -27,6 +28,7 @@ type SavedTravelProfile = {
 const TRAVEL_PROFILE_KEY = "nyc_travel_profile_v1";
 
 export default function RestaurantFilters(props: Props) {
+  const { dictionary, language } = useLanguage();
   const [savedHotel, setSavedHotel] = useState<{ address: string; lat: string; lng: string } | null>(null);
   const selectClass =
     "h-11 w-full rounded-md border-2 border-slate-950 bg-[#fffdf4] px-3 text-sm font-black uppercase tracking-wide text-slate-950 shadow-[3px_3px_0_#111827] outline-none transition focus:bg-white focus:ring-2 focus:ring-red-600";
@@ -64,53 +66,51 @@ export default function RestaurantFilters(props: Props) {
       <input type="hidden" name="hotelLng" value={hotelLng} />
       <div className="mb-4 flex flex-wrap items-end justify-between gap-3 border-b-2 border-dashed border-slate-950 pb-3">
         <div>
-          <p className="font-american-diner text-3xl text-slate-950">Menu de Filtros</p>
-          <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-700">Elige comida, precio y distancia</p>
+          <p className="font-american-diner text-3xl text-slate-950">{dictionary.restaurantFilters.title}</p>
+          <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-700">{dictionary.restaurantFilters.subtitle}</p>
           {savedHotel ? (
             <p className="mt-2 text-xs font-black uppercase tracking-wide text-emerald-800">
-              Dónde duermo: {savedHotel.address}
+              {dictionary.restaurantFilters.sleepingAt} {savedHotel.address}
             </p>
           ) : (
-            <p className="mt-2 text-xs font-black uppercase tracking-wide text-red-700">
-              Guarda tu alojamiento en Editar perfil para filtrar por dónde duermes.
-            </p>
+            <p className="mt-2 text-xs font-black uppercase tracking-wide text-red-700">{dictionary.restaurantFilters.sleepingFallback}</p>
           )}
         </div>
         <span className="rounded-full border-2 border-slate-950 bg-red-700 px-3 py-1 text-xs font-black uppercase tracking-wide text-white">
-          NYC Specials
+          {dictionary.restaurantFilters.specials}
         </span>
       </div>
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <label className="space-y-1">
-          <span className={labelClass}>Tipo de comida</span>
+          <span className={labelClass}>{dictionary.restaurantFilters.cuisine}</span>
           <select name="cuisine" defaultValue={props.cuisine} className={selectClass}>
-            <option value="">Todo el menu</option>
+            <option value="">{dictionary.restaurantFilters.allMenu}</option>
             <option value="pizza">Pizza</option>
-            <option value="burger">Burgers</option>
-            <option value="italian">Italiana</option>
-            <option value="japanese">Japonesa</option>
-            <option value="korean">Coreana</option>
-            <option value="mexican">Mexicana</option>
+            <option value="burger">{language === "en" ? "Burgers" : "Burgers"}</option>
+            <option value="italian">{language === "en" ? "Italian" : "Italiana"}</option>
+            <option value="japanese">{language === "en" ? "Japanese" : "Japonesa"}</option>
+            <option value="korean">{language === "en" ? "Korean" : "Coreana"}</option>
+            <option value="mexican">{language === "en" ? "Mexican" : "Mexicana"}</option>
             <option value="deli">Deli</option>
             <option value="bagel">Bagels</option>
-            <option value="dessert">Postres</option>
+            <option value="dessert">{language === "en" ? "Desserts" : "Postres"}</option>
           </select>
         </label>
         <label className="space-y-1">
-          <span className={labelClass}>Precio medio</span>
+          <span className={labelClass}>{dictionary.restaurantFilters.price}</span>
           <select name="priceRange" defaultValue={props.priceRange} className={selectClass}>
-            <option value="">Cualquier precio</option>
-            <option value="under-20">Menos de $20</option>
+            <option value="">{dictionary.restaurantFilters.anyPrice}</option>
+            <option value="under-20">{language === "en" ? "Under $20" : "Menos de $20"}</option>
             <option value="20-35">$20 - $35</option>
             <option value="35-60">$35 - $60</option>
             <option value="60-100">$60 - $100</option>
-            <option value="over-100">Mas de $100</option>
+            <option value="over-100">{language === "en" ? "Over $100" : "Más de $100"}</option>
           </select>
         </label>
         <label className="space-y-1">
-          <span className={labelClass}>Desde mi ubicación</span>
+          <span className={labelClass}>{dictionary.restaurantFilters.nearMe}</span>
           <select name="maxDistanceFromUserKm" defaultValue={props.maxDistanceFromUserKm} className={selectClass}>
-            <option value="">Sin limite</option>
+            <option value="">{dictionary.restaurantFilters.noLimit}</option>
             <option value="1">1 km</option>
             <option value="3">3 km</option>
             <option value="5">5 km</option>
@@ -118,9 +118,9 @@ export default function RestaurantFilters(props: Props) {
           </select>
         </label>
         <label className="space-y-1">
-          <span className={labelClass}>Desde dónde duermo</span>
+          <span className={labelClass}>{dictionary.restaurantFilters.nearHotel}</span>
           <select name="maxDistanceFromHotelKm" defaultValue={props.maxDistanceFromHotelKm} className={selectClass}>
-            <option value="">Sin limite</option>
+            <option value="">{dictionary.restaurantFilters.noLimit}</option>
             <option value="1">1 km</option>
             <option value="3">3 km</option>
             <option value="5">5 km</option>
@@ -130,10 +130,10 @@ export default function RestaurantFilters(props: Props) {
       </div>
       <div className="mt-4 flex flex-wrap gap-3">
         <button type="submit" className="rounded-md border-2 border-slate-950 bg-slate-950 px-5 py-2 text-sm font-black uppercase tracking-wide text-stone-50 shadow-[3px_3px_0_#b91c1c]">
-          Aplicar filtros
+          {dictionary.restaurantFilters.apply}
         </button>
         <Link href="/restaurants" className="rounded-md border-2 border-slate-950 bg-white px-5 py-2 text-center text-sm font-black uppercase tracking-wide text-slate-950 shadow-[3px_3px_0_#111827] hover:bg-[#fffdf4]">
-          Restaurar
+          {dictionary.restaurantFilters.reset}
         </Link>
         <UseMyLocationButton />
       </div>

@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import HeroCarousel from "@/components/home/HeroCarousel";
+import { getDictionary } from "@/lib/i18n";
+import { getServerLanguage } from "@/lib/server-language";
 
 type HomeCard = {
   title: string;
@@ -9,72 +11,6 @@ type HomeCard = {
   image: string;
   label: string;
 };
-
-const mainCards: HomeCard[] = [
-  {
-    title: "Transporte público",
-    subtitle: "Metro, OMNY, AirTrain, ferries y buses para moverte sin fricción.",
-    href: "/map",
-    image: "https://images.pexels.com/photos/30228466/pexels-photo-30228466.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    label: "Primero",
-  },
-  {
-    title: "Organízame la ruta",
-    subtitle: "Planning automático por días, personas, ritmo y alojamiento.",
-    href: "/route-planner",
-    image: "https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1600&q=84",
-    label: "Ruta",
-  },
-  {
-    title: "Tengo Hambre",
-    subtitle: "Restaurantes, pizza, hamburguesas, favoritos y mapa de locales.",
-    href: "/restaurants",
-    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=84",
-    label: "Food",
-  },
-  {
-    title: "Cultura",
-    subtitle: "Museos, barrios, cine y planes culturales bien elegidos.",
-    href: "/culture",
-    image: "https://images.pexels.com/photos/6133108/pexels-photo-6133108.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    label: "Cultura",
-  },
-  {
-    title: "Roof Tops",
-    subtitle: "Miradores, rooftops, vistas virales y enlaces para entradas.",
-    href: "/viewpoints",
-    image: "https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2?auto=format&fit=crop&w=1600&q=84",
-    label: "Skyline",
-  },
-  {
-    title: "4 de Julio",
-    subtitle: "Fuegos, Sail4th 250, Elcano, grandes veleros y eventos oficiales.",
-    href: "/fourth-of-july",
-    image: "https://images.pexels.com/photos/12674747/pexels-photo-12674747.jpeg?auto=compress&cs=tinysrgb&w=1600",
-    label: "Eventos",
-  },
-  {
-    title: "Nightlife",
-    subtitle: "Discotecas, rooftops, cocktail bars, speakeasies, mapa y filtros para salir por Nueva York.",
-    href: "/nightlife",
-    image: "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1600&q=84",
-    label: "Night",
-  },
-  {
-    title: "eSIM para EE. UU.",
-    subtitle: "Compara planes y activa tu móvil en pocos pasos.",
-    href: "/esim-usa",
-    image: "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=1600&q=84",
-    label: "Conectividad",
-  },
-  {
-    title: "Editar perfil",
-    subtitle: "Cambia fechas, alojamiento, viajeros y ritmo del viaje.",
-    href: "/onboarding",
-    image: "https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?auto=format&fit=crop&w=1600&q=84",
-    label: "Tu viaje",
-  },
-];
 
 function VisualCard({ card, featured = false }: { card: HomeCard; featured?: boolean }) {
   return (
@@ -98,15 +34,64 @@ function VisualCard({ card, featured = false }: { card: HomeCard; featured?: boo
       </div>
       <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
         <p className="mb-2 max-w-md text-sm font-semibold text-white/78">{card.subtitle}</p>
-        <h2 className={`${featured ? "text-4xl sm:text-5xl" : "text-2xl"} font-american-diner leading-tight text-white`}>
-          {card.title}
-        </h2>
+        <h2 className={`${featured ? "text-4xl sm:text-5xl" : "text-2xl"} font-american-diner leading-tight text-white`}>{card.title}</h2>
       </div>
     </Link>
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const language = await getServerLanguage();
+  const dictionary = getDictionary(language);
+
+  const mainCards: HomeCard[] = [
+    {
+      ...dictionary.home.cards[0],
+      href: "/map",
+      image: "https://images.pexels.com/photos/30228466/pexels-photo-30228466.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    },
+    {
+      ...dictionary.home.cards[1],
+      href: "/route-planner",
+      image: "https://images.unsplash.com/photo-1534430480872-3498386e7856?auto=format&fit=crop&w=1600&q=84",
+    },
+    {
+      ...dictionary.home.cards[2],
+      href: "/restaurants",
+      image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1600&q=84",
+    },
+    {
+      ...dictionary.home.cards[3],
+      href: "/culture",
+      image: "https://images.pexels.com/photos/6133108/pexels-photo-6133108.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    },
+    {
+      ...dictionary.home.cards[4],
+      href: "/viewpoints",
+      image: "https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2?auto=format&fit=crop&w=1600&q=84",
+    },
+    {
+      ...dictionary.home.cards[5],
+      href: "/fourth-of-july",
+      image: "https://images.pexels.com/photos/12674747/pexels-photo-12674747.jpeg?auto=compress&cs=tinysrgb&w=1600",
+    },
+    {
+      ...dictionary.home.cards[6],
+      href: "/nightlife",
+      image: "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1600&q=84",
+    },
+    {
+      ...dictionary.home.cards[7],
+      href: "/esim-usa",
+      image: "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=1600&q=84",
+    },
+    {
+      ...dictionary.home.cards[8],
+      href: "/onboarding",
+      image: "https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?auto=format&fit=crop&w=1600&q=84",
+    },
+  ];
+
   return (
     <main className="nyc-page-shell page-bg-home">
       <section className="nyc-content-shell mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8 lg:py-6">
@@ -115,21 +100,17 @@ export default function Home() {
           <div className="relative z-10 flex min-h-[68svh] flex-col justify-end px-5 pb-8 pt-24 text-white sm:px-8 sm:pb-10">
             <div className="max-w-3xl">
               <p className="w-fit rounded-full border border-[#D4AF37]/50 bg-[#D4AF37]/14 px-3 py-2 text-[11px] font-black uppercase tracking-[0.22em] text-[#F7D56B]">
-                Guía premium de viaje
+                {dictionary.home.heroBadge}
               </p>
-              <h1 className="mt-5 font-american-diner text-5xl leading-[0.92] sm:text-7xl">
-                Nueva York, bien pensada y fácil de vivir.
-              </h1>
-              <p className="mt-4 max-w-2xl text-base font-semibold leading-7 text-white/82 sm:text-lg">
-                Rutas, cultura, comida, skyline y planes reales con una estética más limpia y un ritmo suave de navegación.
-              </p>
+              <h1 className="mt-5 font-american-diner text-5xl leading-[0.92] sm:text-7xl">{dictionary.home.heroTitle}</h1>
+              <p className="mt-4 max-w-2xl text-base font-semibold leading-7 text-white/82 sm:text-lg">{dictionary.home.heroSubtitle}</p>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/route-planner" className="nyc-action px-5 py-3 text-sm">
-                Empezar ruta
+                {dictionary.home.heroPrimaryCta}
               </Link>
               <Link href="/culture" className="nyc-flag-action px-5 py-3 text-sm">
-                Ver cultura
+                {dictionary.home.heroSecondaryCta}
               </Link>
             </div>
           </div>
@@ -137,14 +118,10 @@ export default function Home() {
 
         <div className="mb-6 mt-6 flex flex-wrap items-end justify-between gap-3 px-1 pt-2">
           <div>
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">Explora la web</p>
-            <h2 className="mt-1 font-american-diner text-3xl leading-tight text-slate-950 sm:text-4xl">
-              Cada sección con su imagen y su ambiente
-            </h2>
+            <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">{dictionary.home.exploreLabel}</p>
+            <h2 className="mt-1 font-american-diner text-3xl leading-tight text-slate-950 sm:text-4xl">{dictionary.home.exploreTitle}</h2>
           </div>
-          <p className="max-w-xl text-sm font-semibold text-slate-600 sm:text-base">
-            Elige el bloque que necesitas y entra directo sin perder tiempo.
-          </p>
+          <p className="max-w-xl text-sm font-semibold text-slate-600 sm:text-base">{dictionary.home.exploreSubtitle}</p>
         </div>
 
         <div className="grid gap-4 md:grid-cols-4">
