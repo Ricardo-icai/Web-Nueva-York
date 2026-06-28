@@ -35,7 +35,7 @@ type CultureRoute = {
 
 type ScreenLocation = CultureExperience & {
   productions: string[];
-  precisionLabel: "Rodado aqui" | "Solo exterior" | "Inspiracion real" | "Set recreado";
+  precisionLabel: "Rodado aquí" | "Solo exterior" | "Inspiración real" | "Set recreado";
   neighborhood: string;
   onSiteTip: string;
   accuracyNote: string;
@@ -56,9 +56,9 @@ const BADGES = [
 ];
 
 const SCREEN_LABEL_STYLES: Record<ScreenLocation["precisionLabel"], string> = {
-  "Rodado aqui": "bg-emerald-600 text-white",
+  "Rodado aquí": "bg-emerald-600 text-white",
   "Solo exterior": "bg-[#0A2342] text-white",
-  "Inspiracion real": "bg-[#D4AF37] text-[#0A2342]",
+  "Inspiración real": "bg-[#D4AF37] text-[#0A2342]",
   "Set recreado": "bg-[#7A1E2C] text-white",
 };
 
@@ -625,7 +625,7 @@ const screenLocations: ScreenLocation[] = [
     lat: 40.7628,
     lng: -73.9862,
     productions: ["How I Met Your Mother"],
-    precisionLabel: "Inspiracion real",
+    precisionLabel: "Inspiración real",
     neighborhood: "Midtown West",
     onSiteTip: "Pide una parada corta para contextualizar la serie y seguir luego hacia Times Square o Bryant Park.",
     accuracyNote: "MacLaren's era un set de estudio y un bar ficticio; McGee's funciona como referencia real del universo de la serie.",
@@ -634,7 +634,7 @@ const screenLocations: ScreenLocation[] = [
     name: "Empire State Building",
     category: "Pantalla",
     image: commonsFile("Empire State Building all.jpg"),
-    description: "El gran icono romantico y cinematografico de Manhattan, ligado a King Kong, Sleepless in Seattle y decenas de clasicos.",
+    description: "El gran icono romántico y cinematográfico de Manhattan, ligado a King Kong, Sleepless in Seattle y decenas de clásicos.",
     officialWebsite: "https://www.esbnyc.com/",
     googleMapsUrl: maps("Empire State Building New York"),
     openingHours: "Consultar observatorios y horario oficial en la web.",
@@ -688,10 +688,10 @@ const screenLocations: ScreenLocation[] = [
     lat: 40.7568,
     lng: -73.9543,
     productions: ["Spider-Man", "Manhattan", "The Great Gatsby"],
-    precisionLabel: "Rodado aqui",
+    precisionLabel: "Rodado aquí",
     neighborhood: "Midtown East / Long Island City",
     onSiteTip: "Combinalo con el tranvia de Roosevelt Island para una ruta con skyline y sensacion de movimiento real.",
-    accuracyNote: "La accion final de Spider-Man mezcla rodaje real y construccion cinematografica, pero el puente es una parada autentica y muy reconocible.",
+    accuracyNote: "La acción final de Spider-Man mezcla rodaje real y construcción cinematográfica, pero el puente es una parada auténtica y muy reconocible.",
   },
   {
     name: "Roosevelt Island Tramway",
@@ -709,10 +709,10 @@ const screenLocations: ScreenLocation[] = [
     lat: 40.7617,
     lng: -73.9647,
     productions: ["Spider-Man", "Leon: The Professional"],
-    precisionLabel: "Rodado aqui",
+    precisionLabel: "Rodado aquí",
     neighborhood: "Upper East Side / Roosevelt Island",
     onSiteTip: "Haz el trayecto al atardecer y baja a pasear por Roosevelt Island para alargar la experiencia.",
-    accuracyNote: "Es una localizacion real y muy potente visualmente; la pelicula intensifica la escala, pero el trayecto conserva el impacto.",
+    accuracyNote: "Es una localización real y muy potente visualmente; la película intensifica la escala, pero el trayecto conserva el impacto.",
   },
   {
     name: "Hook & Ladder 8",
@@ -733,7 +733,7 @@ const screenLocations: ScreenLocation[] = [
     precisionLabel: "Solo exterior",
     neighborhood: "Tribeca",
     onSiteTip: "Ideal como stop corto dentro de una ruta de downtown con paseo posterior por Tribeca y SoHo.",
-    accuracyNote: "La fachada si es la de la pelicula; los interiores de la base se recrearon fuera de Nueva York.",
+    accuracyNote: "La fachada sí es la de la película; los interiores de la base se recrearon fuera de Nueva York.",
   },
   {
     name: "New York Public Library",
@@ -751,7 +751,7 @@ const screenLocations: ScreenLocation[] = [
     lat: 40.7532,
     lng: -73.9822,
     productions: ["Ghostbusters", "Sex and the City", "Breakfast at Tiffany's"],
-    precisionLabel: "Rodado aqui",
+    precisionLabel: "Rodado aquí",
     neighborhood: "Bryant Park / Midtown",
     onSiteTip: "Combina de maravilla con Bryant Park, Grand Central y una tarde de arquitectura por Midtown.",
     accuracyNote: "La sala principal si forma parte del mito cinematografico, aunque algunas zonas subterraneas famosas se recrearon en Los Angeles.",
@@ -772,10 +772,10 @@ const screenLocations: ScreenLocation[] = [
     lat: 40.7644,
     lng: -73.9747,
     productions: ["Home Alone 2", "Sex and the City", "The Great Gatsby"],
-    precisionLabel: "Rodado aqui",
+    precisionLabel: "Rodado aquí",
     neighborhood: "Central Park South",
     onSiteTip: "Gran parada para unir Fifth Avenue, Central Park y una ruta navidena o glamurosa por Midtown.",
-    accuracyNote: "El hotel es una localizacion real de Home Alone 2; no conviene confundirlo con la jugueteria ficticia de la pelicula.",
+    accuracyNote: "El hotel es una localización real de Home Alone 2; no conviene confundirlo con la juguetería ficticia de la película.",
   },
   {
     name: "FAO Schwarz",
@@ -793,7 +793,7 @@ const screenLocations: ScreenLocation[] = [
     lat: 40.7597,
     lng: -73.9787,
     productions: ["Big", "The Smurfs", "Home Alone 2 inspiration"],
-    precisionLabel: "Inspiracion real",
+    precisionLabel: "Inspiración real",
     neighborhood: "Rockefeller Center",
     onSiteTip: "Es una parada muy agradecida si viajas con ninos o quieres una ruta Midtown divertida y ligera.",
     accuracyNote: "El piano de Big forma parte del mito del lugar; la jugueteria de Home Alone 2 fue una fantasia inspirada, no una tienda real filmada aqui.",
@@ -814,7 +814,7 @@ const screenLocations: ScreenLocation[] = [
     lat: 40.7223,
     lng: -73.9874,
     productions: ["When Harry Met Sally...", "Donnie Brasco", "Across the Universe"],
-    precisionLabel: "Rodado aqui",
+    precisionLabel: "Rodado aquí",
     neighborhood: "Lower East Side",
     onSiteTip: "Funciona genial como parada de comida real dentro de una ruta de cine por downtown y el Village.",
     accuracyNote: "La relacion con When Harry Met Sally es directa y muy facil de explicar al visitante.",
@@ -887,7 +887,7 @@ const screenLocations: ScreenLocation[] = [
 const screenRoutes: CultureRoute[] = [
   {
     name: "Village Screen Route",
-    focus: "Sitcoms, romance y fachadas miticas",
+    focus: "Sitcoms, romance y fachadas míticas",
     stops: ["McGee's Pub", "90 Bedford Street", "66 Perry Street", "Katz's Delicatessen"],
     weather: "Muy buena con tiempo suave; funciona perfecta a pie entre Village y Lower East Side.",
     bestFor: "fans de series, parejas y viajeros repetidores",
@@ -1397,8 +1397,8 @@ export default function CulturePage() {
         <SectionFeatureImage
           src={commonsFile("Times Square at night.jpg")}
           alt="Times Square de noche como icono de cine y series en Nueva York"
-          eyebrow="Pantalla / Calles miticas"
-          title="La Nueva York que llevas anos viendo en pantalla"
+          eyebrow="Pantalla / Calles míticas"
+          title="La Nueva York que llevas años viendo en pantalla"
           copy="Fachadas, puentes, bibliotecas, hoteles y esquinas que han hecho de Nueva York el gran decorado emocional del cine y las series."
         />
         <div className="mb-6 grid gap-4 lg:grid-cols-[1fr]">
@@ -1409,10 +1409,10 @@ export default function CulturePage() {
                   {label}
                 </span>
                 <p className="mt-3 text-sm leading-6 text-white/76">
-                  {label === "Rodado aqui" && "Parada autentica con relacion directa de rodaje en la ciudad."}
+                  {label === "Rodado aquí" && "Parada auténtica con relación directa de rodaje en la ciudad."}
                   {label === "Solo exterior" && "Fachada o establishing shot reconocido, con interiores hechos en otro sitio."}
-                  {label === "Inspiracion real" && "Lugar que ayudo a crear el mito, aunque el set de la ficcion no estuviera aqui."}
-                  {label === "Set recreado" && "El icono existe y es central, pero la escena mas recordada se remato en estudio."}
+                  {label === "Inspiración real" && "Lugar que ayudó a crear el mito, aunque el set de la ficción no estuviera aquí."}
+                  {label === "Set recreado" && "El icono existe y es central, pero la escena más recordada se remató en estudio."}
                 </p>
               </div>
             ))}

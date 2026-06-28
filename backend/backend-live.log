@@ -60,3 +60,286 @@ Error: listen EADDRINUSE: address already in use :::4000
 }
 
 Node.js v24.16.0
+[2J[3J[H[[90m22:15:11[0m] File change detected. Starting incremental compilation...
+
+[[90m22:15:12[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m22:15:13[0m] File change detected. Starting incremental compilation...
+
+[[90m22:15:15[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m22:15:16[0m] File change detected. Starting incremental compilation...
+
+[[90m22:15:17[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m22:15:19[0m] File change detected. Starting incremental compilation...
+
+[[90m22:15:21[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m22:15:21[0m] File change detected. Starting incremental compilation...
+
+[[90m22:15:22[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +15ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +5ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health, GET} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/places/featured, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/restaurants, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/media/hero-image, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/location/search, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/weather/forecast, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/trips, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/trips/:tripId, PUT} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/trips/:tripId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/recommendations/day-plan, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/discover, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/sync, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/restaurants/db, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/burgers, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/pizzas, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/photo, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/design-audit, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/patriot-events/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/patriot-events/recommend, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nyc-transit/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nyc-transit/recommend, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/home-visual-curator/audit, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/culture-curator/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/culture-curator/recommend, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nightlife-curator/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nightlife-curator/recommend, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/freshness-supervisor/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/freshness-supervisor/audit, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 31500  - [39m28/06/2026, 22:15:25 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +2ms[39m
+[2J[3J[H[[90m22:15:54[0m] File change detected. Starting incremental compilation...
+
+[[90m22:15:55[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +26ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +4ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health, GET} route[39m[38;5;3m +6ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/places/featured, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/restaurants, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/media/hero-image, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/location/search, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/weather/forecast, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/trips, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/trips/:tripId, PUT} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/trips/:tripId, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/recommendations/day-plan, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/discover, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/sync, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/restaurants/db, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/burgers, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/pizzas, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/photo, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/design-audit, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/patriot-events/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/patriot-events/recommend, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nyc-transit/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nyc-transit/recommend, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/home-visual-curator/audit, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/culture-curator/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/culture-curator/recommend, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nightlife-curator/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nightlife-curator/recommend, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/freshness-supervisor/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/freshness-supervisor/audit, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 11648  - [39m28/06/2026, 22:15:58 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +7ms[39m
+[31m[Nest] 11648  - [39m28/06/2026, 22:15:58 [31m  ERROR[39m [38;5;3m[NestApplication] [39m[31mError: listen EADDRINUSE: address already in use :::4000[39m[38;5;3m +5ms[39m
+node:net:2008
+    const ex = new UVExceptionWithHostPort(err, 'listen', address, port);
+               ^
+
+Error: listen EADDRINUSE: address already in use :::4000
+    at Server.setupListenHandle [as _listen2] (node:net:2008:16)
+    at listenInCluster (node:net:2065:12)
+    at Server.listen (node:net:2170:7)
+    at ExpressAdapter.listen (C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\@nestjs\platform-express\adapters\express-adapter.js:115:32)
+    at C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\@nestjs\core\nest-application.js:190:30
+    at new Promise (<anonymous>)
+    at NestApplication.listen (C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\@nestjs\core\nest-application.js:180:16)
+    at async bootstrap (C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\backend\src\main.ts:7:3) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 4000
+}
+
+Node.js v24.16.0
+[2J[3J[H[[90m22:18:09[0m] File change detected. Starting incremental compilation...
+
+[[90m22:18:10[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m22:18:12[0m] File change detected. Starting incremental compilation...
+
+[[90m22:18:13[0m] Found 0 errors. Watching for file changes.
+
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +35ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +9ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health, GET} route[39m[38;5;3m +9ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/places/featured, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/restaurants, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/media/hero-image, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/location/search, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/weather/forecast, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/trips, POST} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/trips/:tripId, PUT} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/trips/:tripId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/recommendations/day-plan, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/discover, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/sync, POST} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/restaurants/db, GET} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/burgers, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/pizzas, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/photo, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/design-audit, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/patriot-events/briefing, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/patriot-events/recommend, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nyc-transit/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nyc-transit/recommend, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/home-visual-curator/audit, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/culture-curator/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/culture-curator/recommend, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nightlife-curator/briefing, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nightlife-curator/recommend, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/freshness-supervisor/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/freshness-supervisor/audit, GET} route[39m[38;5;3m +8ms[39m
+[32m[Nest] 16300  - [39m28/06/2026, 22:18:16 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +5ms[39m
+[31m[Nest] 16300  - [39m28/06/2026, 22:18:16 [31m  ERROR[39m [38;5;3m[NestApplication] [39m[31mError: listen EADDRINUSE: address already in use :::4000[39m[38;5;3m +6ms[39m
+node:net:2008
+    const ex = new UVExceptionWithHostPort(err, 'listen', address, port);
+               ^
+
+Error: listen EADDRINUSE: address already in use :::4000
+    at Server.setupListenHandle [as _listen2] (node:net:2008:16)
+    at listenInCluster (node:net:2065:12)
+    at Server.listen (node:net:2170:7)
+    at ExpressAdapter.listen (C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\@nestjs\platform-express\adapters\express-adapter.js:115:32)
+    at C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\@nestjs\core\nest-application.js:190:30
+    at new Promise (<anonymous>)
+    at NestApplication.listen (C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\@nestjs\core\nest-application.js:180:16)
+    at async bootstrap (C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\backend\src\main.ts:7:3) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 4000
+}
+
+Node.js v24.16.0
+[2J[3J[H[[90m22:18:27[0m] File change detected. Starting incremental compilation...
+
+[[90m22:18:28[0m] Found 0 errors. Watching for file changes.
+
+[2J[3J[H[[90m22:18:30[0m] File change detected. Starting incremental compilation...
+
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[NestFactory] [39m[32mStarting Nest application...[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[InstanceLoader] [39m[32mAppModule dependencies initialized[39m[38;5;3m +31ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RoutesResolver] [39m[32mAppController {/}:[39m[38;5;3m +8ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/health, GET} route[39m[38;5;3m +9ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/places/featured, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/restaurants, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/media/hero-image, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/location/search, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/weather/forecast, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/trips, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/trips/:tripId, PUT} route[39m[38;5;3m +3ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/trips/:tripId, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/recommendations/day-plan, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/discover, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/sync, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/restaurants/db, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/burgers, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/pizzas, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/photo, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/restaurants/design-audit, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/patriot-events/briefing, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/patriot-events/recommend, POST} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nyc-transit/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nyc-transit/recommend, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/home-visual-curator/audit, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/culture-curator/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/culture-curator/recommend, POST} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nightlife-curator/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/nightlife-curator/recommend, POST} route[39m[38;5;3m +2ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/freshness-supervisor/briefing, GET} route[39m[38;5;3m +0ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[RouterExplorer] [39m[32mMapped {/agents/freshness-supervisor/audit, GET} route[39m[38;5;3m +1ms[39m
+[32m[Nest] 25512  - [39m28/06/2026, 22:18:31 [32m    LOG[39m [38;5;3m[NestApplication] [39m[32mNest application successfully started[39m[38;5;3m +4ms[39m
+[31m[Nest] 25512  - [39m28/06/2026, 22:18:31 [31m  ERROR[39m [38;5;3m[NestApplication] [39m[31mError: listen EADDRINUSE: address already in use :::4000[39m[38;5;3m +40ms[39m
+node:net:2008
+    const ex = new UVExceptionWithHostPort(err, 'listen', address, port);
+               ^
+
+Error: listen EADDRINUSE: address already in use :::4000
+    at Server.setupListenHandle [as _listen2] (node:net:2008:16)
+    at listenInCluster (node:net:2065:12)
+    at Server.listen (node:net:2170:7)
+    at ExpressAdapter.listen (C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\@nestjs\platform-express\adapters\express-adapter.js:115:32)
+    at C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\@nestjs\core\nest-application.js:190:30
+    at new Promise (<anonymous>)
+    at NestApplication.listen (C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\@nestjs\core\nest-application.js:180:16)
+    at async bootstrap (C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\backend\src\main.ts:7:3) {
+  code: 'EADDRINUSE',
+  errno: -4091,
+  syscall: 'listen',
+  address: '::',
+  port: 4000
+}
+
+Node.js v24.16.0
+ERROR: no se encontr¢ el proceso "28472".
+ERROR: no se encontr¢ el proceso "28472".
+node:child_process:1000
+    throw err;
+    ^
+
+Error: Command failed: taskkill /pid 28472 /T /F
+ERROR: no se encontrï¿½ el proceso "28472".
+
+    at genericNodeError (node:internal/errors:985:15)
+    at wrappedFn (node:internal/errors:539:14)
+    at checkExecSyncError (node:child_process:925:11)
+    at execSync (node:child_process:997:15)
+    at treeKillSync (C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\@nestjs\cli\lib\utils\tree-kill.js:7:38)
+    at C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\@nestjs\cli\actions\start.action.js:69:46
+    at Object.onWatchStatusChange (C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\@nestjs\cli\lib\compiler\watch-compiler.js:82:17)
+    at C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\typescript\lib\typescript.js:133916:30
+    at emitFilesAndReportErrors (C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\typescript\lib\typescript.js:133737:5)
+    at result.afterProgramCreate (C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\node_modules\typescript\lib\typescript.js:133912:5) {
+  status: 128,
+  signal: null,
+  output: [
+    null,
+    Buffer(0) [Uint8Array] [],
+    Buffer(43) [Uint8Array] [
+       69,  82,  82,  79,  82,  58, 32, 110, 111,
+       32, 115, 101,  32, 101, 110, 99, 111, 110,
+      116, 114, 162,  32, 101, 108, 32, 112, 114,
+      111,  99, 101, 115, 111,  32, 34,  50,  56,
+       52,  55,  50,  34,  46,  13, 10
+    ]
+  ],
+  pid: 14352,
+  stdout: Buffer(0) [Uint8Array] [],
+  stderr: Buffer(43) [Uint8Array] [
+     69,  82,  82,  79,  82,  58, 32, 110, 111,
+     32, 115, 101,  32, 101, 110, 99, 111, 110,
+    116, 114, 162,  32, 101, 108, 32, 112, 114,
+    111,  99, 101, 115, 111,  32, 34,  50,  56,
+     52,  55,  50,  34,  46,  13, 10
+  ]
+}
+
+Node.js v24.16.0
+npm error Lifecycle script `start:dev` failed with error:
+npm error code 1
+npm error path C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\backend
+npm error workspace api@0.0.1
+npm error location C:\Users\Ricardo Poblaciones\OneDrive - Universidad Pontificia Comillas\Escritorio\Web NY\Web-Nueva-York\backend
+npm error command failed
+npm error command C:\Windows\system32\cmd.exe /d /s /c nest start --watch

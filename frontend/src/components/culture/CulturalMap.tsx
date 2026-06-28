@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { getDeviceCoordinates } from "@/lib/geolocation";
 import { useSearchParams } from "next/navigation";
@@ -23,6 +23,11 @@ type CulturalRoute = {
 type Props = {
   points: CulturalMapPoint[];
   routes: CulturalRoute[];
+};
+
+type RouteGeometry = {
+  routePath: [number, number][];
+  userToRoutePath: [number, number][];
 };
 
 type MarkerLike = {
@@ -87,6 +92,52 @@ function escapeHtml(value: string) {
   });
 }
 
+async function fetchWalkingRouteGeometry(
+  stops: [number, number][],
+  userLocation: { lat: number; lng: number } | null,
+): Promise<RouteGeometry> {
+  const emptyGeometry: RouteGeometry = { routePath: [], userToRoutePath: [] };
+
+  if (stops.length < 2) {
+    return {
+      routePath: stops,
+      userToRoutePath: userLocation && stops.length ? [[userLocation.lat, userLocation.lng], stops[0]] : [],
+    };
+  }
+
+  const routeCoordinates = stops.map(([lat, lng]) => `${lng},${lat}`).join(";");
+  const routeUrl = `https://router.project-osrm.org/route/v1/foot/${routeCoordinates}?overview=full&geometries=geojson`;
+  const routeResponse = await fetch(routeUrl, {
+    headers: { Accept: "application/json" },
+  });
+  if (!routeResponse.ok) return emptyGeometry;
+
+  const routeJson = (await routeResponse.json()) as {
+    routes?: Array<{ geometry?: { coordinates?: [number, number][] } }>;
+  };
+  const routePath =
+    routeJson.routes?.[0]?.geometry?.coordinates?.map(([lng, lat]) => [lat, lng] as [number, number]) ?? [];
+
+  let userToRoutePath: [number, number][] = [];
+  if (userLocation && stops.length > 0) {
+    const userUrl =
+      `https://router.project-osrm.org/route/v1/foot/` +
+      `${userLocation.lng},${userLocation.lat};${stops[0][1]},${stops[0][0]}?overview=full&geometries=geojson`;
+    const userResponse = await fetch(userUrl, {
+      headers: { Accept: "application/json" },
+    });
+    if (userResponse.ok) {
+      const userJson = (await userResponse.json()) as {
+        routes?: Array<{ geometry?: { coordinates?: [number, number][] } }>;
+      };
+      userToRoutePath =
+        userJson.routes?.[0]?.geometry?.coordinates?.map(([lng, lat]) => [lat, lng] as [number, number]) ?? [];
+    }
+  }
+
+  return { routePath, userToRoutePath };
+}
+
 export default function CulturalMap({ points, routes }: Props) {
   const searchParams = useSearchParams();
   const routeFromUrl = searchParams.get("route") ?? "";
@@ -97,6 +148,8 @@ export default function CulturalMap({ points, routes }: Props) {
   const [activeRoute, setActiveRoute] = useState(routeFromUrl);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [locationError, setLocationError] = useState("");
+  const [routeGeometry, setRouteGeometry] = useState<RouteGeometry>({ routePath: [], userToRoutePath: [] });
+  const [routeGeometryError, setRouteGeometryError] = useState("");
 
   const categories = useMemo(() => ["Todos", ...Array.from(new Set(points.map((point) => point.category)))], [points]);
   const pointByName = useMemo(() => new Map(points.map((point) => [point.name, point])), [points]);
@@ -108,13 +161,10 @@ export default function CulturalMap({ points, routes }: Props) {
     () => selectedRoute?.stops.map((stop) => pointByName.get(stop)).filter((point): point is CulturalMapPoint => Boolean(point)) ?? [],
     [pointByName, selectedRoute],
   );
-  const visiblePoints = useMemo(
-    () => {
-      if (selectedRoutePoints.length) return selectedRoutePoints;
-      return activeCategory === "Todos" ? points : points.filter((point) => point.category === activeCategory);
-    },
-    [activeCategory, points, selectedRoutePoints],
-  );
+  const visiblePoints = useMemo(() => {
+    if (selectedRoutePoints.length) return selectedRoutePoints;
+    return activeCategory === "Todos" ? points : points.filter((point) => point.category === activeCategory);
+  }, [activeCategory, points, selectedRoutePoints]);
 
   function locateUser() {
     setLocationError("");
@@ -124,6 +174,48 @@ export default function CulturalMap({ points, routes }: Props) {
         setLocationError(message instanceof Error ? message.message : "No he podido obtener tu ubicación. Revisa permisos del navegador.");
       });
   }
+
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadRouteGeometry = async () => {
+      if (selectedRoutePoints.length === 0) {
+        if (!cancelled) {
+          setRouteGeometry({ routePath: [], userToRoutePath: [] });
+          setRouteGeometryError("");
+        }
+        return;
+      }
+
+      const fallbackRoutePath = selectedRoutePoints.map((point) => [point.lat, point.lng] as [number, number]);
+      const fallbackUserPath: [number, number][] =
+        userLocation && fallbackRoutePath.length > 0 ? [[userLocation.lat, userLocation.lng], fallbackRoutePath[0]] : [];
+
+      try {
+        const geometry = await fetchWalkingRouteGeometry(fallbackRoutePath, userLocation);
+        if (cancelled) return;
+
+        setRouteGeometry({
+          routePath: geometry.routePath.length > 1 ? geometry.routePath : fallbackRoutePath,
+          userToRoutePath: geometry.userToRoutePath.length > 1 ? geometry.userToRoutePath : fallbackUserPath,
+        });
+        setRouteGeometryError(
+          geometry.routePath.length > 1
+            ? ""
+            : "Mostrando una unión simple temporal mientras se resuelve el recorrido a pie.",
+        );
+      } catch {
+        if (cancelled) return;
+        setRouteGeometry({ routePath: fallbackRoutePath, userToRoutePath: fallbackUserPath });
+        setRouteGeometryError("No he podido cargar la ruta peatonal exacta y estoy mostrando una unión aproximada.");
+      }
+    };
+
+    void loadRouteGeometry();
+    return () => {
+      cancelled = true;
+    };
+  }, [selectedRoutePoints, userLocation]);
 
   useEffect(() => {
     let disposed = false;
@@ -179,11 +271,14 @@ export default function CulturalMap({ points, routes }: Props) {
 
       const bounds: [number, number][] = [];
       const routeCoords: [number, number][] = selectedRoutePoints.map((point) => [point.lat, point.lng]);
+      const renderedRoutePath = routeGeometry.routePath.length > 1 ? routeGeometry.routePath : routeCoords;
+      const renderedUserPath = routeGeometry.userToRoutePath;
+
       if (routeCoords.length > 1) {
-        L.polyline(routeCoords, { color: "#D4AF37", weight: 6, opacity: 0.95 }).addTo(layer);
+        L.polyline(renderedRoutePath, { color: "#D4AF37", weight: 6, opacity: 0.95 }).addTo(layer);
       }
-      if (userLocation && routeCoords.length > 0) {
-        L.polyline([[userLocation.lat, userLocation.lng], routeCoords[0]], {
+      if (userLocation && routeCoords.length > 0 && renderedUserPath.length > 1) {
+        L.polyline(renderedUserPath, {
           color: "#7A1E2C",
           weight: 4,
           opacity: 0.75,
@@ -227,11 +322,11 @@ export default function CulturalMap({ points, routes }: Props) {
       }
     };
 
-    renderMap();
+    void renderMap();
     return () => {
       disposed = true;
     };
-  }, [selectedRoutePoints, userLocation, visiblePoints]);
+  }, [routeGeometry, selectedRoutePoints, userLocation, visiblePoints]);
 
   return (
     <div className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
@@ -279,7 +374,7 @@ export default function CulturalMap({ points, routes }: Props) {
           </button>
           {userLocation ? (
             <p className="mt-2 text-sm font-semibold text-emerald-800">
-              Ubicacion detectada: {userLocation.lat.toFixed(4)}, {userLocation.lng.toFixed(4)}
+              Ubicación detectada: {userLocation.lat.toFixed(4)}, {userLocation.lng.toFixed(4)}
             </p>
           ) : null}
           {locationError ? <p className="mt-2 text-sm font-bold text-[#7A1E2C]">{locationError}</p> : null}
@@ -317,9 +412,12 @@ export default function CulturalMap({ points, routes }: Props) {
             ))}
           </div>
           {selectedRoute ? (
-            <p className="mt-3 text-sm font-semibold text-slate-700">
-              Ruta activa: {selectedRoute.name}. La línea dorada une las paradas; la línea granate conecta tu ubicación con la primera parada.
-            </p>
+            <div className="mt-3 space-y-2">
+              <p className="text-sm font-semibold text-slate-700">
+                Ruta activa: {selectedRoute.name}. La línea dorada sigue calles caminables entre paradas; la granate conecta tu ubicación con el inicio.
+              </p>
+              {routeGeometryError ? <p className="text-xs font-semibold text-amber-700">{routeGeometryError}</p> : null}
+            </div>
           ) : null}
         </div>
       </aside>
