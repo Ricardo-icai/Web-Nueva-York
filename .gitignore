@@ -1,5 +1,9 @@
-﻿node_modules/
+node_modules/
 **/node_modules/
 **/dist/
+.next/
+**/.next/
+.next-*/
+**/.next-*/
 .env
 .DS_Store
