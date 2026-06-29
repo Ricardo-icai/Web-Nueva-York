@@ -13,6 +13,7 @@ import { HomeVisualCuratorAgent } from './home-visual-curator.agent';
 import { CultureCuratorAgent } from './culture-curator.agent';
 import { NightlifeCuratorAgent } from './nightlife-curator.agent';
 import { FreshnessSupervisorAgent } from './freshness-supervisor.agent';
+import { ShoppingCuratorAgent } from './shopping-curator.agent';
 
 @Module({
   imports: [],
@@ -31,6 +32,7 @@ import { FreshnessSupervisorAgent } from './freshness-supervisor.agent';
     CultureCuratorAgent,
     NightlifeCuratorAgent,
     FreshnessSupervisorAgent,
+    ShoppingCuratorAgent,
   ],
 })
 export class AppModule {}

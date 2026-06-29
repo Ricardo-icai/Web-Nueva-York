@@ -59,31 +59,36 @@ export default async function Home() {
     },
     {
       ...dictionary.home.cards[3],
+      href: "/shopping",
+      image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1600&q=84",
+    },
+    {
+      ...dictionary.home.cards[4],
       href: "/culture",
       image: "https://images.pexels.com/photos/6133108/pexels-photo-6133108.jpeg?auto=compress&cs=tinysrgb&w=1600",
     },
     {
-      ...dictionary.home.cards[4],
+      ...dictionary.home.cards[5],
       href: "/viewpoints",
       image: "https://images.unsplash.com/photo-1499092346589-b9b6be3e94b2?auto=format&fit=crop&w=1600&q=84",
     },
     {
-      ...dictionary.home.cards[5],
+      ...dictionary.home.cards[6],
       href: "/fourth-of-july",
       image: "https://images.pexels.com/photos/12674747/pexels-photo-12674747.jpeg?auto=compress&cs=tinysrgb&w=1600",
     },
     {
-      ...dictionary.home.cards[6],
+      ...dictionary.home.cards[7],
       href: "/nightlife",
       image: "https://images.unsplash.com/photo-1514565131-fce0801e5785?auto=format&fit=crop&w=1600&q=84",
     },
     {
-      ...dictionary.home.cards[7],
+      ...dictionary.home.cards[8],
       href: "/esim-usa",
       image: "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=1600&q=84",
     },
     {
-      ...dictionary.home.cards[8],
+      ...dictionary.home.cards[9],
       href: "/onboarding",
       image: "https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?auto=format&fit=crop&w=1600&q=84",
     },

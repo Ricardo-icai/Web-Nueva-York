@@ -15,6 +15,7 @@ export default function MenuDropdown() {
       { href: "/", label: dictionary.nav.home },
       { href: "/route-planner", label: dictionary.nav.planMyTrip },
       { href: "/restaurants", label: dictionary.nav.whereToEat },
+      { href: "/shopping", label: dictionary.nav.shopping },
       { href: "/nightlife", label: dictionary.nav.nightlife },
       { href: "/culture", label: dictionary.nav.culture },
       { href: "/viewpoints", label: dictionary.nav.rooftops },

@@ -16,6 +16,7 @@ export type Dictionary = {
     home: string;
     planMyTrip: string;
     whereToEat: string;
+    shopping: string;
     nightlife: string;
     culture: string;
     rooftops: string;
@@ -116,6 +117,7 @@ export const dictionaries: Record<Language, Dictionary> = {
       home: "Inicio",
       planMyTrip: "Organízame la ruta",
       whereToEat: "Sitios para comer",
+      shopping: "Compras",
       nightlife: "Noche",
       culture: "Cultura",
       rooftops: "Rooftops",
@@ -139,12 +141,13 @@ export const dictionaries: Record<Language, Dictionary> = {
         { title: "Transporte público", subtitle: "Metro, OMNY, AirTrain, ferries y buses para moverte sin fricción.", label: "Primero" },
         { title: "Organízame la ruta", subtitle: "Planning automático por días, personas, ritmo y alojamiento.", label: "Ruta" },
         { title: "Sitios para comer", subtitle: "Restaurantes, pizza, hamburguesas, favoritos y mapa de locales.", label: "Comer" },
+        { title: "Compras", subtitle: "Tiendas famosas, lujo, sneakers, deporte y mapa para ver que te pilla cerca.", label: "Shopping" },
         { title: "Cultura", subtitle: "Museos, barrios, cine y planes culturales bien elegidos.", label: "Cultura" },
         { title: "Rooftops", subtitle: "Miradores, rooftops, vistas virales y enlaces para entradas.", label: "Vistas" },
         { title: "4 de Julio", subtitle: "Fuegos, Sail4th 250, Elcano, grandes veleros y eventos oficiales.", label: "Eventos" },
         { title: "Noche", subtitle: "Discotecas, rooftops, cocktail bars, speakeasies, mapa y filtros para salir por Nueva York.", label: "Noche" },
         { title: "eSIM para EE. UU.", subtitle: "Compara planes y activa tu móvil en pocos pasos.", label: "Conectividad" },
-        { title: "Editar perfil", subtitle: "Cambia fechas, alojamiento, viajeros y ritmo del viaje.", label: "Tu viaje" },
+        { title: "Editar perfil", subtitle: "Cambia fechas, alojamiento y viajeros de tu viaje.", label: "Tu viaje" },
       ],
     },
     auth: {
@@ -220,6 +223,7 @@ export const dictionaries: Record<Language, Dictionary> = {
       home: "Home",
       planMyTrip: "Plan My Trip",
       whereToEat: "Where to Eat",
+      shopping: "Shopping",
       nightlife: "Nightlife",
       culture: "Culture",
       rooftops: "Rooftops",
@@ -243,12 +247,13 @@ export const dictionaries: Record<Language, Dictionary> = {
         { title: "Public Transit", subtitle: "Subway, OMNY, AirTrain, ferries, and buses to help you move around smoothly.", label: "Start Here" },
         { title: "Plan My Trip", subtitle: "Automatic trip planning by days, travelers, pace, and accommodation.", label: "Route" },
         { title: "Where to Eat", subtitle: "Restaurants, pizza, burgers, favorites, and a live dining map.", label: "Food" },
+        { title: "Shopping", subtitle: "Famous stores, luxury, sneakers, sportswear, and a map to see what is near you.", label: "Shopping" },
         { title: "Culture", subtitle: "Museums, neighborhoods, film spots, and carefully chosen cultural plans.", label: "Culture" },
         { title: "Rooftops", subtitle: "Observation decks, rooftops, viral views, and direct ticket links.", label: "Skyline" },
         { title: "4th of July", subtitle: "Fireworks, Sail4th 250, Elcano, tall ships, and official events.", label: "Events" },
         { title: "Nightlife", subtitle: "Clubs, rooftops, cocktail bars, speakeasies, maps, and filters for going out in New York.", label: "Night" },
         { title: "eSIM for the U.S.", subtitle: "Compare plans and get your phone ready in just a few steps.", label: "Connectivity" },
-        { title: "Edit Profile", subtitle: "Update dates, accommodation, travelers, and the pace of your trip.", label: "Your Trip" },
+        { title: "Edit Profile", subtitle: "Update dates, accommodation, and travelers for your trip.", label: "Your Trip" },
       ],
     },
     auth: {

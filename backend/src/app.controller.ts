@@ -12,6 +12,7 @@ import { HomeVisualCuratorAgent } from './home-visual-curator.agent';
 import { CultureCuratorAgent } from './culture-curator.agent';
 import { NightlifeCuratorAgent } from './nightlife-curator.agent';
 import { FreshnessSupervisorAgent } from './freshness-supervisor.agent';
+import { ShoppingCuratorAgent } from './shopping-curator.agent';
 
 @Controller()
 export class AppController {
@@ -28,6 +29,7 @@ export class AppController {
     private readonly cultureCuratorAgent: CultureCuratorAgent,
     private readonly nightlifeCuratorAgent: NightlifeCuratorAgent,
     private readonly freshnessSupervisorAgent: FreshnessSupervisorAgent,
+    private readonly shoppingCuratorAgent: ShoppingCuratorAgent,
   ) {}
 
   @Get('health')
@@ -208,5 +210,10 @@ export class AppController {
   @Get('agents/freshness-supervisor/audit')
   getFreshnessSupervisorAudit() {
     return this.freshnessSupervisorAgent.audit();
+  }
+
+  @Get('agents/shopping-curator/briefing')
+  getShoppingCuratorBriefing() {
+    return this.shoppingCuratorAgent.getBriefing();
   }
 }

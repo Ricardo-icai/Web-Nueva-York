@@ -88,12 +88,10 @@ export default function OnboardingPage() {
   const [missingFields, setMissingFields] = useState<string[]>([]);
   const [heroImage, setHeroImage] = useState<string>("/images/hero-nyc.svg");
   const [tripId, setTripId] = useState<string | null>(null);
-  const [tripName, setTripName] = useState("");
   const [nationality, setNationality] = useState("ES");
   const [travelers, setTravelers] = useState(1);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [pace, setPace] = useState<Pace>("normal");
   const [accommodation, setAccommodation] = useState("");
   const [suggestions, setSuggestions] = useState<LocationSuggestion[]>([]);
   const [selectedLocation, setSelectedLocation] = useState<LocationSuggestion | null>(null);
@@ -103,12 +101,10 @@ export default function OnboardingPage() {
       const saved = (await loadTravelProfile(TRAVEL_PROFILE_KEY)) as SavedTravelProfile | null;
       if (!saved) return;
       setTripId(saved.tripId ?? null);
-      setTripName(saved.name ?? "");
       setNationality(saved.nationality ?? "ES");
       setTravelers(saved.travelers ?? 1);
       setStartDate(saved.startDate ?? "");
       setEndDate(saved.endDate ?? "");
-      setPace(saved.pace ?? "normal");
       setAccommodation(saved.accommodation?.address ?? "");
       if (saved.accommodation?.address) {
         setSelectedLocation({
@@ -176,13 +172,11 @@ export default function OnboardingPage() {
 
   function validateProfile() {
     const missing: string[] = [];
-    if (!tripName.trim()) missing.push("nombre del viaje");
     if (!nationality.trim()) missing.push("nacionalidad principal");
     if (!Number.isFinite(travelers) || travelers < 1) missing.push("número de viajeros");
     if (!accommodation.trim()) missing.push("alojamiento");
     if (!startDate) missing.push("fecha de llegada");
     if (!endDate) missing.push("fecha de salida");
-    if (!pace) missing.push("ritmo del viaje");
 
     if (startDate && endDate && endDate < startDate) {
       missing.push("fecha de salida posterior a la llegada");
@@ -212,13 +206,13 @@ export default function OnboardingPage() {
     };
 
     const payload = {
-      name: tripName.trim(),
+      name: "Viaje a Nueva York",
       nationality,
       language: "es",
       startDate,
       endDate,
       travelers,
-      pace,
+      pace: "normal" as Pace,
       accommodation: {
         address: accommodationPayload.label.trim(),
         lat: accommodationPayload.lat,
@@ -267,7 +261,7 @@ export default function OnboardingPage() {
             Edita los datos base de tu viaje a Nueva York
           </h1>
           <p className="mt-4 text-sm font-semibold leading-6 text-slate-700">
-            Cambia alojamiento, fechas, número de viajeros y ritmo. Guardaremos este perfil para tu usuario.
+            Cambia alojamiento, fechas y número de viajeros. Guardaremos este perfil para tu usuario.
           </p>
         </div>
         <div className="relative min-h-[260px] overflow-hidden rounded-md border-2 border-slate-950">
@@ -283,15 +277,6 @@ export default function OnboardingPage() {
             <p className="mt-1">Falta: {missingFields.join(", ")}.</p>
           </div>
         ) : null}
-
-        <input
-          required
-          name="name"
-          value={tripName}
-          onChange={(event) => setTripName(event.target.value)}
-          placeholder="Nombre del viaje"
-          className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-4 py-3 font-bold"
-        />
 
         <div className="grid gap-4 md:grid-cols-2">
           <div className="grid gap-2">
@@ -387,22 +372,6 @@ export default function OnboardingPage() {
               className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-4 py-3 font-bold"
             />
           </div>
-        </div>
-
-        <div className="grid gap-2">
-          <label htmlFor="pace" className="text-sm font-medium text-slate-600">Ritmo del viaje</label>
-          <select
-            id="pace"
-            name="pace"
-            required
-            value={pace}
-            onChange={(event) => setPace(event.target.value as Pace)}
-            className="rounded-md border-2 border-slate-950 bg-[#fffdf4] px-4 py-3 font-bold"
-          >
-            <option value="relajado">Relajado</option>
-            <option value="normal">Normal</option>
-            <option value="intenso">Intenso</option>
-          </select>
         </div>
 
         {error ? <p className="text-sm text-rose-600">{error}</p> : null}

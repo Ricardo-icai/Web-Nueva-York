@@ -24,22 +24,18 @@ type SavedTravelProfile = {
 const TRAVEL_PROFILE_KEY = "nyc_travel_profile_v1";
 
 type MissingFieldKey =
-  | "tripName"
   | "nationality"
   | "arrivalDate"
   | "departureDate"
   | "travelers"
-  | "pace"
   | "accommodation";
 
 function missingProfileFields(profile: SavedTravelProfile | null) {
   const missing: MissingFieldKey[] = [];
-  if (!profile?.name?.trim()) missing.push("tripName");
   if (!profile?.nationality?.trim()) missing.push("nationality");
   if (!profile?.startDate) missing.push("arrivalDate");
   if (!profile?.endDate) missing.push("departureDate");
   if (!profile?.travelers || profile.travelers < 1) missing.push("travelers");
-  if (!profile?.pace) missing.push("pace");
   if (
     !profile?.accommodation?.address?.trim() ||
     typeof profile.accommodation.lat !== "number" ||
