@@ -16,10 +16,7 @@ export default function LanguageToggle() {
 
   return (
     <div className="flex items-center gap-1 rounded-full border border-slate-950/15 bg-white/80 p-1">
-      {([
-        ["es", dictionary.common.spanish],
-        ["en", dictionary.common.english],
-      ] as const).map(([value, label]) => (
+      {(["es", "en"] as const).map((value) => (
         <button
           key={value}
           type="button"
@@ -30,7 +27,7 @@ export default function LanguageToggle() {
           aria-pressed={language === value}
           title={dictionary.common.language}
         >
-          {label === "Español" ? "ES" : label === "English" ? "EN" : value.toUpperCase()}
+          {value.toUpperCase()}
         </button>
       ))}
     </div>

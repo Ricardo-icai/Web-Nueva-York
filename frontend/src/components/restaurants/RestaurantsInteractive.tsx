@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { FAVORITES_UPDATED_EVENT } from "@/components/favorites/FavoriteToggleButton";
+import { useLanguage } from "@/components/i18n/LanguageProvider";
 import RestaurantLogoImage from "@/components/restaurants/RestaurantLogoImage";
 import { buildOfficialWebsiteSearchUrl } from "@/lib/restaurants/build-restaurant-links";
 import { buildTransitPlannerUrl } from "@/lib/transit-planner";
@@ -64,6 +65,7 @@ function groupKey(r: Restaurant) {
 }
 
 export default function RestaurantsInteractive({ restaurants, mapRestaurants, userLocation, afterMapSlot }: Props) {
+  const { language } = useLanguage();
   const [favoritesLoaded, setFavoritesLoaded] = useState(false);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [geocodedMapRestaurants, setGeocodedMapRestaurants] = useState<{ key: string; items: Restaurant[] } | null>(null);
@@ -175,27 +177,27 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
       <article key={cardKey ?? restaurant.id} className="overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
         <div className="relative h-56 w-full">
           <RestaurantLogoImage
-            name={restaurant.name}
-            officialWebsite={restaurant.officialWebsite}
-            fallbackImageUrl={restaurant.imageUrl}
-          />
+              name={restaurant.name}
+              officialWebsite={restaurant.officialWebsite}
+              fallbackImageUrl={restaurant.imageUrl}
+            />
         </div>
         <div className="space-y-2 p-5">
           <div className="flex items-center justify-between gap-3">
             <h3 className="text-lg font-semibold text-slate-900">{restaurant.name}</h3>
             <button type="button" onClick={() => toggleFavorite(restaurant.id)} className="rounded-full border border-amber-400 px-3 py-1 text-xs font-semibold text-amber-700">
-              {favorite ? "Favorito guardado" : "Favorito"}
+              {favorite ? (language === "en" ? "Saved favorite" : "Favorito guardado") : language === "en" ? "Favorite" : "Favorito"}
             </button>
           </div>
           <p className="text-sm text-slate-700">{restaurant.cuisine.join(", ")}</p>
-          <p className="text-sm text-slate-700">{restaurant.neighborhood ?? restaurant.address ?? "Address unavailable"}</p>
-          <p className="text-sm text-slate-900">{typeof restaurant.googleRating === "number" ? `Rating ${restaurant.googleRating.toFixed(1)} - ${restaurant.googleReviewCount ?? 0} reviews` : "Rating unavailable"}</p>
-          <p className="text-sm text-slate-900">{typeof estimated === "number" ? `Estimated from $${estimated}/person` : "Price estimate unavailable"}</p>
+          <p className="text-sm text-slate-700">{restaurant.neighborhood ?? restaurant.address ?? (language === "en" ? "Address unavailable" : "Dirección no disponible")}</p>
+          <p className="text-sm text-slate-900">{typeof restaurant.googleRating === "number" ? `Rating ${restaurant.googleRating.toFixed(1)} - ${restaurant.googleReviewCount ?? 0} ${language === "en" ? "reviews" : "reseñas"}` : language === "en" ? "Rating unavailable" : "Valoración no disponible"}</p>
+          <p className="text-sm text-slate-900">{typeof estimated === "number" ? `${language === "en" ? "Estimated from" : "Desde"} $${estimated}/${language === "en" ? "person" : "persona"}` : language === "en" ? "Price estimate unavailable" : "Precio orientativo no disponible"}</p>
           <div className="flex flex-wrap gap-2">
             <Link href={restaurant.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-3 py-1 text-sm">Google Maps</Link>
-            <Link href={transitHref} className="rounded-full border border-slate-300 px-3 py-1 text-sm">Como llegar</Link>
+            <Link href={transitHref} className="rounded-full border border-slate-300 px-3 py-1 text-sm">{language === "en" ? "Transit directions" : "Cómo llegar"}</Link>
             <Link href={websiteHref} target="_blank" className="rounded-full border border-amber-500/40 bg-amber-500/10 px-3 py-1 text-sm">
-              {restaurant.officialWebsite ? "Website" : "Buscar web oficial"}
+              {restaurant.officialWebsite ? (language === "en" ? "Official website" : "Web oficial") : language === "en" ? "Find official website" : "Buscar web oficial"}
             </Link>
           </div>
         </div>
@@ -339,7 +341,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
         marker.bindTooltip(r.name, { direction: "top", offset: [0, -12], opacity: 0.95 });
         marker.on("mouseover", () => marker.openTooltip());
         marker.on("mouseout", () => marker.closeTooltip());
-        marker.bindPopup(`<div style="min-width:190px"><strong>${r.name}</strong><br/>${typeof r.googleRating === "number" ? `Rating ${r.googleRating.toFixed(1)} - ${r.googleReviewCount ?? 0} reviews` : "No rating"}<br/>${r.cuisine[0] ?? "Restaurant"}<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a href="${websiteUrl}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">${r.officialWebsite ? "Web oficial" : "Buscar web oficial"}</a><a href="${directionsUrl}" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">Como llegar</a></div></div>`);
+        marker.bindPopup(`<div style="min-width:190px"><strong>${r.name}</strong><br/>${typeof r.googleRating === "number" ? `Rating ${r.googleRating.toFixed(1)} - ${r.googleReviewCount ?? 0} ${language === "en" ? "reviews" : "reseñas"}` : language === "en" ? "No rating" : "Sin valoración"}<br/>${r.cuisine[0] ?? (language === "en" ? "Restaurant" : "Restaurante")}<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a href="${websiteUrl}" target="_blank" rel="noopener noreferrer" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">${r.officialWebsite ? (language === "en" ? "Official website" : "Web oficial") : language === "en" ? "Find official website" : "Buscar web oficial"}</a><a href="${directionsUrl}" style="padding:4px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#1f2937;text-decoration:none;font-size:12px">${language === "en" ? "Transit directions" : "Cómo llegar"}</a></div></div>`);
         marker.addTo(layer);
         bounds.push([r.location.lat, r.location.lng]);
       }
@@ -347,7 +349,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
       if (userLocation) {
         const userIcon = L.divIcon({ className: "", html: `<div style="display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:9999px;background:#16a34a;color:#fff;font-weight:700;font-size:12px;box-shadow:0 1px 4px rgba(0,0,0,.4)">TU</div>`, iconSize: [24, 24], iconAnchor: [12, 12] });
         const you = L.marker([userLocation.lat, userLocation.lng], { icon: userIcon });
-        you.bindTooltip("Tu ubicacion", { direction: "top", offset: [0, -12], opacity: 0.95 });
+        you.bindTooltip(language === "en" ? "Your location" : "Tu ubicación", { direction: "top", offset: [0, -12], opacity: 0.95 });
         you.addTo(layer);
         bounds.push([userLocation.lat, userLocation.lng]);
       }
@@ -361,27 +363,26 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
     return () => {
       disposed = true;
     };
-  }, [resolvedMapRestaurants, userLocation]);
+  }, [language, resolvedMapRestaurants, userLocation]);
 
   return (
     <>
       <section className="mx-auto mt-8 max-w-6xl overflow-hidden rounded-3xl border border-stone-200 bg-white shadow-sm">
         <div className="border-b border-stone-200 px-5 py-4">
-          <h2 className="text-lg font-semibold text-slate-900">Map</h2>
-          <p className="text-sm text-slate-600">Todos los locales en rojo. Tu ubicacion en verde.</p>
+          <h2 className="text-lg font-semibold text-slate-900">{language === "en" ? "Map" : "Mapa"}</h2>
         </div>
         <div ref={mapHostRef} className="h-96 w-full" />
       </section>
 
       <section className="mx-auto mt-8 max-w-6xl">
-        <h2 className="text-2xl font-bold text-slate-900">Favoritos</h2>
-        {favoriteRestaurants.length === 0 ? <p className="mt-2 text-sm text-slate-600">Aun no has marcado favoritos.</p> : <div className="mt-4 grid gap-6 md:grid-cols-2 xl:grid-cols-3">{favoriteRestaurants.map((r, idx) => renderCard(r, `fav-${r.id}-${idx}`))}</div>}
+        <h2 className="text-2xl font-bold text-slate-900">{language === "en" ? "Favorites" : "Favoritos"}</h2>
+        {favoriteRestaurants.length === 0 ? <p className="mt-2 text-sm text-slate-600">{language === "en" ? "You have not saved any favorites yet." : "Aún no has marcado favoritos."}</p> : <div className="mt-4 grid gap-6 md:grid-cols-2 xl:grid-cols-3">{favoriteRestaurants.map((r, idx) => renderCard(r, `fav-${r.id}-${idx}`))}</div>}
       </section>
 
       {afterMapSlot}
 
       <section className="mx-auto mt-8 max-w-6xl space-y-6">
-        <h2 className="text-2xl font-bold text-slate-900">Restaurants By Food Type</h2>
+        <h2 className="text-2xl font-bold text-slate-900">{language === "en" ? "Restaurants by cuisine" : "Restaurantes por tipo de comida"}</h2>
         {grouped.slice(0, visibleGroups).map((group) => (
           <div key={group.name} className="space-y-3">
             <h3 className="text-lg font-semibold text-slate-900">{group.name}</h3>
@@ -399,7 +400,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
                 }
                 className="rounded-md border-2 border-slate-950 bg-white px-4 py-2 text-xs font-black uppercase tracking-[0.14em] text-slate-950 shadow-[3px_3px_0_#111827]"
               >
-                Ver mas {group.name}
+                {language === "en" ? `See more ${group.name}` : `Ver más ${group.name}`}
               </button>
             ) : null}
           </div>
@@ -410,7 +411,7 @@ export default function RestaurantsInteractive({ restaurants, mapRestaurants, us
             onClick={() => setVisibleGroups((current) => Math.min(current + 6, grouped.length))}
             className="rounded-md border-2 border-slate-950 bg-red-700 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white shadow-[4px_4px_0_#111827]"
           >
-            Ver mas categorias
+            {language === "en" ? "See more categories" : "Ver más categorías"}
           </button>
         ) : null}
       </section>

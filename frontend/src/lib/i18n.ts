@@ -64,6 +64,15 @@ export type Dictionary = {
   profileBanner: {
     missingPrefix: string;
     completeProfile: string;
+    fields: {
+      tripName: string;
+      nationality: string;
+      arrivalDate: string;
+      departureDate: string;
+      travelers: string;
+      pace: string;
+      accommodation: string;
+    };
   };
   restaurantSearch: {
     label: string;
@@ -104,17 +113,17 @@ export const dictionaries: Record<Language, Dictionary> = {
       english: "Inglés",
     },
     nav: {
-      home: "Home",
+      home: "Inicio",
       planMyTrip: "Organízame la ruta",
-      whereToEat: "Tengo Hambre",
-      nightlife: "Nightlife",
+      whereToEat: "Sitios para comer",
+      nightlife: "Noche",
       culture: "Cultura",
-      rooftops: "Roof Tops",
+      rooftops: "Rooftops",
       fourthOfJuly: "4 de Julio",
       esim: "eSIM para EE. UU.",
-      editProfile: "Editar mi perfil",
+      editProfile: "Mi perfil",
       menu: "Menú",
-      drawerNote: "Rutas, mapas, cultura y planes de Nueva York en una sola guía.",
+      drawerNote: "Rutas, mapas y planes de Nueva York en una sola guía.",
       closeMenu: "Cerrar menú",
     },
     home: {
@@ -129,38 +138,47 @@ export const dictionaries: Record<Language, Dictionary> = {
       cards: [
         { title: "Transporte público", subtitle: "Metro, OMNY, AirTrain, ferries y buses para moverte sin fricción.", label: "Primero" },
         { title: "Organízame la ruta", subtitle: "Planning automático por días, personas, ritmo y alojamiento.", label: "Ruta" },
-        { title: "Tengo Hambre", subtitle: "Restaurantes, pizza, hamburguesas, favoritos y mapa de locales.", label: "Food" },
+        { title: "Sitios para comer", subtitle: "Restaurantes, pizza, hamburguesas, favoritos y mapa de locales.", label: "Comer" },
         { title: "Cultura", subtitle: "Museos, barrios, cine y planes culturales bien elegidos.", label: "Cultura" },
-        { title: "Roof Tops", subtitle: "Miradores, rooftops, vistas virales y enlaces para entradas.", label: "Skyline" },
+        { title: "Rooftops", subtitle: "Miradores, rooftops, vistas virales y enlaces para entradas.", label: "Vistas" },
         { title: "4 de Julio", subtitle: "Fuegos, Sail4th 250, Elcano, grandes veleros y eventos oficiales.", label: "Eventos" },
-        { title: "Nightlife", subtitle: "Discotecas, rooftops, cocktail bars, speakeasies, mapa y filtros para salir por Nueva York.", label: "Night" },
+        { title: "Noche", subtitle: "Discotecas, rooftops, cocktail bars, speakeasies, mapa y filtros para salir por Nueva York.", label: "Noche" },
         { title: "eSIM para EE. UU.", subtitle: "Compara planes y activa tu móvil en pocos pasos.", label: "Conectividad" },
         { title: "Editar perfil", subtitle: "Cambia fechas, alojamiento, viajeros y ritmo del viaje.", label: "Tu viaje" },
       ],
     },
     auth: {
       planWithAccount: "Planifica Nueva York con tu cuenta.",
-      accountIntro: "Para usar la web tienes que registrarte o iniciar sesión. Así guardamos tu perfil, tu viaje y tus favoritos.",
+      accountIntro: "Para usar la web, inicia sesión o crea tu cuenta. Así guardaremos tu perfil, tu viaje y tus favoritos.",
       enter: "Entrar",
-      privatePlanner: "Private NYC Planner",
-      accessTrip: "Entra a tu viaje de Nueva York",
+      privatePlanner: "Tu planificador privado de Nueva York",
+      accessTrip: "Entra en tu viaje a Nueva York",
       accessTripCopy: "Guarda tu sesión, tus preferencias y tus favoritos por usuario antes de entrar en la web.",
       supabaseConnected: "Conectado a Supabase Auth: cada usuario queda registrado con su propia cuenta.",
       supabaseMissing: "Falta la configuración de Supabase para poder entrar en la web.",
-      login: "Entrar",
+      login: "Iniciar sesión",
       register: "Registro",
-      email: "Correo",
+      email: "Correo electrónico",
       password: "Contraseña",
       createAccount: "Crear cuenta",
       alreadyHaveAccount: "Ya tengo cuenta",
       processing: "Procesando...",
-      createUser: "Crear usuario",
+      createUser: "Crear cuenta",
       signOut: "Salir",
       supabaseOnly: "Esta web funciona solo con Supabase. Añade las variables `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` en Render para activar el acceso.",
     },
     profileBanner: {
-      missingPrefix: "Completa tu perfil del viaje para que las recomendaciones, filtros y rutas se ajusten mejor. Falta:",
+      missingPrefix: "Completa tu perfil para que las rutas y recomendaciones se ajusten mejor a tu viaje. Falta:",
       completeProfile: "Completar perfil",
+      fields: {
+        tripName: "nombre del viaje",
+        nationality: "nacionalidad",
+        arrivalDate: "fecha de llegada",
+        departureDate: "fecha de salida",
+        travelers: "viajeros",
+        pace: "ritmo",
+        accommodation: "alojamiento",
+      },
     },
     restaurantSearch: {
       label: "Buscar por nombre",
@@ -207,9 +225,9 @@ export const dictionaries: Record<Language, Dictionary> = {
       rooftops: "Rooftops",
       fourthOfJuly: "4th of July",
       esim: "eSIM for the U.S.",
-      editProfile: "Edit Profile",
+      editProfile: "My Profile",
       menu: "Menu",
-      drawerNote: "Routes, maps, culture, and New York plans in one polished guide.",
+      drawerNote: "Routes, maps, and New York plans in one polished guide.",
       closeMenu: "Close menu",
     },
     home: {
@@ -235,9 +253,9 @@ export const dictionaries: Record<Language, Dictionary> = {
     },
     auth: {
       planWithAccount: "Plan New York with your account.",
-      accountIntro: "To use the site, you need to sign up or log in. That way we can save your profile, your trip, and your favorites.",
+      accountIntro: "To use the site, sign up or log in. That way we can save your profile, your trip, and your favorites.",
       enter: "Enter",
-      privatePlanner: "Private NYC Planner",
+      privatePlanner: "Your private New York trip planner",
       accessTrip: "Access your New York trip",
       accessTripCopy: "Save your session, preferences, and favorites before you enter the site.",
       supabaseConnected: "Connected to Supabase Auth: each user is stored with their own account.",
@@ -254,8 +272,17 @@ export const dictionaries: Record<Language, Dictionary> = {
       supabaseOnly: "This site only works with Supabase. Add `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` in Render to enable access.",
     },
     profileBanner: {
-      missingPrefix: "Complete your trip profile so recommendations, filters, and routes fit you better. Missing:",
+      missingPrefix: "Complete your profile so routes and recommendations fit your trip better. Missing:",
       completeProfile: "Complete profile",
+      fields: {
+        tripName: "trip name",
+        nationality: "nationality",
+        arrivalDate: "arrival date",
+        departureDate: "departure date",
+        travelers: "travelers",
+        pace: "travel pace",
+        accommodation: "accommodation",
+      },
     },
     restaurantSearch: {
       label: "Search by name",

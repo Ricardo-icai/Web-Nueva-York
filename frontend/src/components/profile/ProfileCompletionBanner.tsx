@@ -23,27 +23,36 @@ type SavedTravelProfile = {
 
 const TRAVEL_PROFILE_KEY = "nyc_travel_profile_v1";
 
+type MissingFieldKey =
+  | "tripName"
+  | "nationality"
+  | "arrivalDate"
+  | "departureDate"
+  | "travelers"
+  | "pace"
+  | "accommodation";
+
 function missingProfileFields(profile: SavedTravelProfile | null) {
-  const missing: string[] = [];
-  if (!profile?.name?.trim()) missing.push("nombre del viaje");
-  if (!profile?.nationality?.trim()) missing.push("nacionalidad");
-  if (!profile?.startDate) missing.push("fecha de llegada");
-  if (!profile?.endDate) missing.push("fecha de salida");
-  if (!profile?.travelers || profile.travelers < 1) missing.push("viajeros");
-  if (!profile?.pace) missing.push("ritmo");
+  const missing: MissingFieldKey[] = [];
+  if (!profile?.name?.trim()) missing.push("tripName");
+  if (!profile?.nationality?.trim()) missing.push("nationality");
+  if (!profile?.startDate) missing.push("arrivalDate");
+  if (!profile?.endDate) missing.push("departureDate");
+  if (!profile?.travelers || profile.travelers < 1) missing.push("travelers");
+  if (!profile?.pace) missing.push("pace");
   if (
     !profile?.accommodation?.address?.trim() ||
     typeof profile.accommodation.lat !== "number" ||
     typeof profile.accommodation.lng !== "number"
   ) {
-    missing.push("alojamiento");
+    missing.push("accommodation");
   }
   return missing;
 }
 
 export default function ProfileCompletionBanner() {
   const pathname = usePathname();
-  const [missing, setMissing] = useState<string[]>([]);
+  const [missing, setMissing] = useState<MissingFieldKey[]>([]);
   const { dictionary } = useLanguage();
 
   useEffect(() => {
@@ -73,7 +82,7 @@ export default function ProfileCompletionBanner() {
     <div className="border-b-2 border-slate-950 bg-[#fff3d1] px-5 py-3">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3">
         <p className="text-sm font-black text-slate-950">
-          {dictionary.profileBanner.missingPrefix} {missing.join(", ")}.
+          {dictionary.profileBanner.missingPrefix} {missing.map((field) => dictionary.profileBanner.fields[field]).join(", ")}.
         </p>
         <Link
           href="/onboarding"

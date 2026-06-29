@@ -10,6 +10,7 @@ import { getNycPizzaHallOfFame } from "@/lib/restaurants/enrich-nyc-pizza";
 import { getRestaurantsIntelligence } from "@/lib/restaurants/enrich-restaurant";
 import { isInPriceRange } from "@/lib/restaurants/estimate-price";
 import { buildOfficialWebsiteSearchUrl } from "@/lib/restaurants/build-restaurant-links";
+import { getServerLanguage } from "@/lib/server-language";
 import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 import type { NycPizzaHallOfFamePlace, Restaurant } from "@/types/restaurants";
 
@@ -133,6 +134,7 @@ function slimRestaurant(restaurant: Restaurant): Restaurant {
 }
 
 export default async function RestaurantsPage({ searchParams }: RestaurantsPageProps) {
+  const language = await getServerLanguage();
   const params = await searchParams;
   const cuisine = one(params.cuisine).toLowerCase();
   const priceRange = one(params.priceRange);
@@ -258,6 +260,7 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
     neighborhood: restaurant.neighborhood ?? restaurant.address ?? null,
     googleMapsUrl: restaurant.googleMapsUrl,
   }));
+  const isEnglish = language === "en";
 
   return (
     <main className="nyc-page-shell page-bg-food">
@@ -291,10 +294,7 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
 
               {burgerHallOfFameForClient.length > 0 ? (
               <section className="mx-auto mt-8 max-w-6xl space-y-4">
-                <h2 className="font-american-diner text-3xl text-slate-900">NYC Burger Hall of Fame</h2>
-                <p className="text-sm text-slate-700">
-                  Los burgers mejor valorados y de moda, ordenados por calidad, distancia, rating y resenas.
-                </p>
+                <h2 className="font-american-diner text-3xl text-slate-900">{isEnglish ? "NYC Burger Hall of Fame" : "Hall of Fame de burgers en Nueva York"}</h2>
                 <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                   {burgerHallOfFameForClient
                     .sort((a, b) => {
@@ -330,37 +330,37 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
                             <FavoriteToggleButton baseKey={RESTAURANT_FAVORITES_KEY} favoriteType="restaurants" itemId={r.id} />
                           </div>
                           <p className="text-xs text-slate-600">
-                            Signature burger: {r.editorialTags?.[0] ?? r.cuisine[0] ?? "Burger house"}
+                            {isEnglish ? "Signature burger" : "Burger destacada"}: {r.editorialTags?.[0] ?? r.cuisine[0] ?? (isEnglish ? "Burger house" : "Hamburguesería")}
                           </p>
-                          <p className="text-xs text-slate-600">{r.neighborhood ?? r.address ?? "Neighborhood unavailable"}</p>
+                          <p className="text-xs text-slate-600">{r.neighborhood ?? r.address ?? (isEnglish ? "Neighborhood unavailable" : "Zona no disponible")}</p>
                           <p className="text-xs text-slate-700">
                             {typeof r.googleRating === "number"
-                              ? `Rating ${r.googleRating.toFixed(1)} - ${r.googleReviewCount ?? 0} reviews`
-                              : "Rating unavailable"}
+                              ? `Rating ${r.googleRating.toFixed(1)} - ${r.googleReviewCount ?? 0} ${isEnglish ? "reviews" : "reseñas"}`
+                              : isEnglish ? "Rating unavailable" : "Valoración no disponible"}
                           </p>
                           <p className="text-xs text-slate-700">
                             {typeof r.averagePricePerPersonUsd === "number"
-                              ? `Estimated from $${r.averagePricePerPersonUsd}/person`
-                              : "Price estimate unavailable"}
+                              ? `${isEnglish ? "Estimated from" : "Desde"} $${r.averagePricePerPersonUsd}/${isEnglish ? "person" : "persona"}`
+                              : isEnglish ? "Price estimate unavailable" : "Precio orientativo no disponible"}
                           </p>
                           <p className="text-xs text-slate-700">
                             {typeof r.distanceFromAccommodationKm === "number"
-                              ? `Distance from hotel: ${r.distanceFromAccommodationKm.toFixed(1)} km`
-                              : "Distance from hotel unavailable"}
+                              ? `${isEnglish ? "Distance from hotel" : "Distancia desde el alojamiento"}: ${r.distanceFromAccommodationKm.toFixed(1)} km`
+                              : isEnglish ? "Distance from hotel unavailable" : "Distancia desde el alojamiento no disponible"}
                           </p>
                           <div className="flex flex-wrap gap-2 text-[11px]">
                             {r.editorialTags?.includes("nyc_classic") ? <span className="rounded-full bg-slate-900 px-2 py-1 text-white">NYC Classic</span> : null}
                             {r.editorialTags?.includes("viral_on_tiktok") ? <span className="rounded-full bg-rose-600 px-2 py-1 text-white">Viral on TikTok</span> : null}
-                            {r.familyFriendly ? <span className="rounded-full bg-emerald-600 px-2 py-1 text-white">Family Friendly</span> : null}
-                            {r.editorialTags?.includes("best_value") ? <span className="rounded-full bg-amber-500 px-2 py-1 text-slate-900">Best Value</span> : null}
-                            {r.editorialTags?.includes("premium_burger") ? <span className="rounded-full bg-violet-700 px-2 py-1 text-white">Premium Burger</span> : null}
-                            {r.editorialTags?.includes("instagram_favorite") ? <span className="rounded-full bg-fuchsia-600 px-2 py-1 text-white">Instagram Favorite</span> : null}
+                            {r.familyFriendly ? <span className="rounded-full bg-emerald-600 px-2 py-1 text-white">{isEnglish ? "Family Friendly" : "Para familias"}</span> : null}
+                            {r.editorialTags?.includes("best_value") ? <span className="rounded-full bg-amber-500 px-2 py-1 text-slate-900">{isEnglish ? "Best Value" : "Mejor calidad-precio"}</span> : null}
+                            {r.editorialTags?.includes("premium_burger") ? <span className="rounded-full bg-violet-700 px-2 py-1 text-white">{isEnglish ? "Premium Burger" : "Burger premium"}</span> : null}
+                            {r.editorialTags?.includes("instagram_favorite") ? <span className="rounded-full bg-fuchsia-600 px-2 py-1 text-white">{isEnglish ? "Instagram Favorite" : "Favorito en Instagram"}</span> : null}
                           </div>
                           <div className="mt-2 flex flex-wrap gap-2 text-xs">
                             <a href={r.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">Google Maps</a>
-                            <a href={buildTransitPlannerUrl({ name: r.name, address: r.address, location: r.location })} className="rounded-full border border-slate-300 px-2 py-1">Como llegar</a>
+                            <a href={buildTransitPlannerUrl({ name: r.name, address: r.address, location: r.location })} className="rounded-full border border-slate-300 px-2 py-1">{isEnglish ? "Transit directions" : "Cómo llegar"}</a>
                             <a href={r.officialWebsite ?? buildOfficialWebsiteSearchUrl(r.name, r.address)} target="_blank" className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-1">
-                              {r.officialWebsite ? "Website" : "Buscar web oficial"}
+                              {r.officialWebsite ? (isEnglish ? "Official website" : "Web oficial") : isEnglish ? "Find official website" : "Buscar web oficial"}
                             </a>
                           </div>
                         </div>
@@ -375,7 +375,7 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
         />
 
         <section className="mx-auto mt-8 max-w-6xl space-y-6">
-          <h2 className="text-2xl font-bold text-slate-900">Must-Try NYC Food & Desserts</h2>
+          <h2 className="text-2xl font-bold text-slate-900">{isEnglish ? "Must-try NYC food and desserts" : "Comida y postres imprescindibles de Nueva York"}</h2>
           {mustTryGroups.map((group) => {
             const groupItems = restaurantsForClient.filter((r) =>
               group.keys.some((k) => r.categories.join(" ").toLowerCase().includes(k)),
@@ -400,29 +400,29 @@ export default async function RestaurantsPage({ searchParams }: RestaurantsPageP
                           fallbackImageUrl={r.imageUrl}
                           className="h-full w-full bg-white object-contain p-5"
                         />
-                      </div>
-                      <div className="space-y-2 p-4">
+                        </div>
+                        <div className="space-y-2 p-4">
                         <div className="flex items-start justify-between gap-3">
                           <p className="text-sm font-semibold text-slate-900">{r.name}</p>
                           <FavoriteToggleButton baseKey={RESTAURANT_FAVORITES_KEY} favoriteType="restaurants" itemId={r.id} />
                         </div>
-                        <p className="text-xs text-slate-600">{r.cuisine.join(", ")}</p>
-                        <p className="text-xs text-slate-600">{r.description ?? "No editorial note."}</p>
+                          <p className="text-xs text-slate-600">{r.cuisine.join(", ")}</p>
+                        <p className="text-xs text-slate-600">{r.description ?? (isEnglish ? "No editorial note." : "Sin nota editorial.")}</p>
                         <p className="text-xs text-slate-700">
                           {typeof r.googleRating === "number"
-                            ? `Rating ${r.googleRating.toFixed(1)} - ${r.googleReviewCount ?? 0} reviews`
-                            : "Rating unavailable"}
+                            ? `Rating ${r.googleRating.toFixed(1)} - ${r.googleReviewCount ?? 0} ${isEnglish ? "reviews" : "reseñas"}`
+                            : isEnglish ? "Rating unavailable" : "Valoración no disponible"}
                         </p>
                         <p className="text-xs text-slate-700">
                           {typeof r.averagePricePerPersonUsd === "number"
-                            ? `Estimated from $${r.averagePricePerPersonUsd}/person`
-                            : "Price estimate unavailable"}
+                            ? `${isEnglish ? "Estimated from" : "Desde"} $${r.averagePricePerPersonUsd}/${isEnglish ? "person" : "persona"}`
+                            : isEnglish ? "Price estimate unavailable" : "Precio orientativo no disponible"}
                         </p>
                         <div className="mt-2 flex flex-wrap gap-2 text-xs">
                           <a href={r.googleMapsUrl} target="_blank" className="rounded-full border border-slate-300 px-2 py-1">Google Maps</a>
-                          <a href={buildTransitPlannerUrl({ name: r.name, address: r.address, location: r.location })} className="rounded-full border border-slate-300 px-2 py-1">Como llegar</a>
+                          <a href={buildTransitPlannerUrl({ name: r.name, address: r.address, location: r.location })} className="rounded-full border border-slate-300 px-2 py-1">{isEnglish ? "Transit directions" : "Cómo llegar"}</a>
                           <a href={r.officialWebsite ?? buildOfficialWebsiteSearchUrl(r.name, r.address)} target="_blank" className="rounded-full border border-amber-400/40 bg-amber-400/10 px-2 py-1">
-                            {r.officialWebsite ? "Website" : "Buscar web oficial"}
+                            {r.officialWebsite ? (isEnglish ? "Official website" : "Web oficial") : isEnglish ? "Find official website" : "Buscar web oficial"}
                           </a>
                         </div>
                       </div>
