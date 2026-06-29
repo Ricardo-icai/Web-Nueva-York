@@ -29,9 +29,6 @@ function VisualCard({ card, featured = false }: { card: HomeCard; featured?: boo
         sizes={featured ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 100vw, 25vw"}
       />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,15,31,0.12),rgba(8,15,31,0.2),rgba(8,15,31,0.88))]" />
-      <div className="absolute left-4 top-4 rounded-full border border-white/35 bg-white/12 px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-white backdrop-blur-sm">
-        {card.label}
-      </div>
       <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
         <p className="mb-2 max-w-md text-sm font-semibold text-white/78">{card.subtitle}</p>
         <h2 className={`${featured ? "text-4xl sm:text-5xl" : "text-2xl"} font-american-diner leading-tight text-white`}>{card.title}</h2>
@@ -103,7 +100,6 @@ export default async function Home() {
                 {dictionary.home.heroBadge}
               </p>
               <h1 className="mt-5 font-american-diner text-5xl leading-[0.92] sm:text-7xl">{dictionary.home.heroTitle}</h1>
-              <p className="mt-4 max-w-2xl text-base font-semibold leading-7 text-white/82 sm:text-lg">{dictionary.home.heroSubtitle}</p>
             </div>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/route-planner" className="nyc-action px-5 py-3 text-sm">
@@ -116,15 +112,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <div className="mb-6 mt-6 flex flex-wrap items-end justify-between gap-3 px-1 pt-2">
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.2em] text-red-700">{dictionary.home.exploreLabel}</p>
-            <h2 className="mt-1 font-american-diner text-3xl leading-tight text-slate-950 sm:text-4xl">{dictionary.home.exploreTitle}</h2>
-          </div>
-          <p className="max-w-xl text-sm font-semibold text-slate-600 sm:text-base">{dictionary.home.exploreSubtitle}</p>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-4">
+        <div className="mt-6 grid gap-4 md:grid-cols-4">
           <VisualCard card={mainCards[0]} featured />
           {mainCards.slice(1).map((card) => (
             <VisualCard key={card.href} card={card} />
