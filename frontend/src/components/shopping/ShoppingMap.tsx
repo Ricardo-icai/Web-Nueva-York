@@ -1,6 +1,7 @@
 "use client";
 
 import { getDeviceCoordinates } from "@/lib/geolocation";
+import { useLanguage } from "@/components/i18n/LanguageProvider";
 import type { ShoppingVenue } from "@/types/shopping";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -38,8 +39,16 @@ const categoryColors: Record<string, string> = {
   fashion: "#D97706",
   sports: "#16A34A",
   sneakers_streetwear: "#2563EB",
+  streetwear: "#1D4ED8",
+  tech: "#111827",
   vintage: "#7C3AED",
   beauty: "#DB2777",
+  toys: "#F59E0B",
+  souvenirs: "#0F766E",
+  outlet: "#B45309",
+  mall: "#475569",
+  bookstore: "#334155",
+  specialty: "#0F172A",
   design_books: "#475569",
   market: "#0F766E",
 };
@@ -57,6 +66,10 @@ function escapeHtml(value: string) {
   });
 }
 
+function categoryLabel(category: string) {
+  return category.replaceAll("_", " ");
+}
+
 export default function ShoppingMap({
   venues,
   accommodation,
@@ -66,6 +79,7 @@ export default function ShoppingMap({
   accommodation?: { lat: number; lng: number; address: string } | null;
   onUserLocationChange?: (location: { lat: number; lng: number } | null) => void;
 }) {
+  const { language } = useLanguage();
   const mapHostRef = useRef<HTMLDivElement | null>(null);
   const leafletMapRef = useRef<ReturnType<LeafletLike["map"]> | null>(null);
   const markersLayerRef = useRef<{ remove: () => void } | null>(null);
@@ -146,7 +160,7 @@ export default function ShoppingMap({
         onUserLocationChange?.(location);
       })
       .catch((message: unknown) => {
-        setLocationError(message instanceof Error ? message.message : "No he podido obtener tu ubicacion.");
+        setLocationError(message instanceof Error ? message.message : language === "en" ? "I could not get your location." : "No he podido obtener tu ubicacion.");
       });
   }
 
@@ -215,7 +229,7 @@ export default function ShoppingMap({
         marker.on("mouseover", () => marker.openTooltip());
         marker.on("mouseout", () => marker.closeTooltip());
         marker.bindPopup(
-          `<div style="min-width:220px"><img src="${escapeHtml(venue.imageUrl)}" alt="${escapeHtml(venue.name)}" style="width:100%;height:92px;object-fit:cover;border-radius:12px;margin-bottom:8px"/><strong>${escapeHtml(venue.name)}</strong><br/>${escapeHtml(venue.neighborhood ?? "")}<br/><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a href="${escapeHtml(venue.officialWebsite ?? venue.googleMapsUrl)}" target="_blank" rel="noopener noreferrer" style="padding:5px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#111827;text-decoration:none;font-size:12px">Web</a><a href="${escapeHtml(venue.directionsUrl ?? venue.googleMapsUrl)}" target="_blank" rel="noopener noreferrer" style="padding:5px 8px;border-radius:9999px;background:#111827;color:#fff;text-decoration:none;font-size:12px">Como llegar</a></div></div>`,
+          `<div style="min-width:230px"><img src="${escapeHtml(venue.imageUrl)}" alt="${escapeHtml(venue.name)}" style="width:100%;height:92px;object-fit:cover;border-radius:12px;margin-bottom:8px"/><strong>${escapeHtml(venue.name)}</strong><br/>${escapeHtml(categoryLabel(venue.category))}<br/>${escapeHtml(venue.neighborhood ?? "")}<br/>${escapeHtml(venue.priceRangeLabel ?? venue.averageSpendLabel ?? (language === "en" ? "Price unavailable" : "Precio aprox. no disponible"))}${venue.googleRating ? `<br/>Google ${venue.googleRating.toFixed(1)}${venue.googleReviewCount ? ` · ${venue.googleReviewCount} ${language === "en" ? "reviews" : "reseñas"}` : ""}` : ""}<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a href="${escapeHtml(venue.officialWebsite ?? venue.googleMapsUrl)}" target="_blank" rel="noopener noreferrer" style="padding:5px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#111827;text-decoration:none;font-size:12px">${language === "en" ? "Website" : "Web"}</a><a href="${escapeHtml(venue.googleMapsUrl)}" target="_blank" rel="noopener noreferrer" style="padding:5px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#111827;text-decoration:none;font-size:12px">Maps</a><a href="${escapeHtml(venue.directionsUrl ?? venue.googleMapsUrl)}" target="_blank" rel="noopener noreferrer" style="padding:5px 8px;border-radius:9999px;background:#111827;color:#fff;text-decoration:none;font-size:12px">${language === "en" ? "Directions" : "Como llegar"}</a></div></div>`,
         );
         marker.addTo(layer);
         bounds.push([venue.location.lat!, venue.location.lng!]);
@@ -224,12 +238,12 @@ export default function ShoppingMap({
       if (userLocation) {
         const userIcon = L.divIcon({
           className: "",
-          html: `<div style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#16a34a;color:#fff;font-weight:900;font-size:11px;border:2px solid white">TU</div>`,
+          html: `<div style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#16a34a;color:#fff;font-weight:900;font-size:11px;border:2px solid white">${language === "en" ? "YOU" : "TU"}</div>`,
           iconSize: [28, 28],
           iconAnchor: [14, 14],
         });
         const userMarker = L.marker([userLocation.lat, userLocation.lng], { icon: userIcon });
-        userMarker.bindTooltip("Tu ubicacion", { direction: "top", offset: [0, -12], opacity: 0.95 });
+        userMarker.bindTooltip(language === "en" ? "Your location" : "Tu ubicacion", { direction: "top", offset: [0, -12], opacity: 0.95 });
         userMarker.addTo(layer);
         bounds.push([userLocation.lat, userLocation.lng]);
       }
@@ -242,7 +256,7 @@ export default function ShoppingMap({
           iconAnchor: [15, 15],
         });
         const accommodationMarker = L.marker([accommodation.lat, accommodation.lng], { icon: accommodationIcon });
-        accommodationMarker.bindTooltip("Donde duermes", { direction: "top", offset: [0, -12], opacity: 0.95 });
+        accommodationMarker.bindTooltip(language === "en" ? "Where you stay" : "Donde duermes", { direction: "top", offset: [0, -12], opacity: 0.95 });
         accommodationMarker.addTo(layer);
         bounds.push([accommodation.lat, accommodation.lng]);
       }
@@ -257,41 +271,19 @@ export default function ShoppingMap({
   }, [accommodation, userLocation, venuesWithCoords, onUserLocationChange]);
 
   return (
-    <section className="border-b border-slate-200 bg-white px-5 py-8 sm:px-8">
+    <section id="shopping-map" className="border-b border-slate-200 bg-[linear-gradient(180deg,#ffffff,#f7f3ea)] px-5 py-8 sm:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
-          <div>
-            <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">Mapa de tiendas</p>
-            <h2 className="font-american-diner text-4xl text-slate-950">Tiendas cerca de ti y de tu alojamiento</h2>
+          <h2 className="font-american-diner text-4xl text-slate-950">{language === "en" ? "Map" : "Mapa"}</h2>
+          <div className="flex flex-col items-end gap-2">
+            <button type="button" onClick={locateUser} className="rounded-full border border-slate-950 bg-slate-950 px-4 py-3 text-xs font-black uppercase tracking-[0.14em] text-white shadow-[0_16px_28px_rgba(15,23,42,0.16)]">
+              {language === "en" ? "Use my location" : "Usar mi ubicacion"}
+            </button>
+            {locationError ? <p className="text-right text-xs font-semibold text-rose-700">{locationError}</p> : null}
           </div>
-          <button type="button" onClick={locateUser} className="rounded-full border border-slate-950 bg-slate-950 px-4 py-3 text-xs font-black uppercase tracking-[0.14em] text-white">
-            Usar mi ubicacion
-          </button>
         </div>
-        <div className="grid gap-5 lg:grid-cols-[1.08fr_0.92fr]">
-          <div className="overflow-hidden rounded-[30px] border border-slate-200 bg-white">
-            <div ref={mapHostRef} className="h-[520px] w-full" />
-          </div>
-          <aside className="space-y-4">
-            <div className="rounded-[24px] border border-slate-200 bg-[#faf7f2] p-5 text-sm text-slate-700">
-              <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">Leyenda</p>
-              <div className="mt-3 grid gap-2">
-                {Object.entries(categoryColors).map(([category, color]) => (
-                  <div key={category} className="flex items-center gap-3">
-                    <span className="h-3 w-3 rounded-full" style={{ backgroundColor: color }} />
-                    <span>{category.replaceAll("_", " ")}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="rounded-[24px] border border-slate-200 bg-[#faf7f2] p-5 text-sm text-slate-700">
-              <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">Estado del mapa</p>
-              <p className="mt-3">{venuesWithCoords.length} tiendas posicionadas en el mapa.</p>
-              {accommodation ? <p className="mt-2">Alojamiento detectado: {accommodation.address}</p> : <p className="mt-2 text-slate-500">Sin alojamiento guardado.</p>}
-              {userLocation ? <p className="mt-2 text-emerald-700">Tu punto verde ya esta activo.</p> : null}
-              {locationError ? <p className="mt-2 text-rose-700">{locationError}</p> : null}
-            </div>
-          </aside>
+        <div className="overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_22px_46px_rgba(15,23,42,0.1)]">
+          <div ref={mapHostRef} className="h-[520px] w-full" />
         </div>
       </div>
     </section>

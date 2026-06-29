@@ -29,6 +29,10 @@ html {
   scroll-behavior: smooth;
 }
 
+html[data-nav-pending="true"] body {
+  cursor: progress;
+}
+
 .font-display {
   font-family: var(--font-playfair), "Times New Roman", serif;
 }
@@ -220,6 +224,70 @@ textarea::placeholder {
   box-shadow:
     0 24px 44px rgba(15, 23, 42, 0.16),
     0 8px 18px rgba(15, 23, 42, 0.1);
+}
+
+.route-transition-shell {
+  opacity: 0.72;
+  transform: translateY(8px);
+  filter: saturate(0.98);
+  transition:
+    opacity 240ms ease,
+    transform 240ms ease,
+    filter 240ms ease;
+}
+
+.route-transition-shell--entered {
+  opacity: 1;
+  transform: translateY(0);
+  filter: saturate(1);
+}
+
+@keyframes menu-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-14px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes menu-float-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes menu-left-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateX(-18px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes nav-progress {
+  0% {
+    transform: translateX(-24%);
+    width: 22%;
+  }
+  50% {
+    transform: translateX(78%);
+    width: 52%;
+  }
+  100% {
+    transform: translateX(320%);
+    width: 18%;
+  }
 }
 
 .nyc-image-panel {

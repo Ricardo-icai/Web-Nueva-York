@@ -46,7 +46,15 @@
     ".next-local/types/**/*.ts",
     ".next-local/dev/types/**/*.ts",
     ".next-shopping-build/types/**/*.ts",
-    ".next-shopping-build/dev/types/**/*.ts"
+    ".next-shopping-build/dev/types/**/*.ts",
+    ".next-shopping-build-2/types/**/*.ts",
+    ".next-shopping-build-2/dev/types/**/*.ts",
+    ".next-shopping-build-3/types/**/*.ts",
+    ".next-shopping-build-3/dev/types/**/*.ts",
+    ".next-nav-smooth-build/types/**/*.ts",
+    ".next-nav-smooth-build/dev/types/**/*.ts",
+    ".next-home-shopping-style-build/types/**/*.ts",
+    ".next-home-shopping-style-build/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"

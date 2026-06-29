@@ -26,11 +26,24 @@ export function rankShoppingVenues(
     .map((venue) => {
       const nearUserKm = distanceKm(options?.userLocation ?? null, venue.location);
       const nearHotelKm = distanceKm(options?.accommodation ?? null, venue.location);
-      let score = venue.editorialScore ?? 70;
-      if (venue.badges?.some((badge) => badge.toLowerCase().includes("icon"))) score += 6;
-      if (venue.badges?.some((badge) => badge.toLowerCase().includes("worth the trip"))) score += 4;
-      if (typeof nearUserKm === "number") score += Math.max(0, 8 - nearUserKm);
-      return { ...venue, nearUserKm, nearHotelKm, rankingScore: score };
+      const editorial = venue.editorialScore ?? 70;
+      const googleRating = (venue.googleRating ?? 4.2) * 20;
+      const trust = venue.verified === false ? 55 : venue.trustScore ?? 82;
+      const trend = venue.trendScore ?? (venue.badges?.some((badge) => /viral|famous|icon/i.test(badge)) ? 84 : 68);
+      const flagshipBoost = venue.isFlagship ? 6 : 0;
+      const officialBoost = venue.officialWebsite ? 4 : 0;
+      const imageBoost = venue.imageUrl ? 3 : 0;
+      const distanceBoost = typeof nearUserKm === "number" ? Math.max(0, 12 - nearUserKm * 1.8) : 0;
+      const score =
+        editorial * 0.38 +
+        googleRating * 0.14 +
+        trust * 0.16 +
+        trend * 0.1 +
+        distanceBoost +
+        flagshipBoost +
+        officialBoost +
+        imageBoost;
+      return { ...venue, nearUserKm, nearHotelKm, rankingScore: Math.round(score) };
     })
     .sort((left, right) => right.rankingScore - left.rankingScore);
 }

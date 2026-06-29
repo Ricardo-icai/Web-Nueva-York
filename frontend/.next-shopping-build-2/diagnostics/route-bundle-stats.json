@@ -1,0 +1,301 @@
+[
+  {
+    "route": "/route-planner",
+    "firstLoadUncompressedJsBytes": 645820,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\119fhzjb2ho6i.js",
+      ".next-shopping-build-2\\static\\chunks\\12k4t436plwy~.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/restaurants",
+    "firstLoadUncompressedJsBytes": 594625,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\03m2x2wesau-1.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/viewpoints",
+    "firstLoadUncompressedJsBytes": 587866,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\04ogo7.7d4721.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/map",
+    "firstLoadUncompressedJsBytes": 582308,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\0_xcl~uep3qm_.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/culture",
+    "firstLoadUncompressedJsBytes": 578144,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\05l1--y9bsv1n.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/shopping",
+    "firstLoadUncompressedJsBytes": 575838,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\07345r584jca1.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/nightlife",
+    "firstLoadUncompressedJsBytes": 575467,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\0i4pf2v5uimn3.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/onboarding",
+    "firstLoadUncompressedJsBytes": 574722,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\051yml9_25d8j.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/fourth-of-july",
+    "firstLoadUncompressedJsBytes": 570304,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\066pcfdq-dw9l.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/",
+    "firstLoadUncompressedJsBytes": 566718,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\0_eptzx88q3e4.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/dashboard/[tripId]",
+    "firstLoadUncompressedJsBytes": 565008,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\0ypiq_oefrdj-.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/esim-usa",
+    "firstLoadUncompressedJsBytes": 565008,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\0ypiq_oefrdj-.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/planner",
+    "firstLoadUncompressedJsBytes": 565008,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\0ypiq_oefrdj-.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/profile",
+    "firstLoadUncompressedJsBytes": 552996,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\0reka6k-r..b-.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/photo-spots",
+    "firstLoadUncompressedJsBytes": 551492,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\0oa9yx3xndmpf.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/sail4th-elcano",
+    "firstLoadUncompressedJsBytes": 551492,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\0oa9yx3xndmpf.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/settings",
+    "firstLoadUncompressedJsBytes": 551492,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\0oa9yx3xndmpf.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/world-cup-2026",
+    "firstLoadUncompressedJsBytes": 551492,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\0oa9yx3xndmpf.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/_not-found",
+    "firstLoadUncompressedJsBytes": 550538,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/itinerary/[tripId]",
+    "firstLoadUncompressedJsBytes": 550538,
+    "firstLoadChunkPaths": [
+      ".next-shopping-build-2\\static\\chunks\\004i0lepx5rfg.js",
+      ".next-shopping-build-2\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-shopping-build-2\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-shopping-build-2\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-shopping-build-2\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-shopping-build-2\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-shopping-build-2\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-shopping-build-2\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  }
+]

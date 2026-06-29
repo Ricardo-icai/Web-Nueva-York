@@ -1,16 +1,17 @@
 "use client";
 
 import SafeImage from "@/components/common/SafeImage";
+import { useLanguage } from "@/components/i18n/LanguageProvider";
 import { buildTransitPlannerUrl } from "@/lib/transit-planner";
 import type { NightlifeVenue } from "@/types/nightlife";
 
-function formatPriceRange(venue: NightlifeVenue) {
+function formatPriceRange(venue: NightlifeVenue, language: "es" | "en") {
   if (typeof venue.averagePricePerPersonUsd === "number") {
     const low = Math.max(venue.averagePricePerPersonUsd - 15, 0);
     const high = venue.averagePricePerPersonUsd + 20;
-    return `${Math.round(low)}-${Math.round(high)} USD por persona`;
+    return `${Math.round(low)}-${Math.round(high)} USD ${language === "en" ? "per person" : "por persona"}`;
   }
-  return "Precio no disponible";
+  return language === "en" ? "Price unavailable" : "Precio no disponible";
 }
 
 function buttonClasses(disabled = false) {
@@ -44,6 +45,7 @@ export default function NightlifeVenueCard({
   onToggleFavorite: (id: string) => void;
   similar: NightlifeVenue[];
 }) {
+  const { language } = useLanguage();
   return (
     <article className="overflow-hidden rounded-[30px] border border-slate-200 bg-white shadow-[0_18px_45px_rgba(15,23,42,0.08)]">
       <div className="relative h-56">
@@ -55,7 +57,7 @@ export default function NightlifeVenueCard({
               <h3 className="mt-1 font-display text-2xl font-bold text-white">{venue.name}</h3>
             </div>
             <button type="button" onClick={() => onToggleFavorite(venue.id)} className="rounded-full border border-white/70 bg-white px-3 py-2 text-[11px] font-black uppercase tracking-[0.12em] text-slate-950">
-              {isFavorite ? "Guardado" : "Favorito"}
+              {isFavorite ? (language === "en" ? "Saved" : "Guardado") : language === "en" ? "Favorite" : "Favorito"}
             </button>
           </div>
         </div>
@@ -64,10 +66,10 @@ export default function NightlifeVenueCard({
       <div className="space-y-4 p-5 text-sm text-slate-700">
         <p>{venue.description}</p>
 
-        <p className="font-semibold text-slate-950">{formatPriceRange(venue)}</p>
+        <p className="font-semibold text-slate-950">{formatPriceRange(venue, language)}</p>
 
         <div className="flex flex-wrap gap-2">
-          <ActionLink href={venue.officialWebsite} label="Web oficial" disabledLabel="Web oficial no disponible" />
+          <ActionLink href={venue.officialWebsite} label={language === "en" ? "Official website" : "Web oficial"} disabledLabel={language === "en" ? "Website unavailable" : "Web oficial no disponible"} />
           <a href={venue.googleMapsUrl} target="_blank" rel="noreferrer" className={buttonClasses(false)}>Google Maps</a>
           <a
             href={buildTransitPlannerUrl({
@@ -78,10 +80,10 @@ export default function NightlifeVenueCard({
             })}
             className={buttonClasses(false)}
           >
-            Como llegar
+            {language === "en" ? "Directions" : "Como llegar"}
           </a>
-          <ActionLink href={venue.ticketUrl} label="Entradas" disabledLabel="Entradas no disponibles" />
-          <ActionLink href={venue.reservationUrl} label="Reserva" disabledLabel="Reserva no disponible" />
+          <ActionLink href={venue.ticketUrl} label={language === "en" ? "Tickets" : "Entradas"} disabledLabel={language === "en" ? "Tickets unavailable" : "Entradas no disponibles"} />
+          <ActionLink href={venue.reservationUrl} label={language === "en" ? "Booking" : "Reserva"} disabledLabel={language === "en" ? "Booking unavailable" : "Reserva no disponible"} />
         </div>
       </div>
     </article>

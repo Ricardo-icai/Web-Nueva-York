@@ -2,13 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLanguage } from "@/components/i18n/LanguageProvider";
 
 export default function MenuDropdown() {
   const pathname = usePathname();
   const { dictionary } = useLanguage();
   const [open, setOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const panelRef = useRef<HTMLElement | null>(null);
+
+  function closeMenu() {
+    setOpen(false);
+  }
 
   const menuLinks = useMemo(
     () => [
@@ -27,26 +33,37 @@ export default function MenuDropdown() {
   );
 
   useEffect(() => {
-    setOpen(false);
+    closeMenu();
   }, [pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+      if (event.key === "Escape") closeMenu();
     };
 
     window.addEventListener("keydown", onKeyDown);
     return () => {
-      document.body.style.overflow = "";
       window.removeEventListener("keydown", onKeyDown);
     };
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onPointerDown = (event: MouseEvent) => {
+      const target = event.target as Node;
+      if (panelRef.current?.contains(target) || buttonRef.current?.contains(target)) return;
+      closeMenu();
+    };
+
+    document.addEventListener("mousedown", onPointerDown);
+    return () => document.removeEventListener("mousedown", onPointerDown);
   }, [open]);
 
   return (
     <>
       <button
+        ref={buttonRef}
         type="button"
         onClick={() => setOpen((prev) => !prev)}
         className="nyc-action px-4 py-2 text-sm"
@@ -57,56 +74,51 @@ export default function MenuDropdown() {
       </button>
 
       {open ? (
-        <>
-          <div className="fixed inset-0 z-[5100] bg-slate-950/45 backdrop-blur-sm" onClick={() => setOpen(false)} aria-hidden="true" />
-
-          <div id="main-navigation-drawer" className="fixed inset-0 z-[5200] flex items-start justify-start p-1 sm:p-3" onClick={() => setOpen(false)}>
-            <aside
-              className="h-[calc(100dvh-0.5rem)] w-[min(86vw,360px)] overflow-hidden rounded-[28px] border border-slate-950/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.9),rgba(255,248,231,0.98))] shadow-[0_28px_80px_rgba(15,23,42,0.28)] backdrop-blur-xl sm:h-[calc(100dvh-1.5rem)]"
-              onClick={(event) => event.stopPropagation()}
-            >
-              <div className="flex h-full flex-col">
-                <div className="border-b border-stone-200 bg-[#0A2342] px-5 py-5 text-white">
-                  <div className="flex items-center justify-between gap-3">
-                    <div>
-                      <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#D4AF37]">{dictionary.common.appName}</p>
-                      <p className="mt-1 font-american-diner text-2xl">{dictionary.nav.menu}</p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => setOpen(false)}
-                      className="flex h-9 w-9 items-center justify-center rounded-md border-2 border-white text-xl font-black shadow-[3px_3px_0_rgba(255,255,255,0.55)] hover:bg-white/10"
-                      aria-label={dictionary.nav.closeMenu}
-                    >
-                      x
-                    </button>
-                  </div>
+        <div id="main-navigation-drawer" className="fixed left-0 top-0 z-[5200] h-dvh w-[min(88vw,380px)] p-2 sm:p-3">
+          <aside
+            ref={panelRef}
+            className="flex h-full flex-col overflow-hidden rounded-[28px] border border-slate-950/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.94),rgba(255,248,231,0.985))] shadow-[0_28px_80px_rgba(15,23,42,0.28)] backdrop-blur-xl animate-[menu-left-sheet-in_240ms_ease-out]"
+          >
+            <div className="border-b border-stone-200 bg-[#0A2342] px-5 py-5 text-white">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-[11px] font-black uppercase tracking-[0.18em] text-[#D4AF37]">{dictionary.common.appName}</p>
+                  <p className="mt-1 font-american-diner text-2xl">{dictionary.nav.menu}</p>
                 </div>
-
-                <nav className="flex-1 space-y-2 overflow-y-auto p-4">
-                  {menuLinks.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setOpen(false)}
-                      className={`block rounded-2xl px-4 py-3 text-base transition hover:-translate-y-0.5 ${
-                        item.profileAction
-                          ? "nyc-flag-action mt-5"
-                          : "nyc-smooth-card border border-slate-950/80 bg-white/88 font-black text-slate-800 shadow-[0_10px_24px_rgba(15,23,42,0.09)] hover:bg-[#fffdf4] hover:text-[#C1121F]"
-                      }`}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
-
-                <div className="border-t border-stone-200 p-4 text-xs font-semibold leading-5 text-slate-500">
-                  {dictionary.nav.drawerNote}
-                </div>
+                <button
+                  type="button"
+                  onClick={closeMenu}
+                  className="flex h-9 w-9 items-center justify-center rounded-md border-2 border-white text-xl font-black shadow-[3px_3px_0_rgba(255,255,255,0.55)] hover:bg-white/10"
+                  aria-label={dictionary.nav.closeMenu}
+                >
+                  x
+                </button>
               </div>
-            </aside>
-          </div>
-        </>
+            </div>
+
+            <nav className="flex-1 space-y-2 overflow-y-auto p-4">
+              {menuLinks.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  prefetch
+                  onClick={closeMenu}
+                  className={`block rounded-2xl px-4 py-3 text-base transition hover:-translate-y-0.5 ${
+                    item.profileAction
+                      ? "nyc-flag-action mt-5"
+                      : "nyc-smooth-card border border-slate-950/80 bg-white/88 font-black text-slate-800 shadow-[0_10px_24px_rgba(15,23,42,0.09)] hover:bg-[#fffdf4] hover:text-[#C1121F]"
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="border-t border-stone-200 p-4 text-xs font-semibold leading-5 text-slate-500">
+              {dictionary.nav.drawerNote}
+            </div>
+          </aside>
+        </div>
       ) : null}
     </>
   );

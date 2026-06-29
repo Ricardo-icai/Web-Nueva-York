@@ -8,6 +8,7 @@ import LanguageToggle from "@/components/i18n/LanguageToggle";
 import BackButton from "@/components/navigation/BackButton";
 import MenuDropdown from "@/components/navigation/MenuDropdown";
 import NavigationFeedback from "@/components/navigation/NavigationFeedback";
+import RouteTransitionShell from "@/components/navigation/RouteTransitionShell";
 import ProfileCompletionBanner from "@/components/profile/ProfileCompletionBanner";
 import { getDictionary } from "@/lib/i18n";
 import { getServerLanguage } from "@/lib/server-language";
@@ -60,7 +61,9 @@ export default async function RootLayout({
               </nav>
             </header>
             <ProfileCompletionBanner />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1">
+              <RouteTransitionShell>{children}</RouteTransitionShell>
+            </main>
           </AuthGate>
         </LanguageProvider>
       </body>

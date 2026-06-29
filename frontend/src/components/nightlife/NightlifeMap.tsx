@@ -1,6 +1,7 @@
 "use client";
 
 import { getDeviceCoordinates } from "@/lib/geolocation";
+import { useLanguage } from "@/components/i18n/LanguageProvider";
 import type { NightlifeVenue } from "@/types/nightlife";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -54,6 +55,10 @@ function escapeHtml(value: string) {
   });
 }
 
+function categoryLabel(category: string) {
+  return category.replaceAll("_", " ");
+}
+
 export default function NightlifeMap({
   venues,
   selectedId,
@@ -67,6 +72,7 @@ export default function NightlifeMap({
   onUserLocationChange?: (location: { lat: number; lng: number } | null) => void;
   accommodation?: { lat: number; lng: number; address: string } | null;
 }) {
+  const { language } = useLanguage();
   const mapHostRef = useRef<HTMLDivElement | null>(null);
   const leafletMapRef = useRef<ReturnType<LeafletLike["map"]> | null>(null);
   const markersLayerRef = useRef<{ remove: () => void } | null>(null);
@@ -149,7 +155,7 @@ export default function NightlifeMap({
         onUserLocationChange?.(location);
       })
       .catch((message: unknown) => {
-        setLocationError(message instanceof Error ? message.message : "No he podido obtener tu ubicacion.");
+        setLocationError(message instanceof Error ? message.message : language === "en" ? "I could not get your location." : "No he podido obtener tu ubicacion.");
       });
   };
 
@@ -218,7 +224,7 @@ export default function NightlifeMap({
         marker.on("mouseover", () => marker.openTooltip());
         marker.on("mouseout", () => marker.closeTooltip());
         marker.bindPopup(
-          `<div style="min-width:220px"><img src="${escapeHtml(venue.imageUrl)}" alt="${escapeHtml(venue.name)}" style="width:100%;height:92px;object-fit:cover;border-radius:12px;margin-bottom:8px"/><strong>${escapeHtml(venue.name)}</strong><br/>${escapeHtml(venue.category.replace("_", " "))}<br/>${escapeHtml(venue.neighborhood ?? "")}<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a href="${escapeHtml(venue.googleMapsUrl)}" target="_blank" rel="noopener noreferrer" style="padding:5px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#111827;text-decoration:none;font-size:12px">Google Maps</a></div></div>`,
+          `<div style="min-width:220px"><img src="${escapeHtml(venue.imageUrl)}" alt="${escapeHtml(venue.name)}" style="width:100%;height:92px;object-fit:cover;border-radius:12px;margin-bottom:8px"/><strong>${escapeHtml(venue.name)}</strong><br/>${escapeHtml(categoryLabel(venue.category))}<br/>${escapeHtml(venue.neighborhood ?? "")}<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><a href="${escapeHtml(venue.googleMapsUrl)}" target="_blank" rel="noopener noreferrer" style="padding:5px 8px;border-radius:9999px;border:1px solid #d6d3d1;color:#111827;text-decoration:none;font-size:12px">Google Maps</a></div></div>`,
         );
         marker.addTo(layer);
         bounds.push([venue.location.lat!, venue.location.lng!]);
@@ -227,12 +233,12 @@ export default function NightlifeMap({
       if (userLocation) {
         const userIcon = L.divIcon({
           className: "",
-          html: `<div style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#16a34a;color:#fff;font-weight:900;font-size:11px;border:2px solid white">TU</div>`,
+          html: `<div style="display:flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:9999px;background:#16a34a;color:#fff;font-weight:900;font-size:11px;border:2px solid white">${language === "en" ? "YOU" : "TU"}</div>`,
           iconSize: [28, 28],
           iconAnchor: [14, 14],
         });
         const userMarker = L.marker([userLocation.lat, userLocation.lng], { icon: userIcon });
-        userMarker.bindTooltip("Tu ubicacion", { direction: "top", offset: [0, -12], opacity: 0.95 });
+        userMarker.bindTooltip(language === "en" ? "Your location" : "Tu ubicacion", { direction: "top", offset: [0, -12], opacity: 0.95 });
         userMarker.addTo(layer);
         bounds.push([userLocation.lat, userLocation.lng]);
       }
@@ -245,7 +251,7 @@ export default function NightlifeMap({
           iconAnchor: [15, 15],
         });
         const accommodationMarker = L.marker([accommodation.lat, accommodation.lng], { icon: accommodationIcon });
-        accommodationMarker.bindTooltip("Donde duermes", { direction: "top", offset: [0, -12], opacity: 0.95 });
+        accommodationMarker.bindTooltip(language === "en" ? "Where you stay" : "Donde duermes", { direction: "top", offset: [0, -12], opacity: 0.95 });
         accommodationMarker.addTo(layer);
         bounds.push([accommodation.lat, accommodation.lng]);
       }
@@ -263,36 +269,17 @@ export default function NightlifeMap({
     <section id="nightlife-map" className="border-t border-slate-200 bg-white px-5 py-8 sm:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
-          <h2 className="font-display text-4xl font-bold text-slate-950">Mapa de nightlife</h2>
-          <button type="button" onClick={locateUser} className="rounded-full border border-slate-950 bg-slate-950 px-4 py-3 text-xs font-black uppercase tracking-[0.14em] text-white">
-            Usar mi ubicacion
-          </button>
+          <h2 className="font-display text-4xl font-bold text-slate-950">{language === "en" ? "Nightlife map" : "Mapa de nightlife"}</h2>
+          <div className="flex flex-col items-end gap-2">
+            <button type="button" onClick={locateUser} className="rounded-full border border-slate-950 bg-slate-950 px-4 py-3 text-xs font-black uppercase tracking-[0.14em] text-white">
+              {language === "en" ? "Use my location" : "Usar mi ubicacion"}
+            </button>
+            {locationError ? <p className="text-right text-xs font-semibold text-rose-700">{locationError}</p> : null}
+          </div>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-[1.08fr_0.92fr]">
-          <div className="overflow-hidden rounded-[30px] border border-slate-200 bg-white">
-            <div ref={mapHostRef} className="h-[520px] w-full" />
-          </div>
-          <aside className="space-y-4">
-            <div className="rounded-[24px] border border-slate-200 bg-[#faf7f2] p-5 text-sm text-slate-700">
-              <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">Leyenda</p>
-              <div className="mt-3 grid gap-2">
-                {Object.entries(categoryColors).map(([category, color]) => (
-                  <div key={category} className="flex items-center gap-3">
-                    <span className="h-3 w-3 rounded-full" style={{ backgroundColor: color }} />
-                    <span>{category.replace("_", " ")}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="rounded-[24px] border border-slate-200 bg-[#faf7f2] p-5 text-sm text-slate-700">
-              <p className="text-xs font-black uppercase tracking-[0.16em] text-slate-500">Estado del mapa</p>
-              <p className="mt-3">{venuesWithCoords.length} locales posicionados sobre el mapa.</p>
-              {accommodation ? <p className="mt-2">Alojamiento detectado: {accommodation.address}</p> : <p className="mt-2 text-slate-500">Sin alojamiento guardado en tu perfil.</p>}
-              {locationError ? <p className="mt-2 text-rose-700">{locationError}</p> : null}
-              {userLocation ? <p className="mt-2 text-emerald-700">Ubicacion detectada: {userLocation.lat.toFixed(4)}, {userLocation.lng.toFixed(4)}</p> : null}
-            </div>
-          </aside>
+        <div className="overflow-hidden rounded-[30px] border border-slate-200 bg-white">
+          <div ref={mapHostRef} className="h-[520px] w-full" />
         </div>
       </div>
     </section>

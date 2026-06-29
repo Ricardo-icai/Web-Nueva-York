@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../../../frontend/src/app/restaurants/loading.tsx"],"sourcesContent":["export default function RestaurantsLoading() {\n  return null;\n}\n"],"names":["RestaurantsLoading"],"mappings":"wDAAe,SAASA,EACtB,OAAO,IACT"}

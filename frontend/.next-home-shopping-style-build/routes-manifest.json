@@ -1,0 +1,208 @@
+{
+  "version": 3,
+  "pages404": true,
+  "appType": "app",
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "onMatchHeaders": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/api/trips/[tripId]",
+      "regex": "^/api/trips/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPtripId": "nxtPtripId"
+      },
+      "namedRegex": "^/api/trips/(?<nxtPtripId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/dashboard/[tripId]",
+      "regex": "^/dashboard/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPtripId": "nxtPtripId"
+      },
+      "namedRegex": "^/dashboard/(?<nxtPtripId>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/itinerary/[tripId]",
+      "regex": "^/itinerary/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPtripId": "nxtPtripId"
+      },
+      "namedRegex": "^/itinerary/(?<nxtPtripId>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/api/location/search",
+      "regex": "^/api/location/search(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/location/search(?:/)?$"
+    },
+    {
+      "page": "/api/media/hero-image",
+      "regex": "^/api/media/hero\\-image(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/media/hero\\-image(?:/)?$"
+    },
+    {
+      "page": "/api/trips",
+      "regex": "^/api/trips(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/trips(?:/)?$"
+    },
+    {
+      "page": "/culture",
+      "regex": "^/culture(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/culture(?:/)?$"
+    },
+    {
+      "page": "/esim-usa",
+      "regex": "^/esim\\-usa(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/esim\\-usa(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/fourth-of-july",
+      "regex": "^/fourth\\-of\\-july(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/fourth\\-of\\-july(?:/)?$"
+    },
+    {
+      "page": "/map",
+      "regex": "^/map(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/map(?:/)?$"
+    },
+    {
+      "page": "/nightlife",
+      "regex": "^/nightlife(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/nightlife(?:/)?$"
+    },
+    {
+      "page": "/onboarding",
+      "regex": "^/onboarding(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/onboarding(?:/)?$"
+    },
+    {
+      "page": "/photo-spots",
+      "regex": "^/photo\\-spots(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/photo\\-spots(?:/)?$"
+    },
+    {
+      "page": "/planner",
+      "regex": "^/planner(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/planner(?:/)?$"
+    },
+    {
+      "page": "/profile",
+      "regex": "^/profile(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/profile(?:/)?$"
+    },
+    {
+      "page": "/restaurants",
+      "regex": "^/restaurants(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/restaurants(?:/)?$"
+    },
+    {
+      "page": "/route-planner",
+      "regex": "^/route\\-planner(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/route\\-planner(?:/)?$"
+    },
+    {
+      "page": "/sail4th-elcano",
+      "regex": "^/sail4th\\-elcano(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sail4th\\-elcano(?:/)?$"
+    },
+    {
+      "page": "/settings",
+      "regex": "^/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/settings(?:/)?$"
+    },
+    {
+      "page": "/shopping",
+      "regex": "^/shopping(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/shopping(?:/)?$"
+    },
+    {
+      "page": "/viewpoints",
+      "regex": "^/viewpoints(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/viewpoints(?:/)?$"
+    },
+    {
+      "page": "/world-cup-2026",
+      "regex": "^/world\\-cup\\-2026(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/world\\-cup\\-2026(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

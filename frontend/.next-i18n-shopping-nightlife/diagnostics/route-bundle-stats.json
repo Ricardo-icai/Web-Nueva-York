@@ -1,0 +1,301 @@
+[
+  {
+    "route": "/route-planner",
+    "firstLoadUncompressedJsBytes": 647186,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\119fhzjb2ho6i.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\12k4t436plwy~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/restaurants",
+    "firstLoadUncompressedJsBytes": 595991,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\03m2x2wesau-1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/viewpoints",
+    "firstLoadUncompressedJsBytes": 589232,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\04ogo7.7d4721.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/shopping",
+    "firstLoadUncompressedJsBytes": 588891,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0n65njqdodd4v.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/map",
+    "firstLoadUncompressedJsBytes": 583674,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_xcl~uep3qm_.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/culture",
+    "firstLoadUncompressedJsBytes": 579510,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\05l1--y9bsv1n.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/nightlife",
+    "firstLoadUncompressedJsBytes": 576732,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_70gbprnrbzq.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/onboarding",
+    "firstLoadUncompressedJsBytes": 576088,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\051yml9_25d8j.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/fourth-of-july",
+    "firstLoadUncompressedJsBytes": 571670,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\066pcfdq-dw9l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/",
+    "firstLoadUncompressedJsBytes": 568084,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_eptzx88q3e4.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/dashboard/[tripId]",
+    "firstLoadUncompressedJsBytes": 566374,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0ypiq_oefrdj-.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/esim-usa",
+    "firstLoadUncompressedJsBytes": 566374,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0ypiq_oefrdj-.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/planner",
+    "firstLoadUncompressedJsBytes": 566374,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0ypiq_oefrdj-.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/profile",
+    "firstLoadUncompressedJsBytes": 554362,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0reka6k-r..b-.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/photo-spots",
+    "firstLoadUncompressedJsBytes": 552858,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oa9yx3xndmpf.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/sail4th-elcano",
+    "firstLoadUncompressedJsBytes": 552858,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oa9yx3xndmpf.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/settings",
+    "firstLoadUncompressedJsBytes": 552858,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oa9yx3xndmpf.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/world-cup-2026",
+    "firstLoadUncompressedJsBytes": 552858,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oa9yx3xndmpf.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/_not-found",
+    "firstLoadUncompressedJsBytes": 551904,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  },
+  {
+    "route": "/itinerary/[tripId]",
+    "firstLoadUncompressedJsBytes": 551904,
+    "firstLoadChunkPaths": [
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0zmy20.w7w.bk.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0nz2qlxv3r.27.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0sur~ccmg786l.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0_0ly8iq07hvd.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0hp0s7fhff6g~.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0mg~mrrae7ar1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\0oec_e9red.k1.js",
+      ".next-i18n-shopping-nightlife\\static\\chunks\\turbopack-0o5qr537-32yf.js"
+    ]
+  }
+]

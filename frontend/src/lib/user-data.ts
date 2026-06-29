@@ -26,6 +26,10 @@ type NightlifeFavoriteRow = {
   item_id: string;
 };
 
+type ShoppingFavoriteRow = {
+  item_id: string;
+};
+
 function requireSupabase() {
   if (!isSupabaseConfigured()) {
     throw new Error("La aplicacion no esta conectada a Supabase.");
@@ -134,6 +138,18 @@ export async function loadFavorites(baseKey: string, favoriteType: string) {
     return itemIds;
   }
 
+  if (favoriteType === "shopping") {
+    const { data } = await supabase!
+      .from("favorite_shopping")
+      .select("item_id")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false });
+
+    const itemIds = (data ?? []).map((row) => (row as ShoppingFavoriteRow).item_id).filter(Boolean);
+    localStorage.setItem(localKey, JSON.stringify(itemIds));
+    return itemIds;
+  }
+
   const { data } = await supabase!
     .from("user_favorites")
     .select("item_ids")
@@ -162,6 +178,22 @@ export async function saveFavorites(baseKey: string, favoriteType: string, itemI
 
     if (itemIds.length > 0) {
       await supabase!.from("favorite_nightlife").upsert(
+        itemIds.map((itemId) => ({
+          user_id: userId,
+          item_id: itemId,
+          updated_at: new Date().toISOString(),
+        })),
+        { onConflict: "user_id,item_id" },
+      );
+    }
+    return;
+  }
+
+  if (favoriteType === "shopping") {
+    await supabase!.from("favorite_shopping").delete().eq("user_id", userId);
+
+    if (itemIds.length > 0) {
+      await supabase!.from("favorite_shopping").upsert(
         itemIds.map((itemId) => ({
           user_id: userId,
           item_id: itemId,

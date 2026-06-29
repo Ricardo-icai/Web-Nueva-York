@@ -1,0 +1,3 @@
+module.exports=[17561,a=>{"use strict";var b=a.i(18332),c=a.i(4009),d=a.i(24299);async function e(){let a=(0,c.getDictionary)(await (0,d.getServerLanguage)());return(0,b.jsx)("main",{className:"nyc-page-shell",children:(0,b.jsx)("section",{className:"nyc-content-shell mx-auto flex min-h-[55vh] max-w-7xl items-center justify-center px-5 py-10",children:(0,b.jsxs)("div",{className:"text-center",children:[(0,b.jsx)("div",{className:"mx-auto h-10 w-10 animate-spin rounded-full border-4 border-stone-300 border-t-red-700"}),(0,b.jsx)("p",{className:"mt-4 text-xs font-black uppercase tracking-[0.2em] text-red-700",children:a.common.loadingNy})]})})})}a.s(["default",0,e])},16223,a=>{a.n(a.i(17561))}];
+
+//# sourceMappingURL=frontend_src_app_loading_tsx_0dopb3j._.js.map

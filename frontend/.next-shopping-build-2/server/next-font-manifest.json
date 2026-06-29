@@ -1,0 +1,87 @@
+{
+  "app": {
+    "[project]/frontend/src/app/_not-found/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/culture/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/dashboard/[tripId]/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/esim-usa/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/fourth-of-july/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/itinerary/[tripId]/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/map/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/nightlife/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/onboarding/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/photo-spots/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/planner/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/profile/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/restaurants/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/route-planner/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/sail4th-elcano/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/settings/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/shopping/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/viewpoints/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ],
+    "[project]/frontend/src/app/world-cup-2026/page": [
+      "static/media/83afe278b6a6bb3c-s.p.0q-301v4kxxnr.woff2",
+      "static/media/2a65768255d6b625-s.p.14by5b4al-y~f.woff2"
+    ]
+  },
+  "appUsingSizeAdjust": true,
+  "pages": {},
+  "pagesUsingSizeAdjust": false
+}

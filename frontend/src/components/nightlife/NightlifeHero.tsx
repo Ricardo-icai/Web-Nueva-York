@@ -1,9 +1,14 @@
+"use client";
+
+import { useLanguage } from "@/components/i18n/LanguageProvider";
+
 export default function NightlifeHero({ total }: { total: number }) {
+  const { language } = useLanguage();
   return (
     <section className="relative min-h-[72vh] overflow-hidden border-b border-slate-200 bg-white text-slate-950">
       <img
         src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=2200&q=80"
-        alt="Ambiente nocturno de fiesta en Nueva York"
+        alt={language === "en" ? "New York nightlife atmosphere" : "Ambiente nocturno de fiesta en Nueva York"}
         className="absolute inset-0 h-full w-full object-cover"
       />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(0,0,0,0.55))]" />
@@ -13,13 +18,13 @@ export default function NightlifeHero({ total }: { total: number }) {
         </h1>
         <div className="mt-8 flex flex-wrap gap-3">
           <a href="#nightlife-filters" className="rounded-full bg-white px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-slate-950">
-            Explorar locales
+            {language === "en" ? "Explore venues" : "Explorar locales"}
           </a>
           <a href="#nightlife-map" className="rounded-full border border-white/70 bg-black/20 px-5 py-3 text-sm font-black uppercase tracking-[0.14em] text-white backdrop-blur">
-            Ver mapa
+            {language === "en" ? "View map" : "Ver mapa"}
           </a>
         </div>
-        <p className="mt-6 text-sm text-white/85">{total} locales curados.</p>
+        <p className="mt-6 text-sm text-white/85">{total} {language === "en" ? "curated venues." : "locales curados."}</p>
       </div>
     </section>
   );

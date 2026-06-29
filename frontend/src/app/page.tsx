@@ -60,7 +60,7 @@ export default async function Home() {
     {
       ...dictionary.home.cards[3],
       href: "/shopping",
-      image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=1600&q=84",
+      image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1600&q=84",
     },
     {
       ...dictionary.home.cards[4],
@@ -86,11 +86,6 @@ export default async function Home() {
       ...dictionary.home.cards[8],
       href: "/esim-usa",
       image: "https://images.unsplash.com/photo-1523206489230-c012c64b2b48?auto=format&fit=crop&w=1600&q=84",
-    },
-    {
-      ...dictionary.home.cards[9],
-      href: "/onboarding",
-      image: "https://images.unsplash.com/photo-1500916434205-0c77489c6cf7?auto=format&fit=crop&w=1600&q=84",
     },
   ];
 
